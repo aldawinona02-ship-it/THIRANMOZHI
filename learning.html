@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THIRANMOZHI - Letters Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="app-container">
+
+    <header class="top-nav page-enter">
+        <a href="index.html" class="nav-brand"><i class="fa-solid fa-leaf"></i> திறன்மொழி</a>
+        <div style="display: flex; gap: 10px; align-items:center;">
+            <div class="user-badge" id="adaptive-badge" style="background: var(--primary-purple); color: white;">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="mode-text">Adaptive Mode</span>
+            </div>
+            <a href="dashboard.html" class="btn btn-blue btn-small" style="padding: 0.5rem 1rem;">Dashboard</a>
+        </div>
+    </header>
+
+    <main class="main-content page-enter" style="animation-delay: 0.1s;">
+        <div class="text-center mb-2">
+            <h1>Choose a Letter to Learn!</h1>
+            <p>Pick any letter block below to start practicing.</p>
+        </div>
+
+        <div class="grid-3" id="letter-gallery">
+            <!-- Adaptive Content rendered here via adaptive-engine.js -->
+        </div>
+
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/adaptive-engine.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update Adaptive Badge
+            const style = app.state.dominant_style;
+            document.getElementById('mode-text').innerText = `${style.charAt(0).toUpperCase() + style.slice(1)} Mode`;
+            
+            // Render Personalized Layout
+            window.adaptiveEngineSys.renderContent();
+        });
+    </script>
+</body>
+</html>

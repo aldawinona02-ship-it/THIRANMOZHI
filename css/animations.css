@@ -1,0 +1,99 @@
+/* =========================================
+   THIRANMOZHI - Animations & Interactions
+   ========================================= */
+
+/* 1. Page Transitions */
+.page-enter {
+  animation: pageFadeInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.page-exit {
+  animation: pageFadeOutDown 0.4s ease-in forwards;
+}
+
+@keyframes pageFadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageFadeOutDown {
+  to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+/* 2. Hanging Letters (Swing Animation) */
+.hanging-letter {
+  display: inline-block;
+  transform-origin: top center;
+  animation: gentleSwing 4s ease-in-out infinite alternate;
+}
+
+.hanging-letter:nth-child(2) { animation-delay: 0.5s; animation-duration: 4.5s; }
+.hanging-letter:nth-child(3) { animation-delay: 1s; animation-duration: 3.8s; }
+.hanging-letter:nth-child(4) { animation-delay: 1.5s; animation-duration: 4.2s; }
+
+@keyframes gentleSwing {
+  0% { transform: rotate(-5deg); }
+  100% { transform: rotate(5deg); }
+}
+
+/* Antigravity Trigger Class (CSS side fallback) */
+.antigravity-active .hanging-letter {
+  animation: floatUp 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-50px) rotate(15deg); }
+  100% { transform: translateY(-100vh) rotate(-15deg); opacity: 0; }
+}
+
+/* 3. Feedback Animations (Stars, Success) */
+.pop-in {
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.shake-error {
+  animation: shakeX 0.4s ease-in-out;
+}
+
+@keyframes shakeX {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+}
+
+/* 4. Stroke Drawing Animation (Canvas Guide) */
+.stroke-dash {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dashDraw 3s linear forwards;
+}
+
+@keyframes dashDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* 5. Pulse emphasis for Auditory/Visual Cues */
+.pulse-cue {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(46, 204, 113, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+}

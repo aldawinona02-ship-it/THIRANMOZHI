@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THIRANMOZHI - Tracing Practice</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <style>
+        .tracing-interface {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1/1;
+            margin: 0 auto;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            border: 4px solid var(--primary-green);
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+            cursor: crosshair;
+        }
+
+        #guide-canvas { z-index: 1; pointer-events: none; }
+        #tracing-canvas { z-index: 2; }
+        
+        .stars-container {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 5;
+            color: #f1c40f;
+            font-size: 2rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .tracing-interface { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="app-container">
+
+    <header class="top-nav page-enter">
+        <a href="learning.html" class="btn btn-blue btn-small"><i class="fa-solid fa-arrow-left"></i> Back</a>
+        <h2 id="header-title" style="margin: 0;">Tracing...</h2>
+    </header>
+
+    <main class="main-content page-enter" style="animation-delay: 0.1s;">
+        <div class="tracing-interface">
+            
+            <!-- Side Panel Details -->
+            <div class="glass-panel text-center">
+                <button class="btn btn-yellow btn-large pulse-cue mb-2" onclick="playCurrentAudio()" style="width: 100%;">
+                    <i class="fa-solid fa-volume-high"></i> Listen Again
+                </button>
+                
+                <h3 id="trace-feedback" class="mt-2" style="font-size: 1.5rem; color: var(--text-dark);">
+                    Follow the dashed line.
+                </h3>
+
+                <div class="mt-2">
+                    <button class="btn btn-blue" onclick="window.tracingSys.clear()"><i class="fa-solid fa-eraser"></i> Clear</button>
+                    <button class="btn btn-green mt-1" onclick="app.navigate('learning.html')" style="width: 100%;">
+                        Finish Tracing <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Canvas Working Area -->
+            <div class="canvas-container pop-in">
+                <div id="celebration-stars" class="stars-container hidden pop-in">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                
+                <canvas id="guide-canvas"></canvas>
+                <canvas id="tracing-canvas"></canvas>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/adaptive-engine.js"></script>
+    <script src="js/tracing.js"></script>
+    <script>
+        function playCurrentAudio() {
+            if(window.tracingSys && window.tracingSys.currentLetterData) {
+                window.audioSys.play(window.tracingSys.currentLetterData.letter);
+            }
+        }
+    </script>
+</body>
+</html>

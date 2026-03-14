@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THIRANMOZHI - Your Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body class="app-container">
+
+    <main class="main-content page-enter pop-in" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+        <div class="glass-panel text-center" style="max-width: 600px; width: 100%;">
+            
+            <div class="card-icon" id="result-icon" style="margin: 0 auto 2rem; width: 120px; height: 120px; font-size: 4rem;">
+                <!-- Icon injected -->
+            </div>
+            
+            <h1 class="mb-1" style="font-size: 2.5rem;">Fantastic! 🎉</h1>
+            <p style="font-size: 1.2rem;" class="mb-2">We discovered how you learn best!</p>
+
+            <div class="card" style="background: white; border: 4px solid var(--primary-blue); margin-bottom: 2rem;">
+                <h2 style="color: var(--primary-blue);" id="style-title">Visual Learner</h2>
+                <p id="style-desc" class="mt-1">You remember things best when you see them! We will show you lots of colorful pictures and clear letters.</p>
+            </div>
+
+            <button class="btn btn-green btn-large" onclick="app.navigate('learning.html')" style="font-size: 1.5rem; padding: 1rem 3rem;">
+                Let's Learn Tamil <i class="fa-solid fa-play"></i>
+            </button>
+            <br><br>
+            <a href="dashboard.html" style="color: var(--text-dark); font-weight: bold;">Teacher/Parent Dashboard</a>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const style = app.state.dominant_style;
+            
+            const iconEl = document.getElementById('result-icon');
+            const titleEl = document.getElementById('style-title');
+            const descEl = document.getElementById('style-desc');
+
+            if(style === 'visual') {
+                iconEl.innerHTML = '<i class="fa-solid fa-eye" style="color: var(--primary-blue)"></i>';
+                iconEl.style.background = 'rgba(110, 198, 255, 0.2)';
+                titleEl.innerText = "You are a Visual Learner!";
+                titleEl.style.color = "var(--primary-blue)";
+                titleEl.parentElement.style.borderColor = "var(--primary-blue)";
+                descEl.innerText = "You remember things best when you see them! We will focus on bright pictures and colorful animations.";
+            } 
+            else if(style === 'auditory') {
+                iconEl.innerHTML = '<i class="fa-solid fa-headphones" style="color: var(--primary-yellow)"></i>';
+                iconEl.style.background = 'rgba(255, 245, 157, 0.5)';
+                titleEl.innerText = "You are an Auditory Learner!";
+                titleEl.style.color = "#d4af37";
+                titleEl.parentElement.style.borderColor = "var(--primary-yellow)";
+                descEl.innerText = "You learn best by listening! We will make sure you hear the Tamil letter sounds very clearly.";
+            } 
+            else if(style === 'kinesthetic') {
+                iconEl.innerHTML = '<i class="fa-solid fa-hand-pointer" style="color: var(--primary-green)"></i>';
+                iconEl.style.background = 'rgba(46, 204, 113, 0.2)';
+                titleEl.innerText = "You are a Kinesthetic Learner!";
+                titleEl.style.color = "var(--primary-green)";
+                titleEl.parentElement.style.borderColor = "var(--primary-green)";
+                descEl.innerText = "You learn best by doing and touching! We will use tracing and dragging games for you.";
+            }
+        });
+    </script>
+</body>
+</html>

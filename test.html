@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THIRANMOZHI - Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .progress-bar-container {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: var(--radius-pill);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-green);
+            width: 33%; /* Hardcoded 1/3 for MVP */
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="app-container">
+
+    <header class="top-nav page-enter">
+        <a href="index.html" class="nav-brand"><i class="fa-solid fa-leaf"></i> திறன்மொழி</a>
+        <div class="user-badge" id="student-badge">
+            <i class="fa-solid fa-user"></i> <span id="student-name-display">Student</span>
+        </div>
+    </header>
+
+    <main class="main-content page-enter" style="animation-delay: 0.1s;">
+        <div class="glass-panel" style="max-width: 800px; margin: 0 auto;">
+            
+            <div class="text-center">
+                <span id="test-progress" style="font-weight: 700; color: var(--primary-purple);">Test 1 of 3</span>
+                <div class="progress-bar-container mt-1">
+                    <div class="progress-fill" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <div class="text-center mb-3">
+                <h2 id="test-title" class="mb-1">Picture Memory</h2>
+                <p id="test-instruction" style="font-size: 1.2rem; color: var(--text-dark);" class="instruction-text">Look at these pictures carefully.</p>
+            </div>
+
+            <!-- Dynamic Test Container injected by tests.js -->
+            <div id="test-container" class="test-area page-enter">
+                <!-- Content goes here -->
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/tests.js"></script>
+    <script>
+        // Set student name in header
+        document.addEventListener('DOMContentLoaded', () => {
+            if(app.state.student && app.state.student.name) {
+                document.getElementById('student-name-display').innerText = app.state.student.name;
+            }
+        });
+    </script>
+</body>
+</html>

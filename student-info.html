@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THIRANMOZHI - Student Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body class="app-container">
+
+    <header class="top-nav page-enter">
+        <a href="index.html" class="nav-brand"><i class="fa-solid fa-leaf"></i> திறன்மொழி</a>
+    </header>
+
+    <main class="main-content page-enter" style="animation-delay: 0.1s;">
+        <div class="glass-panel" style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <div class="card-icon" style="margin: 0 auto 1rem; background: var(--primary-yellow); color: #d4af37;">
+                <i class="fa-solid fa-child-reaching"></i>
+            </div>
+            
+            <h2 class="mb-1">Welcome to Thiranmozhi! 🌟</h2>
+            <p class="mb-2" style="color: var(--text-dark);">Let's get to know you before we start our adventure.</p>
+
+            <form id="student-form" class="mt-2 text-left">
+                <div class="input-group">
+                    <label for="s-name">What is your name?</label>
+                    <input type="text" id="s-name" class="input-control" placeholder="E.g. Kavin" required>
+                </div>
+                
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="input-group">
+                        <label for="s-age">Age</label>
+                        <input type="number" id="s-age" class="input-control" min="4" max="18" placeholder="E.g. 8" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="s-gender">Gender</label>
+                        <select id="s-gender" class="input-control" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Boy</option>
+                            <option value="female">Girl</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="s-disorder">Support Needs (Optional)</label>
+                    <select id="s-disorder" class="input-control">
+                        <option value="none">None / Prefer not to say</option>
+                        <option value="asd">Autism Spectrum Disorder</option>
+                        <option value="idd">Intellectual Developmental Disorder</option>
+                        <option value="ld">Other Learning Difficulty</option>
+                    </select>
+                </div>
+
+                <div class="text-center mt-2">
+                    <button type="submit" class="btn btn-blue" style="width: 100%;">
+                        Start Discovery Test <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('student-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Save inside localStorage wrapper
+            app.state.student = {
+                name: document.getElementById('s-name').value,
+                age: document.getElementById('s-age').value,
+                gender: document.getElementById('s-gender').value,
+                disorder: document.getElementById('s-disorder').value
+            };
+            
+            // Reset scores on new session
+            app.resetAssessment();
+            app.saveState();
+            
+            app.navigate('test.html');
+        });
+    </script>
+</body>
+</html>

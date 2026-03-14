@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THIRANMOZHI - Adaptive Tamil Learning</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        /* Landing Page specifics */
+        body { 
+            overflow: hidden; /* important for particles */ 
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+        }
+        
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .landing-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .hanging-letters-container {
+            position: absolute;
+            top: 0;
+            display: flex;
+            gap: 2rem;
+            z-index: 5;
+        }
+
+        .hanging-letter {
+            font-family: var(--font-tamil);
+            font-size: 5rem;
+            color: var(--primary-purple);
+            text-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
+            position: relative;
+        }
+        
+        /* The string holding the letter */
+        .hanging-letter::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            width: 4px;
+            height: 100px;
+            background: rgba(0,0,0,0.1);
+            transform: translateX(-50%);
+        }
+
+        .title-group {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            padding: 3rem 4rem;
+            border-radius: var(--radius-lg);
+            border: 5px solid white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: translateY(20px);
+            margin-bottom: 3rem;
+        }
+
+        .main-title {
+            font-family: var(--font-tamil);
+            font-size: 6rem;
+            color: var(--primary-green);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            text-shadow: 3px 3px 0 #fff;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        /* Large Start Button */
+        .btn-start {
+            font-size: 2rem;
+            padding: 1.5rem 4rem;
+            border-radius: var(--radius-pill);
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hanging Letters Decoration -->
+    <div class="hanging-letters-container">
+        <div class="hanging-letter">அ</div>
+        <div class="hanging-letter" style="color: var(--primary-blue)">ஆ</div>
+        <div class="hanging-letter" style="color: var(--primary-green)">இ</div>
+        <div class="hanging-letter" style="color: #e67e22">ஈ</div>
+    </div>
+
+    <!-- Antigravity Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <main class="landing-content page-enter" id="landing-main">
+        <div class="title-group hover-float">
+            <h1 class="main-title">திறன்மொழி</h1>
+            <p class="subtitle">Adaptive Tamil Learning for Every Child</p>
+        </div>
+        
+        <button class="btn btn-green btn-start" id="start-btn">
+            <i class="fa-solid fa-rocket"></i> Let's Play!
+        </button>
+    </main>
+
+    <!-- Global Logic -->
+    <script src="js/main.js"></script>
+    <script src="js/particles.js"></script>
+    <script>
+        document.getElementById('start-btn').addEventListener('click', (e) => {
+            // Trigger Antigravity
+            document.body.classList.add('antigravity-active');
+            
+            // Trigger Canvas Gravity Inversion
+            if(window.particleEngine) {
+                window.particleEngine.invertGravity();
+            }
+
+            // Play a sound
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.5);
+            osc.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.5);
+
+            // Navigate after animation
+            setTimeout(() => {
+                document.getElementById('landing-main').classList.replace('page-enter', 'page-exit');
+                setTimeout(() => {
+                    app.navigate('student-info.html');
+                }, 400);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
