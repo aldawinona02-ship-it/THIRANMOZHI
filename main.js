@@ -79,3 +79,4 @@ app.initStore();
 
 // Expose to window for inline scripts
 window.app = app;
+
