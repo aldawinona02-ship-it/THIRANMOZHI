@@ -156,13 +156,15 @@
 
             // Navigate after animation
             setTimeout(() => {
-                document.getElementById('landing-main').classList.replace('page-enter', 'page-exit');
+                const mainEl = document.getElementById('landing-main');
+                if(mainEl) mainEl.classList.replace('page-enter', 'page-exit');
                 setTimeout(() => {
-                    app.navigate('student-info.html');
+                    window.location.href = 'student-info.html';
                 }, 400);
             }, 1000);
         });
     </script>
 </body>
 </html>
+
 
