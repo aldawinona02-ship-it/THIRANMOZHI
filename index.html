@@ -17,7 +17,7 @@
         /* Landing Page specifics */
         body { 
             overflow: hidden; /* important for particles */ 
-            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            background: linear-gradient(135deg, #ccff90 0%, #2ecc71 100%);
         }
         
         #particle-canvas {
@@ -124,7 +124,7 @@
         </div>
         
         <button class="btn btn-green btn-start" id="start-btn">
-            <i class="fa-solid fa-rocket"></i> Let's Play!
+            <i class="fa-solid fa-rocket"></i> Let's Learn
         </button>
     </main>
 
@@ -141,14 +141,18 @@
                 window.particleEngine.invertGravity();
             }
 
-            // Play a sound
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.5);
-            osc.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.5);
+            // Play a sound safely
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.5);
+                osc.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.5);
+            } catch (err) {
+                console.log("Audio error muted:", err);
+            }
 
             // Navigate after animation
             setTimeout(() => {
@@ -161,3 +165,4 @@
     </script>
 </body>
 </html>
+
