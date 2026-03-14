@@ -17,7 +17,7 @@ const app = {
 
     initStore() {
         try {
-            const studentStr = localStorage.getItem('tm_student');
+            const studentStr = localStorage.getItem('thiranmozhi_student') || localStorage.getItem('tm_student');
             if(studentStr && studentStr !== 'undefined') {
                 this.state.student = JSON.parse(studentStr);
             }
@@ -37,7 +37,7 @@ const app = {
 
     saveState() {
         try {
-            localStorage.setItem('tm_student', JSON.stringify(this.state.student));
+            localStorage.setItem('thiranmozhi_student', JSON.stringify(this.state.student));
             localStorage.setItem('tm_score_v', this.state.score_v);
             localStorage.setItem('tm_score_a', this.state.score_a);
             localStorage.setItem('tm_score_k', this.state.score_k);
@@ -79,4 +79,5 @@ app.initStore();
 
 // Expose to window for inline scripts
 window.app = app;
+
 
