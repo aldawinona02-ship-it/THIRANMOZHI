@@ -9,7 +9,8 @@ const VAK_TESTS = [
             container.innerHTML = `
                 <div class="test-visual-diagram text-center">
                     <div id="v1-show">
-                        <div style="background: white; border-radius:10px; padding: 20px; display:inline-block; border:4px solid var(--primary-blue);">
+                        <h3 id="v1-timer" style="color: var(--primary-purple);">Observation Time: 30s</h3>
+                        <div style="background: white; border-radius:10px; padding: 20px; display:inline-block; border:4px solid var(--primary-blue); margin-top: 15px;">
                             <div style="width:200px; height:50px; background:var(--primary-blue); margin-bottom:10px;"></div>
                             <div style="width:100px; height:50px; background:var(--primary-yellow); display:inline-block;"></div>
                             <div style="width:100px; height:50px; background:var(--primary-green); display:inline-block;"></div>
@@ -26,12 +27,22 @@ const VAK_TESTS = [
                 </div>
             `;
             // 30 seconds wait then ask
-            setTimeout(() => {
-                document.getElementById('v1-show').classList.add('hidden');
-                document.getElementById('v1-ask').classList.remove('hidden');
-            }, 30000); // 30s as requested
+            let timeLeft = 30;
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                const timerEl = document.getElementById('v1-timer');
+                if(timerEl) timerEl.innerText = `Observation Time: ${timeLeft}s`;
+                if(timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('v1-show').classList.add('hidden');
+                    document.getElementById('v1-ask').classList.remove('hidden');
+                }
+            }, 1000);
             
-            window.submitTest = (isCorrect) => onComplete(isCorrect ? 10 : 0);
+            window.submitTest = (isCorrect) => {
+                clearInterval(timerInterval);
+                onComplete(isCorrect ? 10 : 0);
+            };
         }
     },
     {
@@ -42,6 +53,9 @@ const VAK_TESTS = [
         render: (container, onComplete) => {
             container.innerHTML = `
                 <div class="test-visual-memory">
+                    <div id="vm-timer-container" class="text-center mb-1">
+                        <h3 id="vm-timer" style="color: var(--primary-purple);">Observation Time: 30s</h3>
+                    </div>
                     <div class="grid-3 mb-2" id="vm-pics" style="grid-template-columns: repeat(5, 1fr) !important; gap: 10px;">
                         <div class="card p-1"><div class="card-icon" style="width:50px; height:50px; font-size:1.5rem">🍎</div>Apple</div>
                         <div class="card p-1"><div class="card-icon" style="width:50px; height:50px; font-size:1.5rem">🐘</div>Elephant</div>
@@ -54,7 +68,7 @@ const VAK_TESTS = [
                         <div class="card p-1"><div class="card-icon" style="width:50px; height:50px; font-size:1.5rem">🍕</div>Pizza</div>
                         <div class="card p-1"><div class="card-icon" style="width:50px; height:50px; font-size:1.5rem">⭐</div>Star</div>
                     </div>
-                    <div id="vm-question" class="hidden">
+                    <div id="vm-question" class="hidden text-center">
                         <h3 class="mb-2">Which one did you see?</h3>
                         <div class="grid-3">
                             <button class="btn btn-blue" onclick="window.submitTest(true)">🍎 Apple</button>
@@ -64,11 +78,22 @@ const VAK_TESTS = [
                     </div>
                 </div>
             `;
-            setTimeout(() => {
-                document.getElementById('vm-pics').classList.add('hidden');
-                document.getElementById('vm-question').classList.remove('hidden');
-            }, 30000); 
-            window.submitTest = (isCorrect) => onComplete(isCorrect ? 10 : 0);
+            let timeLeft = 30;
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                const timerEl = document.getElementById('vm-timer');
+                if(timerEl) timerEl.innerText = `Observation Time: ${timeLeft}s`;
+                if(timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('vm-timer-container').classList.add('hidden');
+                    document.getElementById('vm-pics').classList.add('hidden');
+                    document.getElementById('vm-question').classList.remove('hidden');
+                }
+            }, 1000); 
+            window.submitTest = (isCorrect) => {
+                clearInterval(timerInterval);
+                onComplete(isCorrect ? 10 : 0);
+            };
         }
     },
     {
@@ -79,6 +104,7 @@ const VAK_TESTS = [
         render: (container, onComplete) => {
             container.innerHTML = `
                 <div class="test-visual-color text-center">
+                    <h3 id="v3-timer" style="color: var(--primary-purple); margin-bottom: 15px;">Observation Time: 20s</h3>
                     <div id="v3-show" style="font-size: 1.5rem; line-height: 2;">
                         The quick <span style="background: yellow; font-weight:bold;">brown</span> fox jumps over the lazy <span style="background: #a29bfe; font-weight:bold;">dog</span>. It was a very sunny <span style="background: #55efc4; font-weight:bold;">day</span> outside.
                     </div>
@@ -92,11 +118,22 @@ const VAK_TESTS = [
                     </div>
                 </div>
             `;
-            setTimeout(() => {
-                document.getElementById('v3-show').classList.add('hidden');
-                document.getElementById('v3-ask').classList.remove('hidden');
-            }, 20000); // 20s as requested
-            window.submitTest = (isCorrect) => onComplete(isCorrect ? 10 : 0);
+            let timeLeft = 20;
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                const timerEl = document.getElementById('v3-timer');
+                if(timerEl) timerEl.innerText = `Observation Time: ${timeLeft}s`;
+                if(timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('v3-timer').classList.add('hidden');
+                    document.getElementById('v3-show').classList.add('hidden');
+                    document.getElementById('v3-ask').classList.remove('hidden');
+                }
+            }, 1000); // 20s as requested
+            window.submitTest = (isCorrect) => {
+                clearInterval(timerInterval);
+                onComplete(isCorrect ? 10 : 0);
+            };
         }
     },
 
@@ -440,4 +477,3 @@ document.addEventListener('DOMContentLoaded', () => {
         window.assessmentSys = new AssessmentSystem();
     }
 });
-
