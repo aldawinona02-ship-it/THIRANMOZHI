@@ -8,29 +8,80 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
+    <style>
+        body {
+            background: radial-gradient(circle at top left, var(--primary) 0%, transparent 40%),
+                        radial-gradient(circle at bottom right, var(--secondary) 0%, transparent 40%),
+                        #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-main);
+        }
+        .main-content {
+            width: 100%;
+            padding: 2rem;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .style-card {
+            background: white;
+            border: 4px solid var(--primary);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        .btn-large {
+            padding: 1.2rem 3rem;
+            font-size: 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius-pill);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            font-weight: 800;
+        }
+        .btn-large:hover {
+            transform: scale(1.05);
+            background: #a2d2ff;
+        }
+    </style>
 </head>
 <body class="app-container">
 
-    <main class="main-content page-enter pop-in" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
-        <div class="glass-panel text-center" style="max-width: 600px; width: 100%;">
+    <main class="main-content">
+        <div class="glass-panel text-center">
             
-            <div class="card-icon" id="result-icon" style="margin: 0 auto 2rem; width: 120px; height: 120px; font-size: 4rem;">
+            <div class="card-icon" id="result-icon" style="margin: 0 auto 2rem; width: 120px; height: 120px; font-size: 4rem; border-radius: 50%;">
                 <!-- Icon injected -->
             </div>
             
-            <h1 class="mb-1" style="font-size: 2.5rem;">Fantastic! 🎉</h1>
-            <p style="font-size: 1.2rem;" class="mb-2">We discovered how you learn best!</p>
+            <h1 class="mb-1" style="font-size: 3rem; font-family: var(--font-tamil);">அற்புதம்! 🎉</h1>
+            <p style="font-size: 1.4rem; color: var(--text-muted); font-weight: 600;" class="mb-2">We found your learning super-power!</p>
 
-            <div class="card" style="background: white; border: 4px solid var(--primary-blue); margin-bottom: 2rem;">
-                <h2 style="color: var(--primary-blue);" id="style-title">Visual Learner</h2>
-                <p id="style-desc" class="mt-1">You remember things best when you see them! We will show you lots of colorful pictures and clear letters.</p>
+            <div class="style-card" id="style-card-container">
+                <h2 style="color: var(--text-main);" id="style-title">Visual Learner</h2>
+                <p id="style-desc" class="mt-1" style="color: var(--text-muted); font-size: 1.1rem; font-weight: 600;"></p>
             </div>
 
-            <button class="btn btn-green btn-large" onclick="app.navigate('learning.html')" style="font-size: 1.5rem; padding: 1rem 3rem;">
+            <button class="btn-large" onclick="window.location.href='learning.html'">
                 Let's Learn Tamil <i class="fa-solid fa-play"></i>
             </button>
             <br><br>
-            <a href="dashboard.html" style="color: var(--text-dark); font-weight: bold;">Teacher/Parent Dashboard</a>
+            <a href="dashboard.html" style="color: var(--text-muted); font-weight: 700; text-decoration: none; font-size: 1.1rem;">View Your Progress Dashboard</a>
         </div>
     </main>
 
@@ -44,27 +95,27 @@
             const descEl = document.getElementById('style-desc');
 
             if(style === 'visual') {
-                iconEl.innerHTML = '<i class="fa-solid fa-eye" style="color: var(--primary-blue)"></i>';
-                iconEl.style.background = 'rgba(110, 198, 255, 0.2)';
+                iconEl.innerHTML = '<i class="fa-solid fa-eye"></i>';
+                iconEl.style.color = '#74b9ff';
+                iconEl.style.background = 'rgba(110, 198, 255, 0.1)';
                 titleEl.innerText = "You are a Visual Learner!";
-                titleEl.style.color = "var(--primary-blue)";
-                titleEl.parentElement.style.borderColor = "var(--primary-blue)";
+                document.getElementById('style-card-container').style.borderColor = "var(--primary)";
                 descEl.innerText = "You remember things best when you see them! We will focus on bright pictures and colorful animations.";
             } 
             else if(style === 'auditory') {
-                iconEl.innerHTML = '<i class="fa-solid fa-headphones" style="color: var(--primary-yellow)"></i>';
-                iconEl.style.background = 'rgba(255, 245, 157, 0.5)';
+                iconEl.innerHTML = '<i class="fa-solid fa-headphones"></i>';
+                iconEl.style.color = '#a29bfe';
+                iconEl.style.background = 'rgba(162, 155, 254, 0.1)';
                 titleEl.innerText = "You are an Auditory Learner!";
-                titleEl.style.color = "#d4af37";
-                titleEl.parentElement.style.borderColor = "var(--primary-yellow)";
+                document.getElementById('style-card-container').style.borderColor = "var(--info)";
                 descEl.innerText = "You learn best by listening! We will make sure you hear the Tamil letter sounds very clearly.";
             } 
             else if(style === 'kinesthetic') {
-                iconEl.innerHTML = '<i class="fa-solid fa-hand-pointer" style="color: var(--primary-green)"></i>';
-                iconEl.style.background = 'rgba(46, 204, 113, 0.2)';
+                iconEl.innerHTML = '<i class="fa-solid fa-hand-pointer"></i>';
+                iconEl.style.color = '#55efc4';
+                iconEl.style.background = 'rgba(85, 239, 196, 0.1)';
                 titleEl.innerText = "You are a Kinesthetic Learner!";
-                titleEl.style.color = "var(--primary-green)";
-                titleEl.parentElement.style.borderColor = "var(--primary-green)";
+                document.getElementById('style-card-container').style.borderColor = "var(--accent)";
                 descEl.innerText = "You learn best by doing and touching! We will use tracing and dragging games for you.";
             }
         });

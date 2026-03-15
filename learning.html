@@ -10,15 +10,51 @@
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
+    <style>
+        body {
+            background: radial-gradient(circle at top left, var(--primary) 0%, transparent 40%),
+                        radial-gradient(circle at bottom right, var(--secondary) 0%, transparent 40%),
+                        #f8f9fa;
+            color: var(--text-main);
+        }
+        .top-nav {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-brand {
+            font-family: var(--font-tamil);
+            font-size: 1.8rem;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 800;
+        }
+        .user-badge {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+    </style>
+</head>
 <body class="app-container">
 
-    <header class="top-nav page-enter">
+    <header class="top-nav">
         <a href="index.html" class="nav-brand"><i class="fa-solid fa-leaf"></i> திறன்மொழி</a>
-        <div style="display: flex; gap: 10px; align-items:center;">
-            <div class="user-badge" id="adaptive-badge" style="background: var(--primary-purple); color: white;">
+        <div style="display: flex; gap: 15px; align-items:center;">
+            <div class="user-badge" id="adaptive-badge" style="background: var(--info); color: white;">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="mode-text">Adaptive Mode</span>
             </div>
-            <a href="dashboard.html" class="btn btn-blue btn-small" style="padding: 0.5rem 1rem;">Dashboard</a>
+            <button class="btn btn-secondary btn-small" onclick="window.location.href='dashboard.html'">Dashboard</button>
         </div>
     </header>
 
@@ -34,9 +70,9 @@
 
     </main>
 
-    <script src="js/main.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/adaptive-engine.js"></script>
+    <script src="main.js"></script>
+    <script src="audio.js"></script>
+    <script src="adaptive-engine.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Update Adaptive Badge

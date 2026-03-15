@@ -11,36 +11,89 @@
     <link rel="stylesheet" href="css/responsive.css">
     
     <style>
-        .teacher-view-header {
+        body {
+            background: radial-gradient(circle at top left, var(--primary) 0%, transparent 40%),
+                        radial-gradient(circle at bottom right, var(--secondary) 0%, transparent 40%),
+                        #f8f9fa;
+            color: var(--text-main);
+        }
+        .top-nav {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #e0e0e0;
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-brand {
+            font-family: var(--font-tamil);
+            font-size: 1.8rem;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 800;
+        }
+        .nav-brand i {
+            color: var(--info);
+            margin-right: 0.5rem;
+        }
+        .teacher-view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-md);
+        }
+        #dash-name {
+            font-size: 2.5rem;
+            font-family: var(--font-tamil);
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+        .btn-reset {
+            padding: 0.8rem 1.5rem;
+            background: var(--error);
+            color: white;
+            border: none;
+            border-radius: var(--radius-pill);
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        .btn-reset:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
         }
     </style>
 </head>
-<body class="app-container" style="background: #f8fafc;">
+<body class="app-container">
 
     <header class="top-nav">
-        <a href="index.html" class="nav-brand"><i class="fa-solid fa-leaf"></i> திறன்மொழி (Teacher Portal)</a>
-        <a href="learning.html" class="btn btn-blue btn-small"><i class="fa-solid fa-gamepad"></i> Back to Game</a>
+        <a href="index.html" class="nav-brand"><i class="fa-solid fa-leaf"></i> திறன்மொழி Portal</a>
+        <button class="btn btn-secondary" onclick="window.location.href='learning.html'">
+            <i class="fa-solid fa-gamepad"></i> Back to Game
+        </button>
     </header>
 
-    <main class="main-content page-enter">
+    <main class="main-content" style="padding: 3rem 5%; height: auto; min-height: 100vh;">
         <div class="teacher-view-header">
             <div>
-                <h1 id="dash-name" style="color: var(--text-dark);">Student Profile</h1>
-                <p id="dash-age" style="color: var(--text-muted); font-size: 1.1rem;">Loading...</p>
+                <h1 id="dash-name">Student Profile</h1>
+                <p id="dash-age" style="color: var(--text-muted); font-size: 1.2rem; font-weight: 600;">Loading details...</p>
             </div>
             
-            <button class="btn btn-yellow" onclick="if(confirm('Reset all progress?')) { app.resetAssessment(); app.state.student = null; app.saveState(); app.navigate('index.html'); }">
+            <button class="btn-reset" onclick="if(confirm('Reset all progress and student data?')) { localStorage.clear(); window.location.href='index.html'; }">
                 <i class="fa-solid fa-trash-can"></i> Reset Profile
             </button>
         </div>
 
-        <!-- Rendered by dashboard.js -->
         <div id="dashboard-content">
             <!-- Loading State -->
             <div class="text-center">

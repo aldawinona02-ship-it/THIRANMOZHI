@@ -1,37 +1,38 @@
 :root {
-  /* Vibrant, child-friendly palette */
-  --primary: #FF6B6B;     /* Coral Red */
-  --secondary: #4ECDC4;   /* Mint Green */
-  --accent: #FFE66D;      /* Sunshine Yellow */
-  --info: #45B7D1;        /* Sky Blue */
-  --success: #96CEB4;     /* Soft Green */
-  --warning: #FFBE0B;     /* Orange/Yellow */
+  /* Subtle Pastel Palette */
+  --primary: #BDE0FE;     /* Pastel Blue */
+  --secondary: #FFC8DD;   /* Pastel Pink */
+  --accent: #CAFFBF;      /* Pastel Green */
+  --info: #CDB4DB;        /* Pastel Purple */
+  --success: #B9FBC0;     /* Mint Pastel */
+  --warning: #FDFFB6;     /* Lemon Pastel */
+  --error: #FFADAD;       /* Coral Pastel */
   
   /* Backgrounds & Surfaces */
-  --bg-color: #F7F9FC;
+  --bg-color: #FBFDFF;
   --surface: #FFFFFF;
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.4);
   
-  /* Text Colors */
-  --text-main: #2D3436;
-  --text-muted: #636E72;
+  /* Text Colors - softer than pure black */
+  --text-main: #3D4451;
+  --text-muted: #8E9AAF;
   --text-light: #FFFFFF;
   
-  /* Shadows */
-  --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
-  --shadow-md: 0 10px 20px rgba(0,0,0,0.08);
-  --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
-  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  /* Shadows - softer and more diffused */
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
+  --shadow-md: 0 12px 24px rgba(0,0,0,0.05);
+  --shadow-lg: 0 24px 48px rgba(0,0,0,0.08);
+  --shadow-glass: 0 8px 32px 0 rgba(189, 224, 254, 0.15);
 
   /* Typography */
   --font-ui: 'Nunito', sans-serif;
   --font-tamil: 'Baloo Thambi 2', cursive;
   
-  /* Rounded Corners */
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-pill: 50px;
+  /* Rounded Corners - slightly more organic */
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-pill: 100px;
 }
 
 * {

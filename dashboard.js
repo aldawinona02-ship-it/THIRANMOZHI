@@ -16,81 +16,119 @@ class DashboardEngine {
     }
 
     render() {
-        if(!this.student) {
-            this.container.innerHTML = `
-                <div class="glass-panel text-center">
-                    <h2>No student data found!</h2>
-                    <p>Please complete the intake and assessment first.</p>
-                    <button class="btn btn-blue mt-2" onclick="app.navigate('index.html')">Go Home</button>
-                </div>
-            `;
-            return;
+        const completed = app.state.progress.completed_letters || [];
+        const totalUyir = 12; // அ to ஔ
+        const totalMei = 18; // க to ன
+        
+        const uyirCompleted = completed.filter(l => adaptiveEngineSys.getLetterData(l)?.type === 'uyir').length;
+        const meiCompleted = completed.filter(l => adaptiveEngineSys.getLetterData(l)?.type === 'mei').length;
+
+        const skills = {
+            uyir: Math.round((uyirCompleted / totalUyir) * 100),
+            mei: Math.round((meiCompleted / totalMei) * 100),
+            writing: app.state.progress.skills.writing || 0,
+            phonics: app.state.progress.skills.phonics || 0
+        };
+
+        // Gamification: Mei Explorer check
+        if(meiCompleted >= 5 && !app.state.progress.achievements.includes('Mei Explorer')) {
+            app.state.progress.achievements.push('Mei Explorer');
+            app.saveState();
         }
 
-        const skills = this.progress.skills || { reading: 85, listening: 72, writing: 60 };
         const mistakes = this.progress.mistakes || {};
-        const weakLetters = Object.keys(mistakes).filter(l => mistakes[l] >= 2);
+        const weakLetters = Object.keys(mistakes).filter(l => {
+            const counts = Object.values(mistakes[l]);
+            return counts.reduce((a,b) => a+b, 0) >= 2;
+        });
 
-        document.getElementById('dash-name').innerText = this.student.name;
-        document.getElementById('dash-age').innerText = `${this.student.age} yrs (${this.student.gender})`;
+        document.getElementById('dash-name').innerText = `${this.student.name}'s Progress`;
+        document.getElementById('dash-age').innerText = `${this.student.age} yrs | ${this.student.gender} | ${this.style.toUpperCase()} Learner`;
         
         this.container.innerHTML = `
-            <div class="grid-3 mb-3">
-                <div class="card" style="border-top: 5px solid #3498db">
-                    <h3>Reading</h3>
-                    <div class="progress-bar-container mt-1" style="height:10px; background:#eee; border-radius:5px; overflow:hidden;">
-                        <div style="width: ${skills.reading}%; height:100%; background:#3498db; border-radius:5px;"></div>
-                    </div>
-                    <h2 class="mt-1">${skills.reading}%</h2>
-                </div>
-                <div class="card" style="border-top: 5px solid #f1c40f">
-                    <h3>Listening</h3>
-                    <div class="progress-bar-container mt-1" style="height:10px; background:#eee; border-radius:5px; overflow:hidden;">
-                        <div style="width: ${skills.listening}%; height:100%; background:#f1c40f; border-radius:5px;"></div>
-                    </div>
-                    <h2 class="mt-1">${skills.listening}%</h2>
-                </div>
-                <div class="card" style="border-top: 5px solid #2ecc71">
-                    <h3>Writing</h3>
-                    <div class="progress-bar-container mt-1" style="height:10px; background:#eee; border-radius:5px; overflow:hidden;">
-                        <div style="width: ${skills.writing}%; height:100%; background:#2ecc71; border-radius:5px;"></div>
-                    </div>
-                    <h2 class="mt-1">${skills.writing}%</h2>
-                </div>
+            <!-- Skill Progress Section -->
+            <div class="grid-4 mb-3">
+                ${this.renderSkillCard('Uyir Vowels', skills.uyir, 'var(--primary)', 'fa-moon')}
+                ${this.renderSkillCard('Mei Consonants', skills.mei, 'var(--info)', 'fa-sun')}
+                ${this.renderSkillCard('Writing Accuracy', skills.writing, 'var(--accent)', 'fa-pen-nib')}
+                ${this.renderSkillCard('Pronunciation', skills.phonics, 'var(--warning)', 'fa-comment')}
             </div>
 
-            <div class="dashboard-details" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                <div class="glass-panel">
-                    <h3 class="mb-2"><i class="fa-solid fa-triangle-exclamation" style="color:#e74c3c"></i> Letters to Practice</h3>
-                    <div class="weak-letters-grid" style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div class="dashboard-details" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+                <!-- Weak Areas & AI Recommendation -->
+                <div class="glass-panel" style="padding: 2rem;">
+                    <h3 class="mb-2" style="font-family: var(--font-tamil); font-size: 1.5rem;"><i class="fa-solid fa-triangle-exclamation" style="color:var(--error)"></i> Weak Letters Detection</h3>
+                    <div class="weak-letters-grid mb-2" style="display:flex; gap:12px; flex-wrap:wrap;">
                         ${weakLetters.length > 0 ? 
-                            weakLetters.map(l => `<div class="card text-center" style="padding:10px; min-width:60px; border:2px solid #e74c3c; font-family:var(--font-tamil); font-size:1.5rem;">${l}</div>`).join('') :
-                            '<p style="font-style:italic; color:var(--text-muted);">No weak letters detected yet. Keep learning!</p>'
+                            weakLetters.map(l => `
+                                <div class="card text-center" style="padding:15px; min-width:80px; border:3px solid var(--error); background:white;">
+                                    <div style="font-family:var(--font-tamil); font-size:2.5rem; color:var(--text-main);">${l}</div>
+                                    <small style="color:var(--error); font-weight:800;">NEEDS HELP</small>
+                                </div>`).join('') :
+                            '<p style="font-style:italic; color:var(--text-muted); font-weight:600;">Perfect accuracy so far! No weak letters detected.</p>'
                         }
                     </div>
-                    ${weakLetters.length > 0 ? `<button class="btn btn-primary mt-2" onclick="alert('Starting revision for weak letters...')">Start Revision</button>` : ''}
+                    
+                    <div class="ai-recommendation-box" style="background: rgba(189, 224, 254, 0.2); padding: 1.5rem; border-radius: 15px; border-left: 6px solid var(--info);">
+                        <h4 style="color: var(--info); margin-bottom: 0.5rem;"><i class="fa-solid fa-robot"></i> AI Recommended Path</h4>
+                        <p style="font-weight: 600; color: var(--text-main); font-size: 1.1rem;">
+                            ${this.generateRecommendation(weakLetters)}
+                        </p>
+                        ${weakLetters.length > 0 ? `<button class="btn btn-primary mt-1" style="width:100%" onclick="app.navigate('learning.html')">Start Specialized Lesson</button>` : ''}
+                    </div>
                 </div>
 
-                <div class="glass-panel">
-                    <h3 class="mb-2">Learning Style: <span style="text-transform:capitalize; color:var(--primary-blue)">${this.style}</span></h3>
-                    <p style="font-style:italic; border-left:4px solid var(--primary-blue); padding-left:10px; background:rgba(52, 152, 219, 0.05); padding:10px; border-radius:0 10px 10px 0;">
-                        ${this.generateRecommendation()}
-                    </p>
-                    <div class="mt-2 text-center">
-                         <div style="font-size: 3rem; color: var(--primary-blue);">
-                            <i class="fa-solid fa-${this.style === 'visual' ? 'eye' : this.style === 'auditory' ? 'headphones' : 'hand-pointer'}"></i>
-                         </div>
+                <!-- Achievements / Gamification -->
+                <div class="glass-panel" style="padding: 2rem;">
+                    <h3 class="mb-2" style="font-family: var(--font-tamil); font-size: 1.5rem;"><i class="fa-solid fa-medal" style="color:var(--warning)"></i> Achievements</h3>
+                    <div class="achievements-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                        ${this.renderBadge('Uyir Master', 'All vowels correct', skills.uyir >= 100)}
+                        ${this.renderBadge('Mei Explorer', '50 consonants practiced', skills.mei >= 50)}
+                        ${this.renderBadge('Writing Star', '90% tracing accuracy', skills.writing >= 90)}
+                        ${this.renderBadge('Tamil Beginner', 'Completed assessment', true)}
                     </div>
                 </div>
             </div>
         `;
     }
 
-    generateRecommendation() {
-        if(this.style === 'visual') return "Student responds well to high-contrast imagery and animated stroke orders. Minimize background noise.";
-        if(this.style === 'auditory') return "Student relies heavily on verbal instructions and repetitive sound playback. Ensure device audio is optimized.";
-        if(this.style === 'kinesthetic') return "Student showed high engagement with Drag & Drop tests. Let them spend more time on Canvas tracing without rushing.";
-        return "Complete assessment to generate specific recommendations.";
+    renderSkillCard(label, val, color, icon) {
+        return `
+            <div class="card" style="border-top: 6px solid ${color}; padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="color: var(--text-main); font-size: 1.1rem;">${label}</h3>
+                    <i class="fa-solid ${icon}" style="color: ${color}; opacity: 0.5;"></i>
+                </div>
+                <div class="progress-bar-container" style="height:10px; background:rgba(0,0,0,0.05); border-radius:10px; overflow:hidden;">
+                    <div style="width: ${val}%; height:100%; background: ${color}; border-radius:10px; transition: width 1s ease;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                    <span style="font-weight: 800; color: var(--text-main);">${val}%</span>
+                    <small style="color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Progress</small>
+                </div>
+            </div>
+        `;
+    }
+
+    renderBadge(title, desc, unlocked) {
+        return `
+            <div class="card text-center badge-card ${unlocked ? 'unlocked' : 'locked'}" style="padding: 1rem; border: 2px solid ${unlocked ? 'var(--warning)' : '#eee'}; opacity: ${unlocked ? 1 : 0.5}; position: relative; overflow: hidden;">
+                ${unlocked ? '<div style="background: var(--warning); color: white; position: absolute; top: 5px; right: -25px; transform: rotate(45deg); padding: 2px 30px; font-size: 0.6rem; font-weight: 800;">EARNED</div>' : ''}
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">${unlocked ? '🏅' : '🔒'}</div>
+                <h4 style="font-size: 0.9rem; color: var(--text-main);">${title}</h4>
+                <p style="font-size: 0.7rem; color: var(--text-muted); line-height: 1.2;">${desc}</p>
+            </div>
+        `;
+    }
+
+    generateRecommendation(weakLetters) {
+        if(weakLetters.includes('ழ') || weakLetters.includes('ள')) {
+            return "AI detected confusion between <b>ழ (rolling)</b> and <b>ள (curling)</b>. Focus on <b>Lesson 12: Tongue Positioning</b>.";
+        }
+        if(this.style === 'visual') return "Using your <b>Visual</b> strength: Watch the animated stroke order videos for better recall.";
+        if(this.style === 'auditory') return "Using your <b>Auditory</b> strength: Practice with the 'Echo Mode' to match sounds more accurately.";
+        if(this.style === 'kinesthetic') return "Using your <b>Kinesthetic</b> strength: Spend 10 more minutes on 'Free Writing' to build muscle memory.";
+        return "Keep exploring the letters to unlock more personalized AI advice!";
     }
 }
 

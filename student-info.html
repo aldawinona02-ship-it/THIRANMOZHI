@@ -6,70 +6,102 @@
     <title>THIRANMOZHI - Student Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
-</head>
+    <style>
         body {
-            background: linear-gradient(135deg, #FF6B6B 0%, #9b59b6 100%);
+            background: radial-gradient(circle at top right, var(--primary) 0%, transparent 40%),
+                        radial-gradient(circle at bottom left, var(--secondary) 0%, transparent 40%),
+                        #f8f9fa;
             overflow-x: hidden;
+            height: auto;
+            min-height: 100vh;
         }
-        .main-content {
+        .onboarding-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: calc(100vh - 80px);
+            padding: 4rem 2rem;
+            min-height: 100vh;
         }
         .glass-panel {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--radius-lg);
             padding: 4rem;
-            color: white;
             width: 100%;
             max-width: 650px;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .input-control {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
+            background: white;
+            border: 2px solid #edf2f7;
             padding: 1.2rem;
-            border-radius: 15px;
+            border-radius: var(--radius-md);
             font-size: 1.1rem;
             width: 100%;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
             transition: all 0.3s ease;
+            font-family: var(--font-ui);
         }
         .input-control:focus {
             outline: none;
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(189, 224, 254, 0.3);
             transform: translateY(-2px);
         }
         label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             font-weight: 700;
             font-size: 1rem;
-            letter-spacing: 0.5px;
+            color: var(--text-main);
             opacity: 0.9;
         }
         .welcome-title {
-            font-size: 2.8rem;
+            font-size: 3rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #fff, #ffeaa7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            font-family: var(--font-tamil);
         }
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.4rem;
+            margin-top: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            font-weight: 800;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(189, 224, 254, 0.4);
+            background: #a2d2ff;
+        }
+    </style>
+</head>
+<body class="app-container">
+
+    <main class="onboarding-container">
+        <div class="glass-panel text-center">
+            <h1 class="welcome-title">வணக்கம்!</h1>
+            <p class="mb-3" style="font-size: 1.2rem; color: var(--text-muted); font-weight: 600;">Welcome to ThiranMozhi. Let's get to know you!</p>
 
             <form id="studentForm" class="mt-2 text-left">
                 <div class="input-group">
                     <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="input-control" placeholder="Student Name" required>
+                    <input type="text" id="name" class="input-control" placeholder="Enter student name" required>
                 </div>
                 
-                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="input-group">
                         <label for="age">Age</label>
                         <input type="number" id="age" class="input-control" min="4" max="18" placeholder="Age" required>
@@ -85,14 +117,14 @@
                     </div>
                 </div>
 
-                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="input-group">
                         <label for="phone">Phone (Optional)</label>
-                        <input type="tel" id="phone" class="input-control" placeholder="Phone">
+                        <input type="tel" id="phone" class="input-control" placeholder="Contact number">
                     </div>
                     <div class="input-group">
                         <label for="email">Email (Optional)</label>
-                        <input type="email" id="email" class="input-control" placeholder="Email">
+                        <input type="email" id="email" class="input-control" placeholder="Email address">
                     </div>
                 </div>
 
@@ -107,7 +139,7 @@
                 </div>
 
                 <div class="text-center mt-3">
-                    <button type="submit" class="btn-start" style="width: 100%; border:none; cursor:pointer;">
+                    <button type="submit" class="btn-submit">
                         Let's Begin <i class="fa-solid fa-sparkles"></i>
                     </button>
                 </div>
@@ -115,7 +147,7 @@
         </div>
     </main>
 
-    <script src="js/main.js"></script>
+    <script src="main.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const form = document.getElementById("studentForm");
@@ -134,14 +166,11 @@
 
                     localStorage.setItem("thiranmozhi_student", JSON.stringify(studentData));
 
-                    // Update global app state as well so dashboard components don't break
+                    // Update global app state
                     if(window.app && window.app.state) {
-                        try {
-                            window.app.state.student = studentData;
-                            window.app.resetAssessment();
-                        } catch(err) {
-                            console.warn(err);
-                        }
+                        window.app.state.student = studentData;
+                        window.app.resetAssessment();
+                        window.app.saveState();
                     }
 
                     window.location.href = "pre-test.html";

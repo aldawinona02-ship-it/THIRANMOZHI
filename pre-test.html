@@ -10,33 +10,44 @@
     <link rel="stylesheet" href="css/animations.css">
     <style>
         body {
-            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            background: radial-gradient(circle at top left, var(--primary) 0%, transparent 40%),
+                        radial-gradient(circle at bottom right, var(--secondary) 0%, transparent 40%),
+                        #f8f9fa;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            color: white;
+            color: var(--text-main);
             text-align: center;
         }
         .content {
             animation: bounceIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 4rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+            max-width: 600px;
         }
         h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
             font-family: var(--font-tamil);
-            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            color: var(--text-main);
         }
         p {
-            font-size: 1.5rem;
-            opacity: 0.9;
+            font-size: 1.4rem;
+            color: var(--text-muted);
             margin-bottom: 3rem;
+            font-weight: 600;
         }
         .icon-box {
             font-size: 5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--info);
             animation: float 3s ease-in-out infinite;
         }
         @keyframes float {
@@ -48,8 +59,8 @@
             width: 15px;
             height: 15px;
             border-radius: 50%;
-            background: white;
-            margin: 0 5px;
+            background: var(--primary);
+            margin: 0 8px;
             animation: dotFlashing 1s infinite alternate;
         }
         .loading-dots span:nth-child(2) { animation-delay: 0.2s; }

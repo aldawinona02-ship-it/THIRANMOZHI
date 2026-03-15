@@ -86,21 +86,24 @@ class AdaptiveEngine {
         const letters = this.getLettersForStage(stage);
 
         container.innerHTML = `
-            <div class="stage-selector mb-3 text-center">
-                <button class="btn ${stage==='basic'?'btn-primary':'btn-secondary'}" onclick="localStorage.setItem('tm_current_stage','basic'); location.reload()">Basic</button>
-                <button class="btn ${stage==='intermediate'?'btn-primary':'btn-secondary'}" onclick="localStorage.setItem('tm_current_stage','intermediate'); location.reload()">Intermediate</button>
-                <button class="btn ${stage==='advanced'?'btn-primary':'btn-secondary'}" onclick="localStorage.setItem('tm_current_stage','advanced'); location.reload()">Advanced</button>
+            <div class="stage-selector mb-3 text-center" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 3rem;">
+                <button class="btn ${stage==='basic'?'btn-primary':'btn-secondary'}" onclick="localStorage.setItem('tm_current_stage','basic'); location.reload()" style="padding: 0.8rem 2rem; border-radius: 100px;">Basic</button>
+                <button class="btn ${stage==='intermediate'?'btn-primary':'btn-secondary'}" onclick="localStorage.setItem('tm_current_stage','intermediate'); location.reload()" style="padding: 0.8rem 2rem; border-radius: 100px;">Intermediate</button>
+                <button class="btn ${stage==='advanced'?'btn-primary':'btn-secondary'}" onclick="localStorage.setItem('tm_current_stage','advanced'); location.reload()" style="padding: 0.8rem 2rem; border-radius: 100px;">Advanced</button>
             </div>
-            <div class="grid-4">
+            <div class="grid-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
                 ${letters.map(item => `
-                    <div class="card text-center hover-float" onclick="app.navigate('tracing.html?letter=${item.l}')" style="cursor: pointer; border: 2px solid var(--primary-purple);">
-                        <h2 style="font-size: 5rem; color: var(--primary-purple); margin: 0.5rem 0; font-family: var(--font-tamil);">${item.l}</h2>
-                        <div class="badge mb-1" style="font-size:0.8rem; background:rgba(0,0,0,0.05);">${item.type}</div>
-                        <button class="btn btn-blue btn-small">Practice</button>
+                    <div class="card text-center hover-float" onclick="window.location.href='tracing.html?letter=${encodeURIComponent(item.l)}'" style="cursor: pointer; border: 4px solid var(--primary); padding: 2rem; background: var(--glass-bg); border-radius: var(--radius-lg);">
+                        <h2 style="font-size: 6rem; color: var(--text-main); margin: 0.5rem 0; font-family: var(--font-tamil); line-height: 1;">${item.l}</h2>
+                        <div style="font-size: 0.9rem; background: rgba(0,0,0,0.03); padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 1.5rem; color: var(--text-muted); font-weight: 700;">${item.type.toUpperCase()}</div>
+                        <button class="btn btn-primary" style="width: 100%; font-weight: 800;">Practice Now</button>
                     </div>
                 `).join('')}
             </div>
         `;
+    }
+    getLetterData(char) {
+        return this.letters.find(l => l.l === char);
     }
 }
 

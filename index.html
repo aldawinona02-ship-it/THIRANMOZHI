@@ -20,8 +20,10 @@
         /* Landing Page specifics */
         body {
             overflow: hidden;
-            /* important for particles */
-            background: linear-gradient(135deg, #ccff90 0%, #2ecc71 100%);
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); /* Warm, soft background */
+            background: radial-gradient(circle at top left, var(--primary) 0%, transparent 40%),
+                        radial-gradient(circle at bottom right, var(--secondary) 0%, transparent 40%),
+                        #f8f9fa;
         }
 
         #particle-canvas {
@@ -56,9 +58,10 @@
         .hanging-letter {
             font-family: var(--font-tamil);
             font-size: 5rem;
-            color: var(--primary-purple);
-            text-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
+            color: var(--text-main);
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             position: relative;
+            opacity: 0.8;
         }
 
         /* The string holding the letter */
@@ -91,14 +94,14 @@
 
         .main-title {
             font-family: var(--font-tamil);
-            font-size: 7rem;
-            background: linear-gradient(135deg, var(--primary-green) 0%, #16a085 100%);
+            font-size: 7.5rem;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.1;
             margin-bottom: 1rem;
-            filter: drop-shadow(0 5px 15px rgba(46, 204, 113, 0.3));
+            filter: drop-shadow(0 4px 6px rgba(108, 92, 231, 0.2));
         }
 
         .subtitle {
@@ -112,20 +115,23 @@
         /* Large Start Button */
         .btn-start {
             font-size: 2.2rem;
-            padding: 1.8rem 5rem;
+            padding: 1.8rem 5.5rem;
             border-radius: var(--radius-pill);
-            background: linear-gradient(45deg, var(--primary-green), #27ae60);
-            border: none;
-            color: white;
-            box-shadow: 0 15px 35px rgba(46, 204, 113, 0.4);
+            background: var(--surface);
+            border: 2px solid var(--primary);
+            color: var(--text-main);
+            box-shadow: var(--shadow-md);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-transform: uppercase;
             letter-spacing: 2px;
+            cursor: pointer;
         }
 
         .btn-start:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 45px rgba(46, 204, 113, 0.6);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 15px 30px rgba(189, 224, 254, 0.4);
         }
     </style>
 </head>
@@ -134,16 +140,16 @@
 
     <!-- Hanging Letters Decoration -->
     <div class="hanging-letters-container">
-        <div class="hanging-letter" style="color: #FF6B6B">அ</div>
-        <div class="hanging-letter" style="color: #4ECDC4">ஆ</div>
-        <div class="hanging-letter" style="color: #FFE66D">இ</div>
-        <div class="hanging-letter" style="color: #45B7D1">ஈ</div>
-        <div class="hanging-letter" style="color: #9B59B6">எ</div>
-        <div class="hanging-letter" style="color: #E67E22">ஏ</div>
+        <div class="hanging-letter" style="color: var(--info)">அ</div>
+        <div class="hanging-letter" style="color: var(--secondary)">ஆ</div>
+        <div class="hanging-letter" style="color: var(--primary)">இ</div>
+        <div class="hanging-letter" style="color: var(--accent)">ஈ</div>
+        <div class="hanging-letter" style="color: var(--info)">எ</div>
+        <div class="hanging-letter" style="color: var(--secondary)">ஏ</div>
     </div>
 
     <!-- Antigravity Canvas -->
-    <canvas id="particle-canvas"></canvas>
+    <canvas id="particlesCanvas"></canvas>
 
     <main class="landing-content page-enter" id="landing-main">
         <div class="title-group hover-float">

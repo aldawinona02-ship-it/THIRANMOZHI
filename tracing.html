@@ -28,7 +28,7 @@
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-md);
             overflow: hidden;
-            border: 4px solid var(--primary-green);
+            border: 6px solid var(--primary);
         }
 
         canvas {
@@ -61,28 +61,28 @@
 </head>
 <body class="app-container">
 
-    <header class="top-nav page-enter">
-        <a href="learning.html" class="btn btn-blue btn-small"><i class="fa-solid fa-arrow-left"></i> Back</a>
-        <h2 id="header-title" style="margin: 0;">Tracing...</h2>
+    <header class="top-nav">
+        <button class="btn btn-secondary" onclick="window.location.href='learning.html'"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <h2 id="header-title" style="margin: 0; font-family: var(--font-tamil); font-size: 2rem;">Tracing Practice</h2>
     </header>
 
     <main class="main-content page-enter" style="animation-delay: 0.1s;">
         <div class="tracing-interface">
             
             <!-- Side Panel Details -->
-            <div class="glass-panel text-center">
-                <button class="btn btn-yellow btn-large pulse-cue mb-2" onclick="playCurrentAudio()" style="width: 100%;">
+            <div class="glass-panel text-center" style="padding: 2.5rem;">
+                <button class="btn btn-primary btn-large pulse-cue mb-2" onclick="playCurrentAudio()" style="width: 100%; border-radius: 100px;">
                     <i class="fa-solid fa-volume-high"></i> Listen Again
                 </button>
                 
-                <h3 id="trace-feedback" class="mt-2" style="font-size: 1.5rem; color: var(--text-dark);">
+                <h3 id="trace-feedback" class="mt-2" style="font-size: 1.5rem; color: var(--text-main); font-weight: 700;">
                     Follow the dashed line.
                 </h3>
 
                 <div class="mt-2">
-                    <button class="btn btn-blue" onclick="window.tracingSys.clear()"><i class="fa-solid fa-eraser"></i> Clear</button>
-                    <button class="btn btn-green mt-1" onclick="app.navigate('learning.html')" style="width: 100%;">
-                        Finish Tracing <i class="fa-solid fa-check"></i>
+                    <button class="btn btn-secondary" onclick="window.tracingSys.clear()" style="width: 100%; margin-bottom: 1rem;"><i class="fa-solid fa-eraser"></i> Clear Canvas</button>
+                    <button class="btn btn-primary" onclick="window.location.href='learning.html'" style="width: 100%; font-weight: 800; padding: 1rem;">
+                        Finish & Save <i class="fa-solid fa-check"></i>
                     </button>
                 </div>
             </div>

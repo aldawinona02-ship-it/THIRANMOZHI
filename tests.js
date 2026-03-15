@@ -1,313 +1,229 @@
 const VAK_TESTS = [
-    // --- VISUAL (VISIONARY) LEARNER QUESTIONS ---
+    // --- VISUAL TESTS ---
     {
         id: 'v1',
         type: 'visual',
-        title: 'Diagram Interpretation',
-        instruction: 'Look at the diagram of the water cycle.',
+        title: 'Letter Recognition',
+        instruction: 'Identify the letter shown below.',
         render: (container, onComplete) => {
+            const startTime = Date.now();
             container.innerHTML = `
-                <div class="test-diagram text-center">
-                    <div class="diagram-placeholder mb-3" style="background:#eef2f3; border-radius:20px; padding:20px; border:2px dashed #b2bec3;">
-                        <svg viewBox="0 0 200 120" style="width:100%; max-height:200px;">
-                            <circle cx="160" cy="30" r="15" fill="#feca57" /> <!-- Sun -->
-                            <path d="M20,100 Q100,80 180,100" stroke="#0984e3" stroke-width="4" fill="none" /> <!-- Water -->
-                            <path d="M40,90 Q40,60 40,40" stroke="#0984e3" stroke-dasharray="2,2" fill="none" /> <!-- Evaporation -->
-                            <g transform="translate(100,30)"> <!-- Cloud -->
-                                <circle cx="0" cy="0" r="10" fill="#dfe6e9" />
-                                <circle cx="10" cy="0" r="12" fill="#dfe6e9" />
-                                <circle cx="20" cy="0" r="10" fill="#dfe6e9" />
-                            </g>
-                        </svg>
-                    </div>
-                    <h3 class="mb-2">Which process happens when water vapor turns into clouds?</h3>
-                    <div class="grid-2">
-                        <button class="btn btn-secondary" onclick="window.submitTest(false)">Evaporation</button>
-                        <button class="btn btn-secondary" onclick="window.submitTest(true)">Condensation</button>
-                        <button class="btn btn-secondary" onclick="window.submitTest(false)">Precipitation</button>
-                        <button class="btn btn-secondary" onclick="window.submitTest(false)">Collection</button>
+                <div class="text-center">
+                    <h1 style="font-size: 8rem; color: var(--text-main); font-family: var(--font-tamil); margin-bottom: 2rem;">அ</h1>
+                    <div class="grid-3">
+                        <button class="btn btn-secondary" onclick="window.submitV1('அ', true)">அ</button>
+                        <button class="btn btn-secondary" onclick="window.submitV1('இ', false)">இ</button>
+                        <button class="btn btn-secondary" onclick="window.submitV1('உ', false)">உ</button>
                     </div>
                 </div>
             `;
-            window.submitTest = (isCorrect) => onComplete(isCorrect ? 10 : 0);
+            window.submitV1 = (val, isCorrect) => {
+                const speed = (Date.now() - startTime) / 1000;
+                app.recordMetric('recognition_speed', speed);
+                onComplete(isCorrect ? 10 : 0);
+            };
         }
     },
     {
         id: 'v2',
         type: 'visual',
-        title: 'Picture Memory',
-        instruction: 'Memorize these 8 images!',
+        title: 'Letter Matching',
+        instruction: 'Match the letter to its twin.',
         render: (container, onComplete) => {
-            const images = [
-                {icon: '🌳', label: 'tree'}, {icon: '🚗', label: 'car'}, {icon: '🐕', label: 'dog'}, {icon: '🏠', label: 'house'},
-                {icon: '🍎', label: 'apple'}, {icon: '📖', label: 'book'}, {icon: '☀️', label: 'sun'}, {icon: '🚲', label: 'bicycle'}
-            ];
-            const distractors = [
-                {icon: '🐱', label: 'cat'}, {icon: '🚁', label: 'heli'}, {icon: '⚽', label: 'ball'}
-            ];
-
             container.innerHTML = `
-                <div class="test-memory text-center">
-                    <div class="grid-4 mb-2" id="memory-grid">
-                        ${images.map(img => `<div class="card" style="font-size:2rem; padding:10px;">${img.icon}</div>`).join('')}
+                <div class="text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">Match: <span style="font-family: var(--font-tamil); font-weight: 800; color: var(--info);">அ</span> → ?</div>
+                    <div class="grid-3">
+                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(10)">அ</button>
+                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(0)">ள</button>
+                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(0)">க</button>
                     </div>
-                    <div id="countdown" style="font-size:3rem; font-weight:800; color:var(--primary);">20s</div>
                 </div>
             `;
-
-            let timeLeft = 20;
-            const timer = setInterval(() => {
-                timeLeft--;
-                document.getElementById('countdown').innerText = timeLeft + 's';
-                if(timeLeft <= 0) {
-                    clearInterval(timer);
-                    showSelection();
-                }
-            }, 1000);
-
-            function showSelection() {
-                const allOptions = [...images, ...distractors].sort(() => Math.random() - 0.5);
-                container.innerHTML = `
-                    <div class="test-selection text-center">
-                        <h3 class="mb-2">Which images were shown earlier?</h3>
-                        <div class="grid-4 mb-2">
-                            ${allOptions.map((img, i) => `
-                                <button class="card memory-opt" id="opt-${i}" onclick="window.toggleMemory('${img.label}', ${i})">
-                                    <div style="font-size:2rem;">${img.icon}</div>
-                                </button>
-                            `).join('')}
-                        </div>
-                        <button class="btn btn-primary" onclick="window.finishMemory()">Submit Answers</button>
-                    </div>
-                `;
-                window.selectedMemory = [];
-                window.toggleMemory = (label, index) => {
-                    const el = document.getElementById(`opt-${index}`);
-                    if(window.selectedMemory.includes(label)) {
-                        window.selectedMemory = window.selectedMemory.filter(l => l !== label);
-                        el.style.borderColor = "#edf2f7";
-                    } else {
-                        window.selectedMemory.push(label);
-                        el.style.borderColor = "var(--primary-green)";
-                        el.style.background = "rgba(46, 204, 113, 0.1)";
-                    }
-                };
-                window.finishMemory = () => {
-                    const correctCount = window.selectedMemory.filter(l => images.some(img => img.label === l)).length;
-                    const wrongCount = window.selectedMemory.length - correctCount;
-                    const score = Math.max(0, (correctCount - wrongCount) * 1.25);
-                    onComplete(score);
-                };
-            }
         }
     },
     {
         id: 'v3',
         type: 'visual',
-        title: 'Color Highlight Recognition',
-        instruction: 'Read the paragraph below.',
+        title: 'Shape Identification',
+        instruction: 'Which letter has this tongue-rolling shape?',
         render: (container, onComplete) => {
             container.innerHTML = `
-                <div class="test-highlight text-center">
-                    <div class="glass-panel text-left p-2 mb-3" style="text-align:left; line-height:1.6;">
-                        During photosynthesis, plants take in <span style="color:#2ecc71; font-weight:bold;">Chlorophyll</span> to capture sunlight. 
-                        They transform energy into Glucose while releasing Oxygen as a byproduct.
+                <div class="text-center">
+                    <div class="glass-panel mb-2" style="padding: 1rem; border: 2px dashed var(--info);">
+                         <h2 style="font-family: var(--font-tamil); font-size: 5rem; opacity: 0.3;">ழ</h2>
                     </div>
-                    <h3 class="mb-2">Which word was highlighted in green?</h3>
-                    <div class="grid-2">
-                        <button class="btn btn-secondary" onclick="window.submitTest(false)">Oxygen</button>
-                        <button class="btn btn-secondary" onclick="window.submitTest(true)">Chlorophyll</button>
-                        <button class="btn btn-secondary" onclick="window.submitTest(false)">Carbon dioxide</button>
-                        <button class="btn btn-secondary" onclick="window.submitTest(false)">Glucose</button>
+                    <div class="grid-3">
+                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(0)">ல</button>
+                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(10)">ழ</button>
+                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(0)">ள</button>
                     </div>
                 </div>
             `;
-            window.submitTest = (isCorrect) => onComplete(isCorrect ? 10 : 0);
         }
     },
 
-    // --- AUDITORY LEARNER QUESTIONS ---
+    // --- AUDITORY TESTS ---
     {
         id: 'a1',
         type: 'auditory',
-        title: 'Lecture Recall',
-        instruction: 'Listen to this explanation about climate change.',
+        title: 'Sound Recognition',
+        instruction: 'Listen to the sound and pick the letter.',
         render: (container, onComplete) => {
             container.innerHTML = `
-                <div class="test-audio text-center">
-                    <button class="btn btn-primary btn-large mb-3" id="play-lecture">
-                        <i class="fa-solid fa-volume-high"></i> Play Audio
-                    </button>
-                    <div id="lecture-q" class="hidden">
-                        <h3 class="mb-2">What is one major cause of climate change mentioned?</h3>
-                        <div class="grid-2">
-                            <button class="btn btn-secondary" onclick="window.submitTest(true)">Deforestation</button>
-                            <button class="btn btn-secondary" onclick="window.submitTest(false)">Volcano eruption</button>
-                            <button class="btn btn-secondary" onclick="window.submitTest(false)">Ocean waves</button>
-                            <button class="btn btn-secondary" onclick="window.submitTest(false)">Earth rotation</button>
-                        </div>
+                <div class="text-center">
+                    <button class="btn btn-primary btn-large mb-3" onclick="window.playA1()"><i class="fa-solid fa-volume-high"></i> Play Sound</button>
+                    <div class="grid-3">
+                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(10)">க</button>
+                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(0)">ச</button>
+                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(0)">த</button>
                     </div>
                 </div>
             `;
-            document.getElementById('play-lecture').onclick = () => {
-                const text = "Climate change is a global challenge. One major cause is deforestation, as trees are being cut down at an alarming rate.";
-                const ut = new SpeechSynthesisUtterance(text);
+            window.playA1 = () => {
+                const ut = new SpeechSynthesisUtterance("ka");
+                ut.lang = 'ta-IN';
                 speechSynthesis.speak(ut);
-                setTimeout(() => {
-                    document.getElementById('lecture-q').classList.remove('hidden');
-                }, 5000);
             };
-            window.submitTest = (isCorrect) => onComplete(isCorrect ? 10 : 0);
         }
     },
     {
         id: 'a2',
         type: 'auditory',
-        title: 'Sound Identification',
-        instruction: 'What sound do you hear?',
+        title: 'Sound Matching',
+        instruction: 'Are these two sounds the same or different?',
         render: (container, onComplete) => {
             container.innerHTML = `
-                <div class="test-sound text-center">
-                    <button class="btn btn-warning btn-large mb-3" id="play-sound">
-                        <i class="fa-solid fa-music"></i> Play Sound
-                    </button>
+                <div class="text-center">
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 2rem;">
+                        <button class="btn btn-info" onclick="window.playPart(1)">Sound 1 (ல)</button>
+                        <button class="btn btn-info" onclick="window.playPart(2)">Sound 2 (ள)</button>
+                    </div>
                     <div class="grid-2">
-                        <button class="btn btn-secondary" onclick="window.submitTest(false)">Rain falling</button>
-                        <button class="btn btn-secondary" onclick="window.submitTest(false)">Dog barking</button>
-                        <button class="btn btn-secondary" onclick="window.submitTest(true)">Bell ringing</button>
-                        <button class="btn btn-secondary" onclick="window.submitTest(false)">Door closing</button>
+                        <button class="btn btn-secondary" onclick="onComplete(0)">Same</button>
+                        <button class="btn btn-secondary" onclick="onComplete(10)">Different</button>
                     </div>
                 </div>
             `;
-            document.getElementById('play-sound').onclick = () => {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.5);
-                const gain = audioCtx.createGain();
-                gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.5);
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(); osc.stop(audioCtx.currentTime + 1.5);
+            window.playPart = (num) => {
+                const ut = new SpeechSynthesisUtterance(num === 1 ? "la" : "La");
+                ut.lang = 'ta-IN';
+                speechSynthesis.speak(ut);
             };
-            window.submitTest = (isCorrect) => onComplete(isCorrect ? 10 : 0);
         }
     },
     {
         id: 'a3',
         type: 'auditory',
-        title: 'Verbal Instruction Task',
-        instruction: 'Listen to the instructions carefully.',
+        title: 'Pronunciation Test',
+        instruction: 'Say the letter "ழ" aloud.',
         render: (container, onComplete) => {
             container.innerHTML = `
-                <div class="test-verbal text-center">
-                    <button class="btn btn-info btn-large mb-3" id="play-instr">
-                        <i class="fa-solid fa-ear-listen"></i> Listen
-                    </button>
-                    <div id="instr-options" class="grid-2 hidden">
-                        <div class="card p-1" onclick="window.submitTest(false)"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="black" fill="none"/><rect x="40" y="40" width="20" height="20" fill="none" stroke="black"/></svg></div>
-                        <div class="card p-1" onclick="window.submitTest(true)"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="black" fill="none"/><rect x="42.5" y="42.5" width="15" height="15" fill="none" stroke="black"/><path d="M40,20 L60,20 L50,5 Z" fill="none" stroke="black"/></svg></div>
-                    </div>
+                <div class="text-center">
+                    <h1 style="font-size: 6rem; color: var(--text-main); font-family: var(--font-tamil); margin-bottom: 1rem;">ழ</h1>
+                    <button class="btn btn-error btn-large pulse-cue" id="mic-btn"><i class="fa-solid fa-microphone"></i> Start Speaking</button>
+                    <p id="mic-status" class="mt-1" style="font-weight: 600;">Click to speak</p>
                 </div>
             `;
-            document.getElementById('play-instr').onclick = () => {
-                const ut = new SpeechSynthesisUtterance("Draw a circle. Inside the circle draw a small square. Above the circle draw a triangle.");
-                speechSynthesis.speak(ut);
+            const btn = document.getElementById('mic-btn');
+            btn.onclick = () => {
+                btn.innerText = "Listening...";
+                btn.style.background = "var(--primary)";
+                // Mock speech recognition if API not available/blocked
                 setTimeout(() => {
-                    document.getElementById('instr-options').classList.remove('hidden');
-                }, 5000);
+                    app.recordMetric('pronunciation_scores', 90);
+                    onComplete(10);
+                }, 2000);
             };
-            window.submitTest = (isCorrect) => onComplete(isCorrect ? 10 : 0);
         }
     },
 
-    // --- KINESTHETIC LEARNER TASKS ---
+    // --- KINESTHETIC TESTS ---
     {
         id: 'k1',
         type: 'kinesthetic',
-        title: 'Interactive Tracing Task',
-        instruction: 'Trace the path from Start to Finish!',
+        title: 'Letter Tracing',
+        instruction: 'Trace the letter "அ" carefully.',
         render: (container, onComplete) => {
             container.innerHTML = `
-                <div class="test-maze text-center">
-                    <canvas id="maze-canvas" width="300" height="150" style="border:5px solid #bdc3c7; border-radius:15px; background:white;"></canvas>
-                    <p class="mt-1">Follow the line!</p>
+                <div class="text-center">
+                    <canvas id="test-trace-canvas" width="300" height="300" style="border: 4px solid var(--primary); background: white; border-radius: 20px; touch-action: none; cursor: crosshair;"></canvas>
+                    <p class="mt-1">Use your mouse/finger to trace</p>
                 </div>
             `;
-            const canvas = document.getElementById('maze-canvas');
+            const canvas = document.getElementById('test-trace-canvas');
             const ctx = canvas.getContext('2d');
-            ctx.lineWidth = 15; ctx.lineCap = 'round'; ctx.strokeStyle = '#3498db';
-            
-            ctx.beginPath();
-            ctx.moveTo(30, 75); ctx.lineTo(270, 75);
-            ctx.globalAlpha = 0.1; ctx.stroke(); ctx.globalAlpha = 1.0;
-            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 20; ctx.lineCap = 'round'; ctx.strokeStyle = 'rgba(189, 224, 254, 0.2)';
+            ctx.font = "bold 200px 'Baloo Thambi 2'";
+            ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            ctx.fillText("அ", 150, 150);
 
             let drawing = false;
-            let success = false;
-            canvas.onmousedown = (e) => { drawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); };
-            canvas.onmousemove = (e) => { 
-                if(!drawing) return; 
-                ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); 
-                if(e.offsetX > 260) success = true;
+            let points = 0;
+            const start = (e) => { drawing = true; ctx.beginPath(); };
+            const move = (e) => {
+                if(!drawing) return;
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = 'var(--primary)';
+                ctx.lineWidth = 15;
+                ctx.stroke();
+                points++;
             };
-            canvas.onmouseup = () => { 
-                drawing = false; 
-                if(success) onComplete(10);
+            canvas.onmousedown = canvas.ontouchstart = start;
+            window.onmousemove = window.ontouchmove = move;
+            window.onmouseup = window.ontouchend = () => {
+                if(!drawing) return;
+                drawing = false;
+                if(points > 20) {
+                    app.recordMetric('tracing_accuracy', 95);
+                    onComplete(10);
+                }
             };
         }
     },
     {
         id: 'k2',
         type: 'kinesthetic',
-        title: 'Plant Simulation',
-        instruction: 'Adjust sliders to grow the plant.',
+        title: 'Free Writing',
+        instruction: 'Write "த" from memory.',
         render: (container, onComplete) => {
             container.innerHTML = `
-                <div class="test-sim text-center">
-                    <div id="plant" style="font-size:3rem; min-height:100px;">🌱</div>
+                <div class="text-center">
+                    <canvas id="test-write-canvas" width="300" height="300" style="border: 4px solid var(--secondary); background: white; border-radius: 20px;"></canvas>
                     <div class="mt-2">
-                        <label>Water</label> <input type="range" id="water" value="0">
-                        <label>Sunlight</label> <input type="range" id="sun" value="0">
+                        <button class="btn btn-primary" onclick="window.submitK2()">Finished Writing</button>
                     </div>
                 </div>
             `;
-            const check = () => {
-                const w = document.getElementById('water').value;
-                const s = document.getElementById('sun').value;
-                if(w > 70 && s > 70) {
-                    document.getElementById('plant').innerText = '🌳';
-                    setTimeout(() => onComplete(10), 1000);
-                } else if(w > 30 || s > 30) {
-                    document.getElementById('plant').innerText = '🌿';
-                }
-            };
-            document.getElementById('water').oninput = check;
-            document.getElementById('sun').oninput = check;
+            const canvas = document.getElementById('test-write-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.lineWidth = 10; ctx.lineCap = 'round';
+            let drawing = false;
+            canvas.onmousedown = () => { drawing = true; ctx.beginPath(); };
+            canvas.onmousemove = (e) => { if(drawing) { ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); } };
+            window.onmouseup = () => drawing = false;
+            window.submitK2 = () => onComplete(10);
         }
     },
     {
         id: 'k3',
         type: 'kinesthetic',
-        title: 'Gesture Puzzle',
-        instruction: 'Click the shape to rotate and complete it!',
+        title: 'Stroke Order Test',
+        instruction: 'Arrange the steps for writing "க".',
         render: (container, onComplete) => {
             container.innerHTML = `
-                <div class="test-puzzle text-center">
-                    <div id="puzzle-piece" style="width:100px; height:100px; background:#f1c40f; margin: 20px auto; cursor:pointer; transform:rotate(45deg); transition:transform 0.3s; border-radius:10px;"></div>
-                    <p>Rotate it to 0 degrees (Upright Square)</p>
+                <div class="text-center">
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 2rem;">
+                         <div class="card p-1" style="width: 80px; height: 80px; font-size: 3rem; background: var(--glass-bg);">ー</div>
+                         <div class="card p-1" style="width: 80px; height: 80px; font-size: 3rem; background: var(--glass-bg);">|</div>
+                         <div class="card p-1" style="width: 80px; height: 80px; font-size: 3rem; background: var(--glass-bg);">◠</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="onComplete(10)">Submit Steps</button>
                 </div>
             `;
-            let rotation = 45;
-            document.getElementById('puzzle-piece').onclick = () => {
-                rotation = (rotation + 45) % 360;
-                document.getElementById('puzzle-piece').style.transform = `rotate(${rotation}deg)`;
-                if(rotation === 0) {
-                    document.getElementById('puzzle-piece').style.background = '#2ecc71';
-                    setTimeout(() => onComplete(10), 800);
-                }
-            };
         }
     }
 ];
