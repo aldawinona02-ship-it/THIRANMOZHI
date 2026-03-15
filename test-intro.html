@@ -37,10 +37,14 @@
     <script src="js/main.js"></script>
     <script>
         function startAssessment() {
-            if(window.app) window.app.resetAssessment();
-            // The prompt requests navigating to 'learning-style-test.html', 
-            // but for continuity with our existing architecture, we map it to our test handler.
-            app.navigate('learning-style-test.html');
+            try {
+                if(window.app && typeof window.app.resetAssessment === 'function') {
+                    window.app.resetAssessment();
+                }
+            } catch(e) {
+                console.warn("Failed to reset assessment:", e);
+            }
+            window.location.href = 'learning-style-test.html';
         }
     </script>
 </body>
