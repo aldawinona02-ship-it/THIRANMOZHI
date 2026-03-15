@@ -30,6 +30,15 @@ const app = {
             if(progressStr && progressStr !== 'undefined') {
                 this.state.progress = JSON.parse(progressStr);
             }
+
+            // Auto-login logic
+            if(this.state.student && window.location.pathname.endsWith('student-info.html')) {
+                this.navigate('dashboard.html');
+            }
+            if(this.state.student && window.location.pathname.endsWith('index.html')) {
+                // If they are on home but already logged in, we could redirect to dashboard 
+                // but usually home is first. Let's make "Let's Learn" skip to dashboard.
+            }
         } catch(e) {
             console.warn("LocalStorage access restricted by browser settings. State will reset on reload.");
         }
@@ -70,6 +79,20 @@ const app = {
         this.state.score_a = 0;
         this.state.score_k = 0;
         this.state.dominant_style = 'unassessed';
+        this.saveState();
+    },
+
+    recordMistake(letter) {
+        if(!this.state.progress.mistakes) this.state.progress.mistakes = {};
+        this.state.progress.mistakes[letter] = (this.state.progress.mistakes[letter] || 0) + 1;
+        this.saveState();
+    },
+
+    updateSkillScore(skill, value) {
+        if(!this.state.progress.skills) {
+            this.state.progress.skills = { reading: 80, listening: 70, writing: 60 };
+        }
+        this.state.progress.skills[skill] = value;
         this.saveState();
     }
 };

@@ -8,22 +8,53 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
-    <style>
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            overflow-x: hidden;
+        }
         .progress-bar-container {
             width: 100%;
-            height: 10px;
-            background: #e0e0e0;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.5);
             border-radius: var(--radius-pill);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.8);
         }
         .progress-fill {
             height: 100%;
-            background: var(--primary-green);
-            width: 33%; /* Hardcoded 1/3 for MVP */
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            width: 0%; 
+            transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
         }
-    </style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+            border-radius: 32px;
+            padding: 3rem;
+        }
+        #test-container {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .assessment-header {
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        #test-title {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
 </head>
 <body class="app-container">
 
@@ -37,16 +68,16 @@
     <main class="main-content page-enter" style="animation-delay: 0.1s;">
         <div class="glass-panel" style="max-width: 800px; margin: 0 auto;">
             
-            <div class="text-center">
-                <span id="test-progress" style="font-weight: 700; color: var(--primary-purple);">Test 1 of 3</span>
+            <div class="assessment-header text-center">
+                <span id="test-progress" style="font-weight: 800; color: var(--primary-purple); font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase;">Assessment Phase</span>
                 <div class="progress-bar-container mt-1">
                     <div class="progress-fill" id="progress-bar"></div>
                 </div>
             </div>
 
-            <div class="text-center mb-3">
-                <h2 id="test-title" class="mb-1">Picture Memory</h2>
-                <p id="test-instruction" style="font-size: 1.2rem; color: var(--text-dark);" class="instruction-text">Look at these pictures carefully.</p>
+            <div class="text-center mb-4">
+                <h2 id="test-title" class="mb-1">Loading Assessment...</h2>
+                <p id="test-instruction" style="font-size: 1.3rem; color: #576574; font-weight: 600;" class="instruction-text"></p>
             </div>
 
             <!-- Dynamic Test Container injected by tests.js -->

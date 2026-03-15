@@ -65,46 +65,67 @@
         .hanging-letter::before {
             content: '';
             position: absolute;
-            top: -100px;
+            top: -200px;
             left: 50%;
-            width: 4px;
-            height: 100px;
-            background: rgba(0, 0, 0, 0.1);
+            width: 2px;
+            height: 200px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
             transform: translateX(-50%);
+            box-shadow: 1px 0 2px rgba(255, 255, 255, 0.3);
         }
 
         .title-group {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 3rem 4rem;
-            border-radius: var(--radius-lg);
-            border: 5px solid white;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            padding: 4rem 6rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             transform: translateY(20px);
             margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .main-title {
             font-family: var(--font-tamil);
-            font-size: 6rem;
-            color: var(--primary-green);
+            font-size: 7rem;
+            background: linear-gradient(135deg, var(--primary-green) 0%, #16a085 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             line-height: 1.1;
-            margin-bottom: 0.5rem;
-            text-shadow: 3px 3px 0 #fff;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 5px 15px rgba(46, 204, 113, 0.3));
         }
 
         .subtitle {
-            font-size: 1.5rem;
-            color: var(--text-dark);
-            font-weight: 700;
+            font-size: 1.8rem;
+            color: #2c3e50;
+            font-weight: 800;
+            letter-spacing: 1px;
+            opacity: 0.9;
         }
 
         /* Large Start Button */
         .btn-start {
-            font-size: 2rem;
-            padding: 1.5rem 4rem;
+            font-size: 2.2rem;
+            padding: 1.8rem 5rem;
             border-radius: var(--radius-pill);
-            animation: pulse 2s infinite;
+            background: linear-gradient(45deg, var(--primary-green), #27ae60);
+            border: none;
+            color: white;
+            box-shadow: 0 15px 35px rgba(46, 204, 113, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 45px rgba(46, 204, 113, 0.6);
         }
     </style>
 </head>
@@ -113,10 +134,12 @@
 
     <!-- Hanging Letters Decoration -->
     <div class="hanging-letters-container">
-        <div class="hanging-letter">அ</div>
-        <div class="hanging-letter" style="color: var(--primary-blue)">ஆ</div>
-        <div class="hanging-letter" style="color: var(--primary-green)">இ</div>
-        <div class="hanging-letter" style="color: #e67e22">ஈ</div>
+        <div class="hanging-letter" style="color: #FF6B6B">அ</div>
+        <div class="hanging-letter" style="color: #4ECDC4">ஆ</div>
+        <div class="hanging-letter" style="color: #FFE66D">இ</div>
+        <div class="hanging-letter" style="color: #45B7D1">ஈ</div>
+        <div class="hanging-letter" style="color: #9B59B6">எ</div>
+        <div class="hanging-letter" style="color: #E67E22">ஏ</div>
     </div>
 
     <!-- Antigravity Canvas -->
@@ -146,25 +169,16 @@
                 window.particleEngine.invertGravity();
             }
 
-            // Play a sound safely
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.5);
-                osc.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.5);
-            } catch (err) {
-                console.log("Audio error muted:", err);
-            }
-
             // Navigate after animation
             setTimeout(() => {
                 const mainEl = document.getElementById('landing-main');
                 if (mainEl) mainEl.classList.replace('page-enter', 'page-exit');
                 setTimeout(() => {
-                    window.location.href = 'student-info.html';
+                    if(app.state.student) {
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        window.location.href = 'student-info.html';
+                    }
                 }, 400);
             }, 1000);
         });
