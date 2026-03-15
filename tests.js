@@ -49,7 +49,7 @@ const VAK_TESTS = [
             container.innerHTML = `
                 <div class="test-memory text-center">
                     <div class="grid-4 mb-2" id="memory-grid">
-                        \${images.map(img => `<div class="card" style="font-size:2rem; padding:10px;">\${img.icon}</div>`).join('')}
+                        ${images.map(img => `<div class="card" style="font-size:2rem; padding:10px;">${img.icon}</div>`).join('')}
                     </div>
                     <div id="countdown" style="font-size:3rem; font-weight:800; color:var(--primary);">20s</div>
                 </div>
@@ -71,9 +71,9 @@ const VAK_TESTS = [
                     <div class="test-selection text-center">
                         <h3 class="mb-2">Which images were shown earlier?</h3>
                         <div class="grid-4 mb-2">
-                            \${allOptions.map((img, i) => `
-                                <button class="card memory-opt" id="opt-\${i}" onclick="window.toggleMemory('\${img.label}', \${i})">
-                                    <div style="font-size:2rem;">\${img.icon}</div>
+                            ${allOptions.map((img, i) => `
+                                <button class="card memory-opt" id="opt-${i}" onclick="window.toggleMemory('${img.label}', ${i})">
+                                    <div style="font-size:2rem;">${img.icon}</div>
                                 </button>
                             `).join('')}
                         </div>
@@ -82,7 +82,7 @@ const VAK_TESTS = [
                 `;
                 window.selectedMemory = [];
                 window.toggleMemory = (label, index) => {
-                    const el = document.getElementById(\`opt-\${index}\`);
+                    const el = document.getElementById(`opt-${index}`);
                     if(window.selectedMemory.includes(label)) {
                         window.selectedMemory = window.selectedMemory.filter(l => l !== label);
                         el.style.borderColor = "#edf2f7";
@@ -302,7 +302,7 @@ const VAK_TESTS = [
             let rotation = 45;
             document.getElementById('puzzle-piece').onclick = () => {
                 rotation = (rotation + 45) % 360;
-                document.getElementById('puzzle-piece').style.transform = \`rotate(\${rotation}deg)\`;
+                document.getElementById('puzzle-piece').style.transform = `rotate(${rotation}deg)`;
                 if(rotation === 0) {
                     document.getElementById('puzzle-piece').style.background = '#2ecc71';
                     setTimeout(() => onComplete(10), 800);
@@ -335,13 +335,13 @@ class AssessmentSystem {
 
         const testConfig = this.tests[this.currentTestIndex];
         
-        this.progressEl.innerText = \`Phase: \${testConfig.type.toUpperCase()}\`;
+        this.progressEl.innerText = `Phase: ${testConfig.type.toUpperCase()}`;
         this.titleEl.innerText = testConfig.title;
         this.instructionEl.innerText = testConfig.instruction;
         
         // Update Progress Bar
         const progressPercent = ((this.currentTestIndex) / this.tests.length) * 100;
-        if(this.progressBar) this.progressBar.style.width = \`\${progressPercent}%\`;
+        if(this.progressBar) this.progressBar.style.width = `${progressPercent}%`;
 
         // Add Enter animation
         this.container.classList.remove('page-exit');
