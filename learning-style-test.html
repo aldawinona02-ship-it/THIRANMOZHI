@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THIRANMOZHI - Assessment</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="app-container">
+
+    <header class="top-nav">
+        <a href="index.html" class="nav-brand"><i class="fa-solid fa-leaf"></i> திறன்மொழி</a>
+        <div id="test-progress" style="font-size: 1.2rem; font-weight: bold; background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 20px;">
+            Activity 1 of 9
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div style="width: 100%; height: 6px; background: rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;">
+        <div id="progress-bar" style="width: 0%; height: 100%; background: var(--primary-purple); transition: width 0.5s ease-out;"></div>
+    </div>
+
+    <main class="main-content">
+        <div class="glass-panel text-center">
+            <h1 id="test-title" class="mb-1" style="color: var(--primary-purple); font-size: 2.5rem;">Loading Test...</h1>
+            <p id="test-instruction" class="instruction-text mb-2"></p>
+            
+            <div id="test-container" class="page-enter" style="min-height: 400px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                <!-- Test content is injected heavily via the tests.js logic file -->
+                <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: var(--text-muted);"></i>
+            </div>
+        </div>
+    </main>
+
+    <!-- Global Logic -->
+    <script src="js/main.js"></script>
+    <script src="js/tests.js"></script>
+</body>
+</html>
