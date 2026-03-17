@@ -5,6 +5,9 @@ class ThiranmozhiApp {
         this.ctx = null;
         this.canvas = null;
 
+        this.engine = new AdaptiveEngine();
+        this.currentLessonPath = [];
+        this.currentLetterIdx = 0;
         this.init();
     }
 
@@ -115,6 +118,46 @@ class ThiranmozhiApp {
         };
     }
 
+    async startLesson() {
+        this.currentLessonPath = this.engine.getPersonalizedPath();
+        this.currentLetterIdx = 0;
+        this.renderCurrentLetter();
+    }
+
+    renderCurrentLetter() {
+        const letterData = this.currentLessonPath[this.currentLetterIdx];
+        if(!letterData) return;
+
+        // Update UI
+        const letterEl = document.getElementById('current-letter');
+        if(letterEl) letterEl.innerText = letterData.l;
+
+        const progressBar = document.getElementById('lesson-progress-bar');
+        if(progressBar) {
+            const percent = ((this.currentLetterIdx + 1) / this.currentLessonPath.length) * 100;
+            progressBar.style.width = `${percent}%`;
+        }
+
+        // Setup Tracing Guide
+        if(this.tracing) {
+            this.tracing.setupGuide(letterData.l);
+            this.tracing.clear();
+        }
+
+        // TTS
+        this.speak(letterData.l);
+    }
+
+    nextLetter() {
+        if(this.currentLetterIdx < this.currentLessonPath.length - 1) {
+            this.currentLetterIdx++;
+            this.renderCurrentLetter();
+        } else {
+            // Lesson Complete
+            alert("Congrats! Lesson completed.");
+            window.location.href = 'dashboard.html';
+        }
+    }
     startDrawing(e) {
         this.isDrawing = true;
         this.ctx.beginPath();

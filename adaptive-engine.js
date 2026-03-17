@@ -22,8 +22,8 @@ const TAMIL_DATA = {
 
 class AdaptiveEngine {
     constructor() {
-        this.style = app.state.dominant_style || 'visual';
-        this.letters = this.generateDataset();
+        this.dataset = this.generateDataset();
+        this.mistakeMatrix = JSON.parse(localStorage.getItem('thiranmozhi_mistakes')) || {};
         this.stages = {
             basic: { uyir: ['அ', 'இ', 'உ', 'எ', 'ஒ'], mei: ['க', 'த', 'ப', 'ந', 'ம'] },
             intermediate: { uyir: ['ஆ', 'ஈ', 'ஊ', 'ஏ', 'ஓ'], mei: ['ச', 'ய', 'ல', 'வ', 'ர'] },

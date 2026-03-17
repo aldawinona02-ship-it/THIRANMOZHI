@@ -73,26 +73,31 @@
         </div>
     </header>
 
-    <main class="main-content page-enter" style="animation-delay: 0.1s;">
-        <div class="glass-panel" style="max-width: 800px; margin: 0 auto;">
+    <main class="main-content container page-enter" style="padding-top: 4rem;">
+        <div class="glass-card" style="max-width: 850px; margin: 0 auto; position: relative; overflow: hidden;">
             
-            <div class="assessment-header text-center">
-                <span id="test-progress" style="font-weight: 800; color: var(--primary-purple); font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase;">Assessment Phase</span>
-                <div class="progress-bar-container mt-1">
-                    <div class="progress-fill" id="progress-bar"></div>
-                </div>
+            <!-- Assessment Header -->
+            <div class="assessment-header text-center mb-2">
+                <div class="badge-new mb-1" id="test-category" style="background: var(--primary-light); color: white;">Visual Activity</div>
+                <h2 id="test-title" class="mb-1" style="font-family: var(--font-tamil); font-size: 2.5rem;">Letter Recognition</h2>
+                <p id="test-instruction" class="section-subtitle" style="font-size: 1.1rem; color: var(--text-muted);">Identify the letter shown below.</p>
             </div>
 
-            <div class="text-center mb-4">
-                <h2 id="test-title" class="mb-1">Loading Assessment...</h2>
-                <p id="test-instruction" style="font-size: 1.3rem; color: #576574; font-weight: 600;" class="instruction-text"></p>
+            <!-- Modern Progress Bar -->
+            <div class="progress-container mb-3" style="background: #E2E8F0; height: 12px; border-radius: var(--radius-pill); overflow: hidden; position: relative;">
+                <div id="progress-bar" style="width: 10%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);"></div>
             </div>
 
-            <!-- Dynamic Test Container injected by tests.js -->
-            <div id="test-container" class="test-area page-enter">
-                <!-- Content goes here -->
+            <!-- Activity Area -->
+            <div id="test-container" class="test-area page-enter" style="min-height: 350px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.02); border-radius: var(--radius-md); padding: 2rem;">
+                <!-- Content injected by tests.js -->
+                <div class="loader"><i class="fa-solid fa-spinner fa-spin"></i> Loading Activity...</div>
             </div>
 
+            <!-- Footer Meta -->
+            <div class="test-footer mt-2 text-center" style="font-size: 0.9rem; color: var(--text-muted); font-weight: 700; opacity: 0.6;">
+                <span id="activity-count">Activity 1 of 9</span>
+            </div>
         </div>
     </main>
 

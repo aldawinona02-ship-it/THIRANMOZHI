@@ -9,11 +9,11 @@ const VAK_TESTS = [
             const startTime = Date.now();
             container.innerHTML = `
                 <div class="text-center">
-                    <h1 style="font-size: 8rem; color: var(--text-main); font-family: var(--font-tamil); margin-bottom: 2rem;">அ</h1>
-                    <div class="grid-3">
-                        <button class="btn btn-secondary" onclick="window.submitV1('அ', true)">அ</button>
-                        <button class="btn btn-secondary" onclick="window.submitV1('இ', false)">இ</button>
-                        <button class="btn btn-secondary" onclick="window.submitV1('உ', false)">உ</button>
+                    <h1 style="font-size: 8rem; color: var(--text-main); font-family: var(--font-tamil); margin-bottom: 2rem; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));">அ</h1>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <button class="btn btn-premium" onclick="window.submitV1('அ', true)">அ</button>
+                        <button class="btn btn-premium" onclick="window.submitV1('இ', false)">இ</button>
+                        <button class="btn btn-premium" onclick="window.submitV1('உ', false)">உ</button>
                     </div>
                 </div>
             `;
@@ -72,19 +72,14 @@ const VAK_TESTS = [
         render: (container, onComplete) => {
             container.innerHTML = `
                 <div class="text-center">
-                    <button class="btn btn-primary btn-large mb-3" onclick="window.playA1()"><i class="fa-solid fa-volume-high"></i> Play Sound</button>
-                    <div class="grid-3">
-                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(10)">க</button>
-                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(0)">ச</button>
-                        <button class="btn btn-secondary" style="font-family: var(--font-tamil); font-size: 2rem;" onclick="onComplete(0)">த</button>
+                    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 2rem;"><i class="fa-solid fa-volume-high"></i></div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <button class="btn btn-premium" onclick="onComplete(10)">ஆ</button>
+                        <button class="btn btn-premium" onclick="onComplete(0)">அ</button>
+                        <button class="btn btn-premium" onclick="onComplete(0)">இ</button>
                     </div>
                 </div>
             `;
-            window.playA1 = () => {
-                const ut = new SpeechSynthesisUtterance("ka");
-                ut.lang = 'ta-IN';
-                speechSynthesis.speak(ut);
-            };
         }
     },
     {
@@ -95,21 +90,14 @@ const VAK_TESTS = [
         render: (container, onComplete) => {
             container.innerHTML = `
                 <div class="text-center">
-                    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 2rem;">
-                        <button class="btn btn-info" onclick="window.playPart(1)">Sound 1 (ல)</button>
-                        <button class="btn btn-info" onclick="window.playPart(2)">Sound 2 (ள)</button>
-                    </div>
-                    <div class="grid-2">
-                        <button class="btn btn-secondary" onclick="onComplete(0)">Same</button>
-                        <button class="btn btn-secondary" onclick="onComplete(10)">Different</button>
+                    <h1 style="font-size: 6rem; font-family: var(--font-tamil); margin-bottom: 2rem;">இ = ?</h1>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <button class="btn btn-premium" onclick="onComplete(10)"><i class="fa-solid fa-leaf"></i></button>
+                        <button class="btn btn-premium" onclick="onComplete(0)"><i class="fa-solid fa-sun"></i></button>
+                        <button class="btn btn-premium" onclick="onComplete(0)"><i class="fa-solid fa-cloud"></i></button>
                     </div>
                 </div>
             `;
-            window.playPart = (num) => {
-                const ut = new SpeechSynthesisUtterance(num === 1 ? "la" : "La");
-                ut.lang = 'ta-IN';
-                speechSynthesis.speak(ut);
-            };
         }
     },
     {
@@ -120,21 +108,14 @@ const VAK_TESTS = [
         render: (container, onComplete) => {
             container.innerHTML = `
                 <div class="text-center">
-                    <h1 style="font-size: 6rem; color: var(--text-main); font-family: var(--font-tamil); margin-bottom: 1rem;">ழ</h1>
-                    <button class="btn btn-error btn-large pulse-cue" id="mic-btn"><i class="fa-solid fa-microphone"></i> Start Speaking</button>
-                    <p id="mic-status" class="mt-1" style="font-weight: 600;">Click to speak</p>
+                    <div style="font-size: 5rem; color: var(--primary); margin-bottom: 2rem;">
+                         <i class="fa-solid fa-microphone-lines"></i>
+                    </div>
+                    <button class="btn btn-primary btn-large" onclick="onComplete(10)">
+                        <i class="fa-solid fa-microphone"></i> Click to Speak "A"
+                    </button>
                 </div>
             `;
-            const btn = document.getElementById('mic-btn');
-            btn.onclick = () => {
-                btn.innerText = "Listening...";
-                btn.style.background = "var(--primary)";
-                // Mock speech recognition if API not available/blocked
-                setTimeout(() => {
-                    app.recordMetric('pronunciation_scores', 90);
-                    onComplete(10);
-                }, 2000);
-            };
         }
     },
 
@@ -192,10 +173,9 @@ const VAK_TESTS = [
         render: (container, onComplete) => {
             container.innerHTML = `
                 <div class="text-center">
-                    <canvas id="test-write-canvas" width="300" height="300" style="border: 4px solid var(--secondary); background: white; border-radius: 20px;"></canvas>
-                    <div class="mt-2">
-                        <button class="btn btn-primary" onclick="window.submitK2()">Finished Writing</button>
-                    </div>
+                    <canvas id="test-write-canvas" width="400" height="300" style="background:white; border: 4px solid var(--glass-border); border-radius: var(--radius-md); cursor: crosshair; margin-bottom: 2rem;"></canvas>
+                    <br>
+                    <button class="btn btn-primary" onclick="window.submitK2()">Finish Writing</button>
                 </div>
             `;
             const canvas = document.getElementById('test-write-canvas');
@@ -235,7 +215,8 @@ class AssessmentSystem {
         this.container = document.getElementById('test-container');
         this.titleEl = document.getElementById('test-title');
         this.instructionEl = document.getElementById('test-instruction');
-        this.progressEl = document.getElementById('test-progress');
+        this.categoryEl = document.getElementById('test-category');
+        this.activityCountEl = document.getElementById('activity-count');
         this.progressBar = document.getElementById('progress-bar');
         
         if(this.container) {
@@ -251,12 +232,14 @@ class AssessmentSystem {
 
         const testConfig = this.tests[this.currentTestIndex];
         
-        this.progressEl.innerText = `Phase: ${testConfig.type.toUpperCase()}`;
+        if(this.categoryEl) this.categoryEl.innerText = `${testConfig.type.toUpperCase()} ACTIVITY`;
+        if(this.activityCountEl) this.activityCountEl.innerText = `Activity ${this.currentTestIndex + 1} of ${this.tests.length}`;
+        
         this.titleEl.innerText = testConfig.title;
         this.instructionEl.innerText = testConfig.instruction;
         
         // Update Progress Bar
-        const progressPercent = ((this.currentTestIndex) / this.tests.length) * 100;
+        const progressPercent = ((this.currentTestIndex + 1) / this.tests.length) * 100;
         if(this.progressBar) this.progressBar.style.width = `${progressPercent}%`;
 
         // Add Enter animation

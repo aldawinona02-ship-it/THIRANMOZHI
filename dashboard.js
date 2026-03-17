@@ -1,5 +1,6 @@
 class DashboardEngine {
     constructor() {
+        this.engine = new AdaptiveEngine();
         this.container = document.getElementById('dashboard-content');
         if(!this.container) return;
         
@@ -13,6 +14,91 @@ class DashboardEngine {
         };
 
         this.render();
+    }
+
+    renderDashboard() {
+        const student = app.state.student;
+        const dominant = app.state.dominant_style;
+        const scores = {
+            v: app.state.score_v,
+            a: app.state.score_a,
+            k: app.state.score_k
+        };
+        
+        // Update Profile Area
+        document.getElementById('dash-name').innerText = `Hello, ${student.name}!`;
+        document.getElementById('dash-age').innerText = `${dominant.charAt(0).toUpperCase() + dominant.slice(1)} Learner | Age ${student.age}`;
+
+        // Render Skills Grid
+        const skillsGrid = document.getElementById('skills-grid');
+        skillsGrid.innerHTML = '';
+        const skills = [
+            { name: 'Visual Recognition', score: scores.v || 0, icon: 'fa-eye', color: 'var(--primary)' },
+            { name: 'Phonic Strength', score: scores.a || 0, icon: 'fa-ear-listen', color: 'var(--secondary)' },
+            { name: 'Motor Coordination', score: scores.k || 0, icon: 'fa-hand-pointer', color: 'var(--accent)' },
+            { name: 'Memory', score: Math.round((scores.v + scores.a) / 1.5) || 0, icon: 'fa-brain', color: 'var(--info)' }
+        ];
+
+        skills.forEach(skill => {
+            skillsGrid.innerHTML += `
+                <div class="skill-card" style="background: rgba(255,255,255,0.8); padding: 1.25rem; border-radius: var(--radius-md); border-bottom: 4px solid ${skill.color};">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <i class="fa-solid ${skill.icon}" style="color: ${skill.color};"></i>
+                        <span style="font-weight: 800; font-size: 0.9rem;">${skill.score}%</span>
+                    </div>
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">${skill.name}</div>
+                    <div class="progress-mini" style="height: 6px; background: #e2e8f0; border-radius: 10px; margin-top: 0.5rem; overflow: hidden;">
+                        <div style="width: ${skill.score}%; height: 100%; background: ${skill.color};"></div>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Render Achievements
+        const achievementsGrid = document.getElementById('achievements-grid');
+        achievementsGrid.innerHTML = '';
+        const badges = [
+            { name: 'First Step', icon: 'fa-shoe-prints', unlocked: true },
+            { name: 'Tamil Scholar', icon: 'fa-book-open', unlocked: scores.v > 80 },
+            { name: 'Master Tracer', icon: 'fa-feather-pointed', unlocked: scores.k > 80 },
+            { name: 'Sound Seeker', icon: 'fa-music', unlocked: scores.a > 80 }
+        ];
+
+        badges.forEach(badge => {
+            achievementsGrid.innerHTML += `
+                <div class="achievement-badge text-center" style="opacity: ${badge.unlocked ? 1 : 0.3}; filter: ${badge.unlocked ? 'none' : 'grayscale(1)'}">
+                    <div style="font-size: 2rem; color: var(--warning); margin-bottom: 0.5rem;"><i class="fa-solid ${badge.icon}"></i></div>
+                    <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">${badge.name}</div>
+                </div>
+            `;
+        });
+
+        // Focus Area (Weak Letters) logic
+        const focusArea = document.getElementById('focus-area-content');
+        const weakLetters = this.engine.getWeakLetters();
+        
+        if (weakLetters.length > 0) {
+            focusArea.innerHTML = `
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Let's work on these specific letters today:</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    ${weakLetters.map(l => `<span style="width: 45px; height: 45px; background: var(--error); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-family: var(--font-tamil); font-weight: 800; box-shadow: 0 4px 0 #b91c1c;">${l}</span>`).join('')}
+                </div>
+            `;
+        } else {
+            focusArea.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted);">Mastering everything! Keep practicing to find new challenges.</p>`;
+        }
+
+        // AI Coaching Advice
+        const aiReco = document.getElementById('ai-reco');
+        if (weakLetters.length > 0) {
+            aiReco.innerText = `You're having a little trouble with "${weakLetters[0]}". Don't worry, even scholars take time! Try to trace it 5 times today.`;
+        } else if (dominant === 'visual') {
+            aiReco.innerText = "Focus on the shape of the letters. Try drawing them in the air before you trace!";
+        } else if (dominant === 'auditory') {
+            aiReco.innerText = "Listen closely to the letter sounds. Speak them out loud as you trace them!";
+        } else {
+            aiReco.innerText = "Keep your hand moving! Physical practice is your superpower.";
+        }
     }
 
     render() {

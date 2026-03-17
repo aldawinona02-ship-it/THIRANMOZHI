@@ -10,19 +10,15 @@
         href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 
     <style>
-        :root {
-            --primary: #4361ee;
-            --primary-light: #4895ef;
-            --secondary: #7209b7;
-            --accent: #f72585;
-            --info: #4cc9f0;
-            --surface: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --text-main: #2b2d42;
-            --text-muted: #6c757d;
-            --font-tamil: 'Baloo Thambi 2', cursive;
+        /* Landing Page specifics */
+        body {
+            overflow: hidden;
+            background: radial-gradient(circle at top left, var(--primary) -20%, transparent 40%),
+                        radial-gradient(circle at bottom right, var(--secondary) -20%, transparent 40%),
+                        var(--bg-color);
         }
 
         * {
@@ -33,39 +29,7 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(247, 37, 133, 0.1) 0%, transparent 40%),
-                #f8f9fa;
-            color: var(--text-main);
-            overflow: hidden;
             height: 100vh;
-        }
-
-        /* --- Animations --- */
-        @keyframes float {
-            0% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-15px) rotate(2deg);
-            }
-
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-        }
-
-        @keyframes swing {
-            0% {
-                transform: rotate(-3deg);
-                transform-origin: top center;
-            }
-
-            100% {
-                transform: rotate(3deg);
-                transform-origin: top center;
-            }
         }
 
         /* --- Hanging Letters --- */
@@ -98,6 +62,11 @@
             margin-bottom: -10px;
         }
 
+        @keyframes swing {
+            0% { transform: rotate(-3deg); transform-origin: top center; }
+            100% { transform: rotate(3deg); transform-origin: top center; }
+        }
+
         /* --- Main Content --- */
         .landing-content {
             position: relative;
@@ -124,83 +93,16 @@
 
         .main-title {
             font-family: var(--font-tamil);
-            font-size: clamp(4rem, 15vw, 8rem);
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            font-size: 7.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--info));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-subtitle {
-            font-size: clamp(1rem, 4vw, 1.4rem);
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* --- Buttons --- */
-        .cta-group {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        /* --- Features --- */
-        .features-preview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-
-        .feature-item i {
-            font-size: 1.5rem;
+            line-height: 1.1;
             margin-bottom: 1rem;
-            display: block;
-            color: var(--primary);
+            filter: drop-shadow(0 8px 12px rgba(67, 97, 238, 0.3));
         }
 
-        .feature-item h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* --- Logic States --- */
         .antigravity-active {
             transition: all 1s ease-in;
             transform: translateY(-100vh);
@@ -210,7 +112,6 @@
 </head>
 
 <body>
-
     <div class="hanging-letters-container">
         <div class="hanging-letter" style="color: var(--info); animation-delay: 0s;">அ</div>
         <div class="hanging-letter" style="color: var(--secondary); animation-delay: 0.2s;">ஆ</div>
@@ -219,60 +120,77 @@
         <div class="hanging-letter" style="color: var(--info); animation-delay: 0.8s;">உ</div>
     </div>
 
-    <main class="landing-content" id="landing-main">
-        <div class="glass-card">
-            <span
-                style="background: #e0e7ff; color: #4361ee; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 900; letter-spacing: 1px;">AI-POWERED
-                TAMIL LEARNING</span>
-
-            <h1 class="main-title">திறன்மொழி</h1>
-            <p class="section-subtitle">A personalized journey to master Tamil through play, practice, and adaptive AI.
-            </p>
-
-            <div class="cta-group">
-                <button class="btn btn-primary" id="start-btn">
-                    <i class="fa-solid fa-rocket"></i> Get Started
-                </button>
-                <button class="btn btn-secondary" onclick="window.location.href='pre-test.html'">
-                    <i class="fa-solid fa-vial"></i> Quick Check
-                </button>
+    <main class="landing-content page-enter" id="landing-main">
+        <div class="container">
+            <div class="hero-section glass-card hover-float" style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <div class="badge-new mb-1" style="display: inline-block; padding: 0.5rem 1.25rem; background: var(--accent); color: var(--text-main); border-radius: var(--radius-pill); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem;">AI-Powered Experience</div>
+                <h1 class="main-title">திறன்மொழி</h1>
+                <p class="section-subtitle mb-2" style="font-size: 1.4rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Personalized Tamil learning for every child. Adaptive. Interactive. Fun.
+                </p>
+                
+                <div class="cta-group" style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" id="start-btn">
+                        <i class="fa-solid fa-graduation-cap"></i> Start Learning
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.location.href='pre-test.html'">
+                        <i class="fa-solid fa-vial"></i> Take Assessment
+                    </button>
+                </div>
             </div>
 
-            <div class="features-preview">
-                <div class="feature-item">
-                    <i class="fa-solid fa-brain"></i>
-                    <h4>Smart Learning</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Adapts to your speed</p>
+            <div class="features-preview mt-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 4rem;">
+                <div class="feature-item text-center">
+                    <div class="card-icon" style="background: var(--primary-light); color: white; margin: 0 auto 1rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h4>Adaptive AI</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Matches your child's unique learning style.</p>
                 </div>
-                <div class="feature-item">
-                    <i class="fa-solid fa-star"></i>
-                    <h4>Fun Games</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Earn points as you go</p>
+                <div class="feature-item text-center">
+                    <div class="card-icon" style="background: var(--secondary); color: white; margin: 0 auto 1rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h4>Tracing Practice</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Engaging stroke-by-stroke guidance.</p>
                 </div>
-                <div class="feature-item">
-                    <i class="fa-solid fa-child"></i>
-                    <h4>Kid Safe</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Built for early learners</p>
+                <div class="feature-item text-center">
+                    <div class="card-icon" style="background: var(--accent); color: white; margin: 0 auto 1rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h4>Progress Tracking</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Detailed analytics for teachers & parents.</p>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Global Logic -->
+    <script src="main.js"></script>
+    <script src="particles.js"></script>
     <script>
         // Start Button Logic
         document.getElementById('start-btn').addEventListener('click', function () {
             const mainContent = document.getElementById('landing-main');
-
-            // Add the "flying away" effect
             mainContent.classList.add('antigravity-active');
 
-            // Wait for animation to finish then redirect
             setTimeout(() => {
-                // Change this to your actual next page
-                window.location.href = 'student-info.html';
-            }, 800);
+                const mainEl = document.getElementById('landing-main');
+                if (mainEl) mainEl.classList.replace('page-enter', 'page-exit');
+                
+                setTimeout(() => {
+                    if(app.state.student) {
+                        if(app.state.dominant_style && app.state.dominant_style !== 'unassessed') {
+                            window.location.href = 'learning.html';
+                        } else {
+                            window.location.href = 'dashboard.html';
+                        }
+                    } else {
+                        window.location.href = 'student-info.html';
+                    }
+                }, 400);
+            }, 1000);
         });
     </script>
 </body>
-
 </html>

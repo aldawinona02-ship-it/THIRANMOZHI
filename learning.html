@@ -48,32 +48,61 @@
 </head>
 <body class="app-container">
 
-    <header class="top-nav">
-        <a href="index.html" class="nav-brand"><i class="fa-solid fa-leaf"></i> திறன்மொழி</a>
-        <div style="display: flex; gap: 15px; align-items:center;">
-            <div class="user-badge" id="adaptive-badge" style="background: var(--info); color: white;">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="mode-text">Adaptive Mode</span>
-            </div>
-            <button class="btn btn-secondary btn-small" onclick="window.location.href='dashboard.html'">Dashboard</button>
+    <header class="top-nav container" style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0;">
+        <a href="dashboard.html" class="nav-brand" style="font-family: var(--font-ui); font-weight: 800; color: var(--text-muted);"><i class="fa-solid fa-chevron-left"></i> Exit Lesson</a>
+        
+        <div class="lesson-progress-container" style="flex-grow: 1; margin: 0 3rem; background: #E2E8F0; height: 12px; border-radius: 10px; overflow: hidden;">
+            <div id="lesson-progress-bar" style="width: 25%; height: 100%; background: var(--success); transition: width 0.4s ease;"></div>
+        </div>
+
+        <div class="user-stats" style="display: flex; gap: 1rem; align-items: center;">
+            <div style="color: var(--secondary); font-weight: 800;"><i class="fa-solid fa-heart"></i> 5</div>
+            <div style="color: var(--warning); font-weight: 800;"><i class="fa-solid fa-fire"></i> 2</div>
         </div>
     </header>
 
-    <main class="main-content page-enter" style="animation-delay: 0.1s;">
-        <div class="text-center mb-2">
-            <h1>Choose a Letter to Learn!</h1>
-            <p>Pick any letter block below to start practicing.</p>
+    <main class="main-content container page-enter" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh;">
+        
+        <div class="lesson-card glass-card text-center" style="width: 100%; max-width: 900px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; align-items: center;">
+            
+            <!-- Left Side: Letter & Sound -->
+            <div class="letter-display" style="padding: 2rem; background: rgba(0,0,0,0.03); border-radius: var(--radius-md);">
+                <div id="current-letter" style="font-size: 10rem; font-family: var(--font-tamil); margin-bottom: 2rem; color: var(--text-main); font-weight: 800;">அ</div>
+                <button class="btn btn-premium" id="play-sound-btn" style="width: 100%; font-size: 1.2rem; background: var(--primary);">
+                    <i class="fa-solid fa-volume-high"></i> Listen
+                </button>
+            </div>
+
+            <!-- Right Side: Tracing Canvas -->
+            <div class="tracing-interaction">
+                <div class="canvas-header mb-1" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h4 style="font-weight: 800;">Practice Tracing</h4>
+                    <span class="badge-new" id="accuracy-badge" style="display:none; font-size: 0.7rem;">98% Match</span>
+                </div>
+                
+                <div class="canvas-wrapper" style="position: relative; background: white; border: 4px solid var(--glass-border); border-radius: var(--radius-md); overflow: hidden;">
+                    <canvas id="guideCanvas" width="400" height="400" style="position: absolute; top:0; left:0; width: 100%; height: 100%; opacity: 0.1;"></canvas>
+                    <canvas id="tracingCanvas" width="400" height="400" style="width: 100%; height: 400px; cursor: crosshair;"></canvas>
+                </div>
+
+                <div class="canvas-footer mt-1" style="display: flex; gap: 1rem;">
+                    <button class="btn btn-secondary" id="clear-btn" style="flex: 1; font-size: 0.9rem;">Clear</button>
+                    <button class="btn btn-accent" id="hint-btn" style="flex: 1; font-size: 0.9rem;">Show Hint</button>
+                </div>
+            </div>
         </div>
 
-        <div class="grid-3" id="letter-gallery">
-            <!-- Adaptive Content rendered here via adaptive-engine.js -->
+        <!-- Lesson Navigation -->
+        <div class="lesson-navigation mt-3" style="width: 100%; max-width: 900px; display: flex; justify-content: space-between;">
+            <button class="btn btn-secondary" id="prev-btn" style="padding: 1rem 3rem;"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+            <div id="trace-feedback" style="font-weight: 800; color: var(--text-muted); padding-top: 1rem;">Trace carefully!</div>
+            <button class="btn btn-green" id="next-btn" style="padding: 1rem 4rem;">Continue <i class="fa-solid fa-arrow-right"></i></button>
         </div>
-
     </main>
 
     <script src="main.js"></script>
     <script src="audio.js"></script>
     <script src="adaptive-engine.js"></script>
-    <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Update Adaptive Badge
             const style = app.state.dominant_style;

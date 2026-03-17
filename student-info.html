@@ -90,26 +90,27 @@
 </head>
 <body class="app-container">
 
-    <main class="onboarding-container">
-        <div class="glass-panel text-center">
+    <main class="onboarding-container container">
+        <div class="glass-card text-center" style="max-width: 650px; margin: 0 auto;">
+            <div class="step-indicator mb-1" style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Step 1 of 2</div>
             <h1 class="welcome-title">வணக்கம்!</h1>
-            <p class="mb-3" style="font-size: 1.2rem; color: var(--text-muted); font-weight: 600;">Welcome to ThiranMozhi. Let's get to know you!</p>
+            <p class="mb-2" style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600;">Welcome to THIRANMOZHI. Let's create your learning profile.</p>
 
-            <form id="studentForm" class="mt-2 text-left">
-                <div class="input-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="input-control" placeholder="Enter student name" required>
+            <form id="studentForm" class="text-left" style="background: rgba(255,255,255,0.5); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
+                <div class="input-group mb-1">
+                    <label for="name">Student Name</label>
+                    <input type="text" id="name" class="input-control" placeholder="e.g. Rahul" required style="border: 2px solid #E2E8F0; padding: 1rem; border-radius: var(--radius-sm); width: 100%;">
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;" class="mb-1">
                     <div class="input-group">
                         <label for="age">Age</label>
-                        <input type="number" id="age" class="input-control" min="4" max="18" placeholder="Age" required>
+                        <input type="number" id="age" class="input-control" min="4" max="18" placeholder="Age" required style="border: 2px solid #E2E8F0; padding: 1rem; border-radius: var(--radius-sm); width: 100%;">
                     </div>
                     <div class="input-group">
                         <label for="gender">Gender</label>
-                        <select id="gender" class="input-control" required>
-                            <option value="">Select Gender</option>
+                        <select id="gender" class="input-control" required style="border: 2px solid #E2E8F0; padding: 1rem; border-radius: var(--radius-sm); width: 100%;">
+                            <option value="">Select</option>
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>
@@ -117,20 +118,9 @@
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <div class="input-group">
-                        <label for="phone">Phone (Optional)</label>
-                        <input type="tel" id="phone" class="input-control" placeholder="Contact number">
-                    </div>
-                    <div class="input-group">
-                        <label for="email">Email (Optional)</label>
-                        <input type="email" id="email" class="input-control" placeholder="Email address">
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label for="disorder">Support Needs (Optional)</label>
-                    <select id="disorder" class="input-control">
+                <div class="input-group mb-2">
+                    <label for="disorder">Learning Support (Optional)</label>
+                    <select id="disorder" class="input-control" style="border: 2px solid #E2E8F0; padding: 1rem; border-radius: var(--radius-sm); width: 100%;">
                         <option>None</option>
                         <option>Autism Spectrum Disorder</option>
                         <option>Intellectual Developmental Disorder</option>
@@ -138,9 +128,9 @@
                     </select>
                 </div>
 
-                <div class="text-center mt-3">
-                    <button type="submit" class="btn-submit">
-                        Let's Begin <i class="fa-solid fa-sparkles"></i>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1.25rem;">
+                        Continue to Assessment <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
             </form>

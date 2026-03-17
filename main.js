@@ -25,7 +25,7 @@ const app = {
 
     initStore() {
         try {
-            const studentStr = localStorage.getItem('thiranmozhi_student') || localStorage.getItem('tm_student');
+            const studentStr = localStorage.getItem('thiranmozhi_student');
             if(studentStr && studentStr !== 'undefined') {
                 this.state.student = JSON.parse(studentStr);
             }
@@ -38,32 +38,42 @@ const app = {
             if(progressStr && progressStr !== 'undefined') {
                 this.state.progress = JSON.parse(progressStr);
             }
-
-            // Auto-login and Redirection logic
-            const isTestPage = window.location.pathname.endsWith('test.html') || 
-                               window.location.pathname.endsWith('pre-test.html') ||
-                               window.location.pathname.endsWith('learning-style-test.html');
-            const isInfoPage = window.location.pathname.endsWith('student-info.html');
-            const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
-
-            if(this.state.student) {
-                // Already have a student profile
-                const isAssessed = this.state.dominant_style && this.state.dominant_style !== 'unassessed';
-
-                if(isAssessed) {
-                    // Prevent being trapped in test pages if already finished
-                    if(isTestPage || isInfoPage) {
-                        this.navigate('learning.html');
-                    }
-                } else {
-                    // Have profile but not assessed - allow test but skip info
-                    if(isInfoPage) {
-                        this.navigate('dashboard.html');
-                    }
-                }
-            }
+            
+            this.autoLogin();
         } catch(e) {
-            console.warn("LocalStorage access restricted by browser settings. State will reset on reload.");
+            console.warn("State initialization error:", e);
+        }
+    },
+
+    autoLogin() {
+        // Strict Navigation Flow Enforcement
+        const path = window.location.pathname;
+        const isLanding = path.endsWith('index.html') || path === '/' || path.endsWith('THIRANMOZHI/');
+        const isInfo = path.includes('student-info.html');
+        const isTest = path.includes('test.html') || path.includes('pre-test.html');
+        const isResult = path.includes('result.html');
+        const isDash = path.includes('dashboard.html');
+        const isLearn = path.includes('learning.html');
+
+        const hasProfile = !!this.state.student;
+        const hasAssessed = this.state.dominant_style && this.state.dominant_style !== 'unassessed';
+
+        // 1. No Profile? Send to Info (if not already there or on landing)
+        if (!hasProfile && !isInfo && !isLanding) {
+            this.navigate('student-info.html');
+            return;
+        }
+
+        // 2. Profile exists but not assessed? Send to assessment if trying to skip
+        if (hasProfile && !hasAssessed && (isDash || isLearn)) {
+            this.navigate('pre-test.html');
+            return;
+        }
+
+        // 3. Already assessed? Prevent assessment loop
+        if (hasProfile && hasAssessed && isTest) {
+            this.navigate('dashboard.html');
+            return;
         }
     },
 
