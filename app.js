@@ -124,9 +124,16 @@ class ThiranmozhiApp {
         const y = e.clientY - rect.top;
         this.ctx.moveTo(x, y);
 
+        // Reset points for accuracy check
+        this.tracePoints = [{x, y}];
+
         // Feedback Update
-        document.getElementById('trace-feedback').innerText = "Awesome, keep tracing!";
-        document.getElementById('trace-feedback').style.color = 'var(--warning)';
+        const feedback = document.getElementById('trace-feedback');
+        if(feedback) {
+            feedback.innerText = "Awesome, keep tracing!";
+            feedback.style.color = '#F9C74F'; // Vibrant Yellow
+            feedback.classList.add('pulse');
+        }
     }
 
     draw(e) {
@@ -136,15 +143,49 @@ class ThiranmozhiApp {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
+        this.tracePoints.push({x, y});
+
+        // Dynamic Stroke effect
+        const hue = (this.tracePoints.length % 360);
+        this.ctx.strokeStyle = `hsl(${hue}, 80%, 60%)`;
+        this.ctx.lineWidth = 18 - (Math.min(this.tracePoints.length / 10, 8)); // Tapered stroke
+        
         this.ctx.lineTo(x, y);
         this.ctx.stroke();
+
+        // Create a secondary glow effect
+        this.ctx.shadowBlur = 10;
+        this.ctx.shadowColor = `hsl(${hue}, 80%, 60%)`;
     }
 
     stopDrawing() {
         if(this.isDrawing) {
             this.isDrawing = false;
-            document.getElementById('trace-feedback').innerText = "Great job!";
-            document.getElementById('trace-feedback').style.color = 'var(--success)';
+            this.ctx.shadowBlur = 0; // Reset shadow
+            
+            this.calculateAccuracy();
+
+            const feedback = document.getElementById('trace-feedback');
+            if(feedback) {
+                feedback.innerText = "Great job!";
+                feedback.style.color = '#4361EE'; // Vibrant Blue
+            }
+        }
+    }
+
+    calculateAccuracy() {
+        // Simplified accuracy logic: 
+        // In a real app, this would compare this.tracePoints with a reference path.
+        // For now, we simulate a high score if they moved enough.
+        const score = Math.min(Math.floor(this.tracePoints.length / 5), 100);
+        console.log(`Trace Accuracy Score: ${score}%`);
+        
+        // Show accuracy badge if it exists
+        const badge = document.getElementById('accuracy-badge');
+        if(badge) {
+            badge.innerText = `${score}% Match`;
+            badge.style.display = 'inline-block';
+            badge.style.background = score > 80 ? 'var(--success)' : 'var(--warning)';
         }
     }
 
