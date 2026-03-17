@@ -1,4 +1,3 @@
-[walkthrough.md](https://github.com/user-attachments/files/26042468/walkthrough.md)
 # Thiranmozhi AI & UI Overhaul Walkthrough
 
 The Thiranmozhi application has been transformed into a premium, AI-driven adaptive learning platform for Tamil.
