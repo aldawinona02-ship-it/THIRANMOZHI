@@ -1,37 +1,37 @@
 :root {
-  /* Subtle Pastel Palette */
-  --primary: #BDE0FE;     /* Pastel Blue */
-  --secondary: #FFC8DD;   /* Pastel Pink */
-  --accent: #CAFFBF;      /* Pastel Green */
-  --info: #CDB4DB;        /* Pastel Purple */
-  --success: #B9FBC0;     /* Mint Pastel */
-  --warning: #FDFFB6;     /* Lemon Pastel */
-  --error: #FFADAD;       /* Coral Pastel */
+  /* Vibrant & Motivating Palette */
+  --primary: #4361EE;     /* Strong Royal Blue */
+  --secondary: #F72585;   /* Radiant Neon Pink */
+  --accent: #4CC9F0;      /* Bright Cyan */
+  --info: #7209B7;        /* Deep Purple */
+  --success: #4895EF;     /* Sky Blue */
+  --warning: #F9C74F;     /* Golden Yellow */
+  --error: #F94144;       /* Vivid Red */
   
   /* Backgrounds & Surfaces */
-  --bg-color: #FBFDFF;
+  --bg-color: #F8F9FA;
   --surface: #FFFFFF;
-  --glass-bg: rgba(255, 255, 255, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.9); /* Increased opacity for readability */
+  --glass-border: rgba(255, 255, 255, 0.6);
   
-  /* Text Colors - softer than pure black */
-  --text-main: #3D4451;
-  --text-muted: #8E9AAF;
+  /* Text Colors - High Contrast */
+  --text-main: #2B2D42;
+  --text-muted: #4A4E69;
   --text-light: #FFFFFF;
   
-  /* Shadows - softer and more diffused */
-  --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
-  --shadow-md: 0 12px 24px rgba(0,0,0,0.05);
-  --shadow-lg: 0 24px 48px rgba(0,0,0,0.08);
-  --shadow-glass: 0 8px 32px 0 rgba(189, 224, 254, 0.15);
+  /* Shadows - Defined and Crisp */
+  --shadow-sm: 0 4px 12px rgba(67, 97, 238, 0.1);
+  --shadow-md: 0 12px 24px rgba(67, 97, 238, 0.15);
+  --shadow-lg: 0 24px 48px rgba(67, 97, 238, 0.2);
+  --shadow-glass: 0 8px 32px 0 rgba(67, 97, 238, 0.1);
 
   /* Typography */
   --font-ui: 'Nunito', sans-serif;
   --font-tamil: 'Baloo Thambi 2', cursive;
   
-  /* Rounded Corners - slightly more organic */
-  --radius-md: 20px;
-  --radius-lg: 32px;
+  /* Rounded Corners */
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-pill: 100px;
 }
 
