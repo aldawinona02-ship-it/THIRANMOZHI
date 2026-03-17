@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="css/animations.css">
     <style>
         body {
-            background: radial-gradient(circle at top right, var(--primary) 0%, transparent 40%),
-                        radial-gradient(circle at bottom left, var(--secondary) 0%, transparent 40%),
-                        #f8f9fa;
+            background: radial-gradient(circle at top right, var(--primary) -20%, transparent 40%),
+                        radial-gradient(circle at bottom left, var(--secondary) -20%, transparent 40%),
+                        var(--bg-color);
             overflow-x: hidden;
             height: auto;
             min-height: 100vh;
@@ -25,9 +25,9 @@
             min-height: 100vh;
         }
         .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-lg);
             border-radius: var(--radius-lg);
             padding: 4rem;
