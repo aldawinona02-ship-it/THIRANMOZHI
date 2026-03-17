@@ -6,7 +6,7 @@ class DashboardEngine {
         this.student = app.state.student;
         this.progress = app.state.progress;
         this.style = app.state.dominant_style;
-        this.scores =     {
+        this.scores = {
             v: app.state.score_v,
             a: app.state.score_a,
             k: app.state.score_k
