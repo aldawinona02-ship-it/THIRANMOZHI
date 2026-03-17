@@ -81,7 +81,7 @@ class TracingEngine {
         const x = this.guideCanvas.width / 2;
         const y = this.guideCanvas.height / 2;
 
-        // Draw light grey guide
+        // Draw light grey guide                        
         this.guideCtx.fillStyle = '#e0e0e0';
         this.guideCtx.fillText(text, x, y);
 
@@ -104,7 +104,7 @@ class TracingEngine {
         this.setupStroke();
         
         const rect = this.canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
+        const x = e.clientX - rect.left;                                
         const y = e.clientY - rect.top;
         this.ctx.moveTo(x, y);
         this.drawnPoints.push({x, y});
