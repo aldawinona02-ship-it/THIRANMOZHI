@@ -1,4 +1,3 @@
-[task.md](https://github.com/user-attachments/files/26042464/task.md)
 # Thiranmozhi Overhaul & AI Upgrade Task List
 
 - [x] Initial UI/UX Overhaul (Pastel Theme)
