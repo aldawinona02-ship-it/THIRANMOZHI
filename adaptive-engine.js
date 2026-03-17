@@ -1,22 +1,22 @@
 const TAMIL_DATA = {
     uyir: [
-        { l: 'அ', v: 'Easy', w: 'Easy', p: 'Easy' }, { l: 'ஆ', v: 'Easy', w: 'Easy', p: 'Easy' },
-        { l: 'இ', v: 'Easy', w: 'Easy', p: 'Easy' }, { l: 'ஈ', v: 'Easy', w: 'Easy', p: 'Medium' },
-        { l: 'உ', v: 'Easy', w: 'Easy', p: 'Easy' }, { l: 'ஊ', v: 'Medium', w: 'Medium', p: 'Medium' },
-        { l: 'எ', v: 'Easy', w: 'Easy', p: 'Easy' }, { l: 'ஏ', v: 'Medium', w: 'Medium', p: 'Medium' },
-        { l: 'ஐ', v: 'Hard', w: 'Hard', p: 'Hard' }, { l: 'ஒ', v: 'Easy', w: 'Medium', p: 'Easy' },
-        { l: 'ஓ', v: 'Medium', w: 'Medium', p: 'Medium' }, { l: 'ஔ', v: 'Hard', w: 'Hard', p: 'Hard' }
+        { l: 'அ', v: 'Easy', w: 'Easy', p: 'Easy', sound: 'a' }, { l: 'ஆ', v: 'Easy', w: 'Easy', p: 'Easy', sound: 'aa' },
+        { l: 'இ', v: 'Easy', w: 'Easy', p: 'Easy', sound: 'i' }, { l: 'ஈ', v: 'Easy', w: 'Easy', p: 'Medium', sound: 'ee' },
+        { l: 'உ', v: 'Easy', w: 'Easy', p: 'Easy', sound: 'u' }, { l: 'ஊ', v: 'Medium', w: 'Medium', p: 'Medium', sound: 'oo' },
+        { l: 'எ', v: 'Easy', w: 'Easy', p: 'Easy', sound: 'e' }, { l: 'ஏ', v: 'Medium', w: 'Medium', p: 'Medium', sound: 'ae' },
+        { l: 'ஐ', v: 'Hard', w: 'Hard', p: 'Hard', sound: 'ai' }, { l: 'ஒ', v: 'Easy', w: 'Medium', p: 'Easy', sound: 'o' },
+        { l: 'ஓ', v: 'Medium', w: 'Medium', p: 'Medium', sound: 'oh' }, { l: 'ஔ', v: 'Hard', w: 'Hard', p: 'Hard', sound: 'au' }
     ],
     mei: [
-        { l: 'க', v: 'Easy', w: 'Easy', p: 'Medium' }, { l: 'ங', v: 'Hard', w: 'Medium', p: 'Hard' },
-        { l: 'ச', v: 'Medium', w: 'Medium', p: 'Medium' }, { l: 'ஞ', v: 'Hard', w: 'Medium', p: 'Hard' },
-        { l: 'ட', v: 'Medium', w: 'Medium', p: 'Medium' }, { l: 'ண', v: 'Hard', w: 'Medium', p: 'Hard' },
-        { l: 'த', v: 'Easy', w: 'Easy', p: 'Medium' }, { l: 'ந', v: 'Easy', w: 'Easy', p: 'Easy' },
-        { l: 'ப', v: 'Easy', w: 'Easy', p: 'Medium' }, { l: 'ம', v: 'Easy', w: 'Easy', p: 'Easy' },
-        { l: 'ய', v: 'Medium', w: 'Medium', p: 'Easy' }, { l: 'ர', v: 'Medium', w: 'Medium', p: 'Medium' },
-        { l: 'ல', v: 'Medium', w: 'Medium', p: 'Easy' }, { l: 'வ', v: 'Medium', w: 'Medium', p: 'Easy' },
-        { l: 'ழ', v: 'Hard', w: 'Hard', p: 'Hard' }, { l: 'ள', v: 'Hard', w: 'Medium', p: 'Hard' },
-        { l: 'ற', v: 'Medium', w: 'Hard', p: 'Hard' }, { l: 'ன', v: 'Medium', w: 'Medium', p: 'Medium' }
+        { l: 'க்', v: 'Easy', w: 'Easy', p: 'Medium', base: 'க', sound: 'ik' }, { l: 'ங்', v: 'Hard', w: 'Medium', p: 'Hard', base: 'ங', sound: 'ing' },
+        { l: 'ச்', v: 'Medium', w: 'Medium', p: 'Medium', base: 'ச', sound: 'ich' }, { l: 'ஞ்', v: 'Hard', w: 'Medium', p: 'Hard', base: 'ஞ', sound: 'inj' },
+        { l: 'ட்', v: 'Medium', w: 'Medium', p: 'Medium', base: 'ட', sound: 'it' }, { l: 'ண்', v: 'Hard', w: 'Medium', p: 'Hard', base: 'ண', sound: 'inn' },
+        { l: 'த்', v: 'Easy', w: 'Easy', p: 'Medium', base: 'த', sound: 'ith' }, { l: 'ந்', v: 'Easy', w: 'Easy', p: 'Easy', base: 'ந', sound: 'in' },
+        { l: 'ப்', v: 'Easy', w: 'Easy', p: 'Medium', base: 'ப', sound: 'ip' }, { l: 'ம்', v: 'Easy', w: 'Easy', p: 'Easy', base: 'ம', sound: 'im' },
+        { l: 'ய்', v: 'Medium', w: 'Medium', p: 'Easy', base: 'ய', sound: 'iy' }, { l: 'ர்', v: 'Medium', w: 'Medium', p: 'Medium', base: 'ர', sound: 'ir' },
+        { l: 'ல்', v: 'Medium', w: 'Medium', p: 'Easy', base: 'ல', sound: 'il' }, { l: 'வ்', v: 'Medium', w: 'Medium', p: 'Easy', base: 'வ', sound: 'iv' },
+        { l: 'ழ்', v: 'Hard', w: 'Hard', p: 'Hard', base: 'ழ', sound: 'izhl' }, { l: 'ள்', v: 'Hard', w: 'Medium', p: 'Hard', base: 'ள', sound: 'ill' },
+        { l: 'ற்', v: 'Medium', w: 'Hard', p: 'Hard', base: 'ற', sound: 'itr' }, { l: 'ன்', v: 'Medium', w: 'Medium', p: 'Medium', base: 'ன', sound: 'in2' }
     ]
 };
 
@@ -35,14 +35,25 @@ class AdaptiveEngine {
         let all = [];
         // Add Uyir
         TAMIL_DATA.uyir.forEach(l => all.push({ ...l, type: 'uyir', id: 'u-' + l.l }));
-        // Add Mei
+        // Add Mei (with pulli)
         TAMIL_DATA.mei.forEach(l => all.push({ ...l, type: 'mei', id: 'm-' + l.l }));
-        // Generate Uyirmei logic (216)
+        
+        // Proper Uyirmei generation logic
+        const uyir_suffix_map = {
+            'அ': '', 'ஆ': 'ா', 'இ': 'ி', 'ஈ': 'ீ', 'உ': 'ு', 'ஊ': 'ூ',
+            'எ': 'ெ', 'ஏ': 'ே', 'ஐ': 'ை', 'ஒ': 'ொ', 'ஓ': 'ோ', 'ஔ': 'ௌ'
+        };
+
         TAMIL_DATA.mei.forEach(m => {
+            const base = m.base;
             TAMIL_DATA.uyir.forEach(u => {
-                // Simplified result generation for logic
+                let char;
+                // Special cases for U and UU vowel markers are complex in Tamil, 
+                // but standard unicode handles most via combining marks.
+                char = base + uyir_suffix_map[u.l];
+                
                 all.push({ 
-                    l: m.l + u.l, // This is a placeholder for combined character
+                    l: char,
                     type: 'uyirmei', 
                     base_mei: m.l, 
                     uyir: u.l, 
