@@ -39,13 +39,28 @@ const app = {
                 this.state.progress = JSON.parse(progressStr);
             }
 
-            // Auto-login logic
-            if(this.state.student && window.location.pathname.endsWith('student-info.html')) {
-                this.navigate('dashboard.html');
-            }
-            if(this.state.student && window.location.pathname.endsWith('index.html')) {
-                // If they are on home but already logged in, we could redirect to dashboard 
-                // but usually home is first. Let's make "Let's Learn" skip to dashboard.
+            // Auto-login and Redirection logic
+            const isTestPage = window.location.pathname.endsWith('test.html') || 
+                               window.location.pathname.endsWith('pre-test.html') ||
+                               window.location.pathname.endsWith('learning-style-test.html');
+            const isInfoPage = window.location.pathname.endsWith('student-info.html');
+            const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
+
+            if(this.state.student) {
+                // Already have a student profile
+                const isAssessed = this.state.dominant_style && this.state.dominant_style !== 'unassessed';
+
+                if(isAssessed) {
+                    // Prevent being trapped in test pages if already finished
+                    if(isTestPage || isInfoPage) {
+                        this.navigate('learning.html');
+                    }
+                } else {
+                    // Have profile but not assessed - allow test but skip info
+                    if(isInfoPage) {
+                        this.navigate('dashboard.html');
+                    }
+                }
             }
         } catch(e) {
             console.warn("LocalStorage access restricted by browser settings. State will reset on reload.");
