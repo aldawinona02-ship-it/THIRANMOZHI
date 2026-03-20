@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THIRANMOZHI - Stop & Review!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%);
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem 1.5rem;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .review-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #7b1fa2;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-subtitle {
+            color: #555;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .tiger-review {
+            font-size: 4rem;
+            animation: tiger-review-bounce 1.5s ease-in-out infinite;
+            display: block;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+        }
+
+        @keyframes tiger-review-bounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .question-display {
+            font-family: 'Baloo Thambi 2', cursive;
+            font-size: 6rem;
+            font-weight: 800;
+            color: #4a148c;
+            margin: 1rem 0;
+            animation: letter-float 2s ease-in-out infinite;
+        }
+
+        @keyframes letter-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .question-prompt {
+            font-weight: 800;
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-btn {
+            font-family: 'Baloo Thambi 2', cursive;
+            font-size: 2rem;
+            padding: 1rem 0.5rem;
+            border-radius: 16px;
+            border: 3px solid rgba(0,0,0,0.1);
+            background: #f3f0ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 800;
+        }
+
+        .review-btn:hover { transform: scale(1.08); }
+        .review-btn.correct {
+            background: linear-gradient(135deg, #a5d6a7, #66bb6a);
+            border-color: #2e7d32;
+            color: white;
+        }
+        .review-btn.wrong {
+            background: linear-gradient(135deg, #ffcdd2, #ef9a9a);
+            border-color: #c62828;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dot {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .dot.done { background: #66bb6a; transform: scale(1.2); }
+        .dot.active { background: #7b1fa2; transform: scale(1.3); }
+        .dot.wrong-dot { background: #ef5350; }
+
+        .well-done-card {
+            text-align: center;
+            display: none;
+        }
+
+        .well-done-card h2 {
+            font-size: 2rem;
+            color: #7b1fa2;
+            margin-bottom: 0.5rem;
+        }
+
+        .tiger-speech-r {
+            background: #f3f0ff;
+            border: 3px solid #ce93d8;
+            border-radius: 16px;
+            padding: 0.8rem 1.2rem;
+            font-weight: 800;
+            color: #4a148c;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: linear-gradient(135deg, #7b1fa2, #4a148c);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(123,31,162,0.4);
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .btn-continue:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(123,31,162,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="review-card">
+        <div id="quiz-section">
+            <span class="tiger-review">🐅</span>
+            <div class="review-title">⭐ Stop & Review!</div>
+            <div class="tiger-speech-r" id="tiger-review-msg">Let's see what you've learned! 3 quick questions! 🐅</div>
+            <div class="progress-dots" id="progress-dots"></div>
+            <div class="question-display" id="question-letter"></div>
+            <div class="question-prompt" id="question-prompt">Which sound does this letter make?</div>
+            <div class="review-grid" id="review-options"></div>
+        </div>
+
+        <div class="well-done-card" id="well-done-section">
+            <div style="font-size:5rem; margin-bottom:1rem;">🏆</div>
+            <h2>Review Complete!</h2>
+            <p class="review-subtitle" id="result-msg">Great work!</p>
+            <span style="display:block; font-size:3rem; margin-bottom:1.5rem;">🐅⭐</span>
+            <button class="btn-continue" onclick="window.reviewEngine.finish()">
+                Continue the Adventure! 🗺️
+            </button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="adaptive-engine.js"></script>
+    <script src="review.js"></script>
+</body>
+</html>

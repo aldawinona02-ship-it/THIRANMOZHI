@@ -6,7 +6,7 @@
     <title>THIRANMOZHI - Assessment Intro</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
 </head>
 <body class="app-container">
@@ -18,23 +18,23 @@
     <main class="main-content page-enter" style="animation-delay: 0.1s; display: flex; align-items: center; justify-content: center;">
         <div class="glass-panel text-center" style="max-width: 600px; width: 100%;">
             
-            <div class="card-icon pop-in" style="margin: 0 auto 1.5rem; background: var(--primary-green); color: white; width: 100px; height: 100px; font-size: 3rem;">
+            <div class="card-icon pop-in" style="margin: 0 auto 1.5rem; background: var(--primary); color: white; width: 100px; height: 100px; font-size: 3rem; display: flex; align-items: center; justify-content: center; border-radius: 50%;">
                 <i class="fa-solid fa-brain"></i>
             </div>
             
-            <h1 class="mb-1" style="font-size: 2.5rem; color: var(--text-dark);">Get Ready for the Learning Style Test</h1>
+            <h1 class="mb-1" style="font-size: 2.5rem; color: var(--text-main);">Get Ready for the Learning Style Test</h1>
             
             <p class="mb-2" style="font-size: 1.2rem; color: var(--text-muted);">
-                We will conduct <strong style="color: var(--primary-purple);">9 short activities</strong> to understand how you learn best. They are very fun and completely okay to guess on!
+                We will conduct <strong style="color: var(--primary);">9 short activities</strong> to understand how you learn best. They are very fun and completely okay to guess on!
             </p>
 
-            <button class="btn btn-green btn-large pop-in" onclick="startAssessment()" style="font-size: 1.5rem; padding: 1rem 3rem; animation-delay: 0.4s;">
-                Start Test <i class="fa-solid fa-play"></i>
+            <button class="btn btn-primary btn-large pop-in" onclick="startAssessment()" style="font-size: 1.5rem; padding: 1.25rem 3rem; animation-delay: 0.4s; border-radius: 100px; width: 100%;">
+                Start Discovery Test <i class="fa-solid fa-play"></i>
             </button>
         </div>
     </main>
 
-    <script src="js/main.js"></script>
+    <script src="main.js"></script>
     <script>
         function startAssessment() {
             try {
@@ -44,7 +44,7 @@
             } catch(e) {
                 console.warn("Failed to reset assessment:", e);
             }
-            window.location.href = 'learning-style-test.html';
+            window.location.href = 'test.html';
         }
     </script>
 </body>

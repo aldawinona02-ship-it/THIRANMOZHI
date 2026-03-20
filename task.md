@@ -1,28 +1,18 @@
-# Task: Professional EdTech Refactor
+# Task: End-to-End Student Audit & Enhancement
 
-## UI/UX Refinement
-- [x] Define a modern "Premium Pastel" design system in `styles.css` <!-- id: 0 -->
-- [x] Overhaul Landing Page (`index.html`) with clear CTAs <!-- id: 1 -->
-- [x] Standardize `student-info.html` onboarding <!-- id: 2 -->
-- [x] Refactor Assessment UI (`test.html`) for clarity and focus <!-- id: 3 -->
-- [x] Redesign Dashboard (`dashboard.html`) for gamified progress tracking <!-- id: 4 -->
-- [/] Update Learning Space (`learning.html`) to feel modern and interactive <!-- id: 5 -->
+## Audit & Analysis (PLANNING)
+- [/] Perform E2E Audit via Browser (Landing → Learning) <!-- id: 0 -->
+- [ ] Research Industry Benchmarks (Duolingo, Khan Academy Kids) <!-- id: 1 -->
+- [ ] Identify friction points and "negatives" <!-- id: 2 -->
+- [ ] Update `implementation_plan.md` with audit findings <!-- id: 3 -->
 
-## Recording & Persistence
-- [x] Connect learning interactions to `app.recordMetric` <!-- id: 6 -->
-- [x] Ensure `next-btn` is locked until "proper answer" is recorded <!-- id: 7 -->
-- [x] Add celebration/feedback effects upon successful learning <!-- id: 8 -->
+## UI/UX Enhancements (EXECUTION)
+- [ ] Fix identified "negatives" (Flow bottlenecks, missing tooltips) <!-- id: 4 -->
+- [ ] Enhance Gamification (Daily Streaks, XP, Leveling UI) <!-- id: 5 -->
+- [ ] Improve Feedback Loops (Haptic-style vibrations, better success/fail sounds) <!-- id: 6 -->
+- [ ] Refine Responsive Design for mobile/tablet <!-- id: 7 -->
 
-## Adaptive Engine Enhancements
-- [x] Enhance mistake tracking per letter in `adaptive-engine.js` <!-- id: 9 -->
-- [x] Implement logic for personalized lesson generation based on weak letters <!-- id: 10 -->
-- [x] Optimize dashboard to update dynamically as the user practices <!-- id: 11 -->
-
-## GitHub Sync
-- [x] Resolve conflicts and push to origin/main <!-- id: 14 -->
-
-## Verification
-- [x] Test Visual style flow <!-- id: 9 -->
-- [x] Test Auditory style flow <!-- id: 10 -->
-- [x] Test Kinesthetic style flow <!-- id: 11 -->
-- [x] Verify state persistence after lesson completion <!-- id: 12 -->
+## Verification (VERIFICATION)
+- [ ] Run final E2E student journey test <!-- id: 8 -->
+- [ ] Verify state persistence and AI adaptation <!-- id: 9 -->
+- [ ] Create `walkthrough.md` with result comparisons <!-- id: 10 -->

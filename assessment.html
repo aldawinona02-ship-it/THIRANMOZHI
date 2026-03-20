@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THIRANMOZHI - Assessment</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .assessment-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .test-section {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .test-section.active {
+            display: block;
+        }
+
+        .option-grid {
+            margin-top: 2rem;
+            gap: 1.5rem;
+        }
+
+        .option-btn {
+            background: #fff;
+            border: 3px solid var(--glass-border);
+            padding: 2.5rem 1rem;
+            font-size: 3rem;
+            font-family: var(--font-tamil);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .option-btn.selected {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .writing-area {
+            background: #fff;
+            border: 4px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            height: 400px;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        #assessment-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+
+<body class="app-wrapper">
+    <header class="top-nav container">
+        <div class="nav-brand">
+            <span style="font-weight: 800; color: var(--text-muted);">Assessment Mode</span>
+        </div>
+        <div class="lesson-progress-container"
+            style="flex-grow: 1; margin: 0 4rem; height: 12px; background: #E2E8F0; border-radius: 10px; overflow: hidden;">
+            <div id="assessment-progress-bar"
+                style="width: 10%; height: 100%; background: var(--info); transition: width 0.4s ease;"></div>
+        </div>
+        <div id="q-count" style="font-weight: 800; color: var(--primary);">Q 1 / 10</div>
+    </header>
+
+    <main class="main-content container page-enter">
+        <div class="glass-card assessment-container text-center">
+
+            <!-- Section 1: Reading Recognition -->
+            <div id="section-reading" class="test-section active">
+                <div class="test-header mb-2">
+                    <span class="badge-new mb-1" style="background: var(--primary-light); color: white;">Reading</span>
+                    <h2 style="font-weight: 800;">Identify the Letter</h2>
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">Click the button that matches the sound:
+                        <strong id="target-sound">"A"</strong>
+                    </p>
+                </div>
+                <div class="grid-3 option-grid" id="reading-options">
+                    <!-- Buttons injected by assessment.js -->
+                </div>
+            </div>
+
+            <!-- Section 2: Listening -->
+            <div id="section-listening" class="test-section">
+                <div class="test-header mb-2">
+                    <span class="badge-new mb-1"
+                        style="background: var(--secondary-light); color: white;">Listening</span>
+                    <h2 style="font-weight: 800;">Listen and Match</h2>
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">Press play, listen closely, then pick the
+                        correct letter.</p>
+                </div>
+                <button class="btn btn-premium btn-large mb-3" id="play-q-sound" style="background: var(--primary);">
+                    <i class="fa-solid fa-play"></i> Play Sound
+                </button>
+                <div class="grid-3 option-grid" id="listening-options">
+                    <!-- Buttons injected by assessment.js -->
+                </div>
+            </div>
+
+            <!-- Section 3: Writing/Tracing -->
+            <div id="section-writing" class="test-section">
+                <div class="test-header mb-2">
+                    <span class="badge-new mb-1" style="background: var(--accent); color: white;">Writing</span>
+                    <h2 style="font-weight: 800;">Draw from Memory</h2>
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">Draw the letter: <strong
+                            id="target-write-letter"
+                            style="font-size: 1.5rem; font-family: var(--font-tamil);">ழ</strong></p>
+                </div>
+                <div class="writing-area">
+                    <canvas id="assessment-canvas" width="600" height="400"></canvas>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-secondary" id="clear-write-btn" style="flex: 1;">Clear</button>
+                    <button class="btn btn-primary btn-premium" id="submit-write-btn" style="flex: 2;">Finish & Submit
+                        Item</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="mt-4 text-center" style="opacity: 0.6; font-size: 0.8rem; font-weight: 700;">
+        THIRANMOZHI Smart Assessment Engine &copy; 2024
+    </footer>
+
+    <script src="main.js"></script>
+    <script src="audio.js"></script>
+    <script src="adaptive-engine.js"></script>
+    <script src="tests.js"></script>
+</body>
+
+</html>

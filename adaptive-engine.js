@@ -68,7 +68,7 @@ class AdaptiveEngine {
         const stage = this.stages[stageName];
         if(!stage) return [];
         
-        const filtered = this.letters.filter(l => 
+        const filtered = this.dataset.filter(l => 
             (l.type === 'uyir' && stage.uyir.includes(l.l)) ||
             (l.type === 'mei' && stage.mei.includes(l.l))
         );
@@ -114,9 +114,9 @@ class AdaptiveEngine {
         `;
     }
     getLetterData(char) {
-        return this.letters.find(l => l.l === char);
+        return this.dataset.find(l => l.l === char);
     }
 }
 
 window.adaptiveEngineSys = new AdaptiveEngine();
-window.DOMContentLoaded = () => window.adaptiveEngineSys.renderContent();
+document.addEventListener('DOMContentLoaded', () => window.adaptiveEngineSys.renderContent());

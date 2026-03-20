@@ -62,7 +62,7 @@
 <body class="app-container">
 
     <header class="top-nav">
-        <button class="btn btn-secondary" onclick="window.location.href='learning.html'"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn btn-secondary" onclick="window.location.href='practice.html'"><i class="fa-solid fa-arrow-left"></i> Back</button>
         <h2 id="header-title" style="margin: 0; font-family: var(--font-tamil); font-size: 2rem;">Tracing Practice</h2>
     </header>
 
@@ -79,10 +79,13 @@
                     Follow the dashed line.
                 </h3>
 
-                <div class="mt-2">
-                    <button class="btn btn-secondary" onclick="window.tracingSys.clear()" style="width: 100%; margin-bottom: 1rem;"><i class="fa-solid fa-eraser"></i> Clear Canvas</button>
-                    <button class="btn btn-primary" onclick="window.location.href='learning.html'" style="width: 100%; font-weight: 800; padding: 1rem;">
-                        Finish & Save <i class="fa-solid fa-check"></i>
+                <div class="mt-2" style="display: grid; gap: 0.8rem;">
+                    <button class="btn btn-premium" onclick="window.tracingSys.playGuideAnimation()" style="width: 100%; animation: pulse 2s infinite;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Watch Guide
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.tracingSys.clear()" style="width: 100%;"><i class="fa-solid fa-eraser"></i> Clear Canvas</button>
+                    <button class="btn btn-primary" onclick="window.location.href='practice.html'" style="width: 100%; font-weight: 800; padding: 1rem;">
+                        <i class="fa-solid fa-check"></i> Finish Practice
                     </button>
                 </div>
             </div>
@@ -109,7 +112,7 @@
     <script>
         function playCurrentAudio() {
             if(window.tracingSys && window.tracingSys.currentLetterData) {
-                window.audioSys.play(window.tracingSys.currentLetterData.letter);
+                window.audioSys.play(window.tracingSys.currentLetterData.l || window.tracingSys.currentLetterData.letter);
             }
         }
     </script>

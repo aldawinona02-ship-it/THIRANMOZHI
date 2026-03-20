@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THIRANMOZHI - Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/responsive.css">
-    
+
     <style>
         body {
             background: radial-gradient(circle at top left, var(--primary) 0%, transparent 40%),
-                        radial-gradient(circle at bottom right, var(--secondary) 0%, transparent 40%),
-                        #f8f9fa;
+                radial-gradient(circle at bottom right, var(--secondary) 0%, transparent 40%),
+                #f8f9fa;
             color: var(--text-main);
         }
+
         .top-nav {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -27,6 +31,7 @@
             align-items: center;
             box-shadow: var(--shadow-sm);
         }
+
         .nav-brand {
             font-family: var(--font-tamil);
             font-size: 1.8rem;
@@ -34,10 +39,12 @@
             text-decoration: none;
             font-weight: 800;
         }
+
         .nav-brand i {
             color: var(--info);
             margin-right: 0.5rem;
         }
+
         .teacher-view-header {
             display: flex;
             justify-content: space-between;
@@ -50,12 +57,14 @@
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-md);
         }
+
         #dash-name {
             font-size: 2.5rem;
             font-family: var(--font-tamil);
             color: var(--text-main);
             margin-bottom: 0.5rem;
         }
+
         .btn-reset {
             padding: 0.8rem 1.5rem;
             background: var(--error);
@@ -67,21 +76,28 @@
             box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
         }
+
         .btn-reset:hover {
             transform: scale(1.05);
             opacity: 0.9;
         }
     </style>
 </head>
+
 <body class="app-container">
 
-    <header class="top-nav container" style="display: flex; justify-content: space-between; align-items: center; padding: 2rem 0;">
-        <a href="index.html" class="nav-brand" style="font-family: var(--font-tamil); font-size: 1.8rem; font-weight: 800; color: var(--primary);"><i class="fa-solid fa-leaf"></i> திறன்மொழி Portal</a>
+    <header class="top-nav container"
+        style="display: flex; justify-content: space-between; align-items: center; padding: 2rem 0;">
+        <a href="index.html" class="nav-brand"
+            style="font-family: var(--font-tamil); font-size: 1.8rem; font-weight: 800; color: var(--primary);"><i
+                class="fa-solid fa-leaf"></i> திறன்மொழி Portal</a>
         <div class="header-actions" style="display: flex; gap: 1rem;">
-            <button class="btn btn-premium" onclick="window.location.href='learning.html'">
-                <i class="fa-solid fa-gamepad"></i> Resume Learning
+            <button class="btn btn-premium" onclick="window.location.href='practice.html'">
+                <i class="fa-solid fa-graduation-cap"></i> Resume Practice
             </button>
-            <button class="btn btn-secondary" style="padding: 0.8rem 1.2rem; background: var(--error); box-shadow: 0 4px 0 #b91c1c;" onclick="if(confirm('Reset all progress?')) { localStorage.clear(); window.location.href='index.html'; }">
+            <button class="btn btn-secondary"
+                style="padding: 0.8rem 1.2rem; background: var(--error); box-shadow: 0 4px 0 #b91c1c;"
+                onclick="if(confirm('Reset all progress?')) { localStorage.clear(); window.location.href='index.html'; }">
                 <i class="fa-solid fa-trash-can"></i>
             </button>
         </div>
@@ -89,55 +105,32 @@
 
     <main class="main-content container page-enter" style="padding-top: 1rem;">
         <!-- Student Hero Section -->
-        <div class="glass-card mb-2" style="display: flex; align-items: center; gap: 2rem; border-left: 8px solid var(--primary);">
-            <div class="avatar-large" style="width: 100px; height: 100px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white; border: 4px solid white; box-shadow: var(--shadow-md);">
+        <div class="glass-card mb-2"
+            style="display: flex; align-items: center; gap: 2rem; border-left: 8px solid var(--primary);">
+            <div class="avatar-large"
+                style="width: 100px; height: 100px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white; border: 4px solid white; box-shadow: var(--shadow-md);">
                 <i class="fa-solid fa-user-astronaut"></i>
             </div>
             <div>
-                <h1 id="dash-name" style="font-family: var(--font-tamil); font-size: 2.5rem; line-height: 1.1;">Welcome back!</h1>
-                <p id="dash-age" style="color: var(--text-muted); font-weight: 700; font-size: 1.1rem;">Visual Learner | Age 8</p>
+                <h1 id="dash-name" style="font-family: var(--font-tamil); font-size: 2.5rem; line-height: 1.1;">Welcome
+                    back!</h1>
+                <p id="dash-age" style="color: var(--text-muted); font-weight: 700; font-size: 1.1rem;">Visual Learner |
+                    Age 8</p>
             </div>
         </div>
 
-        <div id="dashboard-content" class="dashboard-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
-            <!-- Main Stats Column -->
-            <div class="stats-column">
-                <div class="glass-card mb-2" style="padding: 2rem;">
-                    <h3 class="mb-1" style="font-family: var(--font-tamil);"><i class="fa-solid fa-chart-simple" style="color: var(--primary);"></i> Skill Overview</h3>
-                    <div id="skills-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                        <!-- Injected by dashboard.js -->
-                    </div>
-                </div>
-
-                <div class="glass-card" style="padding: 2rem;">
-                    <h3 class="mb-1" style="font-family: var(--font-tamil);"><i class="fa-solid fa-medal" style="color: var(--warning);"></i> Recent Achievements</h3>
-                    <div id="achievements-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem;">
-                        <!-- Injected by dashboard.js -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Side AI Column -->
-            <div class="ai-column">
-                <div class="glass-card mb-2" style="border-top: 6px solid var(--error); padding: 1.5rem;">
-                    <h3 class="mb-1" style="font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-triangle-exclamation" style="color: var(--error);"></i> Focus Area</h3>
-                    <div id="focus-area-content">
-                        <!-- Injected by dashboard.js -->
-                    </div>
-                </div>
-
-                <div class="glass-card" style="background: linear-gradient(135deg, var(--info), var(--primary)); color: white; border: none; padding: 1.5rem;">
-                    <h3 class="mb-1" style="font-size: 1.2rem; color: white;"><i class="fa-solid fa-robot"></i> AI Coach</h3>
-                    <p id="ai-reco" style="font-size: 0.95rem; font-weight: 600; line-height: 1.4; opacity: 0.9;">
-                        Loading personalized advice...
-                    </p>
-                    <button class="btn mt-1" style="width: 100%; color: var(--info); font-size: 0.9rem;" onclick="app.navigate('learning.html')">Start Recommendation</button>
-                </div>
+        <div id="dashboard-content" class="dashboard-grid">
+            <!-- Dynamically populated by dashboard.js -->
+            <div class="loader text-center" style="grid-column: 1 / -1; padding: 5rem;">
+                <i class="fa-solid fa-spinner fa-spin fa-3x" style="color: var(--primary);"></i>
+                <p class="mt-1">Loading your progress...</p>
             </div>
         </div>
     </main>
 
     <script src="main.js"></script>
+    <script src="adaptive-engine.js"></script>
     <script src="dashboard.js"></script>
 </body>
+
 </html>

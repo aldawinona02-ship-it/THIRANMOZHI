@@ -180,10 +180,10 @@
                 
                 setTimeout(() => {
                     if(app.state.student) {
-                        if(app.state.dominant_style && app.state.dominant_style !== 'unassessed') {
-                            window.location.href = 'learning.html';
-                        } else {
+                        if(app.state.is_assessed) {
                             window.location.href = 'dashboard.html';
+                        } else {
+                            window.location.href = 'test-intro.html';
                         }
                     } else {
                         window.location.href = 'student-info.html';

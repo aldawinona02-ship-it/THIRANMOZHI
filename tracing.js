@@ -8,6 +8,7 @@ class TracingEngine {
         this.guideCtx = this.guideCanvas.getContext('2d');
 
         this.isDrawing = false;
+        this.isAnimating = false;
 
         // Track drawn points for accuracy calculation
         this.drawnPoints = [];
@@ -36,15 +37,16 @@ class TracingEngine {
 
         // Load the letter to trace
         const urlParams = new URLSearchParams(window.location.search);
-        const letterChar = urlParams.get('letter') || 'அ';
+        let letterChar = urlParams.get('letter') || localStorage.getItem('tm_current_letter') || 'அ';
         this.currentLetterData = window.adaptiveEngineSys.getLetterData(letterChar);
 
         if (this.currentLetterData) {
-            document.getElementById('header-title').innerText = `Tracing: ${this.currentLetterData.letter}`;
+            const char = this.currentLetterData.l || this.currentLetterData.letter;
+            document.getElementById('header-title').innerText = `Tracing: ${char}`;
             // If Auditory, play sound on load
-            if (app.state.dominant_style === 'auditory') {
+            if (app.state.dominant_style === 'auditory' && window.audioSys) {
                 setTimeout(() => {
-                    window.audioSys.play(this.currentLetterData.letter);
+                    window.audioSys.play(char);
                 }, 500);
             }
         }
@@ -90,6 +92,59 @@ class TracingEngine {
         this.guideCtx.strokeStyle = '#bdbdbd';
         this.guideCtx.setLineDash([15, 15]);
         this.guideCtx.strokeText(text, x, y);
+    }
+
+    playGuideAnimation() {
+        if (!this.guideCtx || !this.currentLetterData || this.isAnimating) return;
+        
+        this.isAnimating = true;
+        this.setFeedback("Watching the guide...", "var(--info)");
+        
+        const text = this.currentLetterData.l || this.currentLetterData.letter;
+        const fontSize = this.guideCanvas.width * 0.7;
+        const x = this.guideCanvas.width / 2;
+        const y = this.guideCanvas.height / 2;
+        
+        let offset = 1000;
+        const speed = 15;
+        
+        const animate = () => {
+            if (offset <= 0) {
+                this.isAnimating = false;
+                this.drawGuide(); // Reset to static guide
+                this.setFeedback("Now your turn! Trace the line.", "var(--primary)");
+                if (window.audioSys) window.audioSys.playFeedback('success');
+                return;
+            }
+            
+            this.guideCtx.clearRect(0, 0, this.guideCanvas.width, this.guideCanvas.height);
+            
+            // Draw faint background original
+            this.guideCtx.font = `bold ${fontSize}px 'Baloo Thambi 2', cursive`;
+            this.guideCtx.textAlign = 'center';
+            this.guideCtx.textBaseline = 'middle';
+            this.guideCtx.fillStyle = '#f5f5f5';
+            this.guideCtx.fillText(text, x, y);
+            
+            // Draw the "Animated" stroke
+            this.guideCtx.lineWidth = 10;
+            this.guideCtx.strokeStyle = 'var(--primary)';
+            this.guideCtx.setLineDash([1000, 1000]);
+            this.guideCtx.lineDashOffset = offset;
+            this.guideCtx.strokeText(text, x, y);
+            
+            // Add a "Magic Brush" tip
+            // Note: Finding the exact tip position of a text stroke in Canvas is complex, 
+            // so we use the dash-offset trick for visual effect.
+            
+            offset -= speed;
+            requestAnimationFrame(animate);
+        };
+        
+        // Play audio alongside animation
+        if (window.audioSys) window.audioSys.play(text);
+        
+        animate();
     }
 
     getTouchPos(e) {
