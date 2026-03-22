@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak - Thiranmozhi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .module-container {
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .mic-btn {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-size: 3rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 0 #46A302;
+            transition: transform 0.1s, box-shadow 0.1s;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .mic-btn:active {
+            transform: translateY(10px);
+            box-shadow: 0 0px 0 #46A302;
+        }
+        .mic-btn.listening {
+            background: var(--error);
+            box-shadow: 0 10px 0 #D32F2F;
+            animation: pulse 1.5s infinite;
+        }
+        .mic-btn.listening:active { box-shadow: 0 0 0 #D32F2F; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .target-word {
+            font-family: var(--font-tamil);
+            font-size: 5rem;
+            color: var(--text-main);
+            margin-top: 1rem;
+        }
+        .result-box {
+            font-size: 1.5rem;
+            font-weight: bold;
+            min-height: 40px;
+            margin-top: 1rem;
+            color: var(--text-muted);
+        }
+        .feedback {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-top: 1rem;
+        }
+        .feedback.correct { color: var(--primary); }
+        .feedback.wrong { color: var(--error); }
+    </style>
+</head>
+<body>
+    <header style="padding: 1rem; background: white; border-bottom: 2px solid var(--glass-border); display: flex; justify-content: space-between;">
+        <button class="btn" onclick="window.location.href='dashboard.html'"><i class="fa-solid fa-arrow-left"></i> Hub</button>
+        <span style="font-size: 1.5rem; font-weight: 800; color: var(--primary);"><i class="fa-solid fa-microphone"></i> Speak Module</span>
+    </header>
+
+    <div class="module-container">
+        <h2>Pronounce this word clearly:</h2>
+        <div class="target-word" id="target">அம்மா</div>
+        
+        <button class="mic-btn" id="mic-btn"><i class="fa-solid fa-microphone"></i></button>
+        
+        <div class="result-box" id="result">Waiting for voice...</div>
+        <div class="feedback" id="feedback"></div>
+        
+        <button class="btn btn-secondary mt-3" id="next-btn" style="display:none; width: 100%;">Next Word <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <script src="speech.js"></script>
+</body>
+</html>

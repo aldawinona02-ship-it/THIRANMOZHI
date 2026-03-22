@@ -11,17 +11,15 @@
         /* ==============================
            MAP PAGE LAYOUT
         ============================== */
-        body { overflow-x: hidden; }
+        body { overflow-x: hidden; background-color: var(--bg-color); }
 
         .map-header {
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 100;
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: white;
             border-bottom: 2px solid var(--glass-border);
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -36,30 +34,36 @@
         }
 
         .map-header .student-pill {
-            background: var(--primary-light);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-weight: 700;
+            background: var(--bg-color);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-pill);
+            font-weight: 800;
             font-size: 0.9rem;
             display: flex; align-items: center; gap: 0.5rem;
+            border: 2px solid var(--glass-border);
         }
 
         .paw-counter {
             display: flex; align-items: center; gap: 0.5rem;
             font-weight: 800;
-            color: var(--warning);
+            color: var(--accent);
             font-size: 1rem;
+            background: white;
+            padding: 0.3rem 1rem;
+            border-radius: var(--radius-pill);
+            border: 2px solid var(--glass-border);
+            border-bottom-width: 4px;
         }
 
         /* ==============================
            MAP SCROLL AREA
         ============================== */
         .map-scroll {
-            padding-top: 80px;
+            padding-top: 100px;
             padding-bottom: 120px;
             min-height: 100vh;
-            background: linear-gradient(180deg, #e0f7fa 0%, #b3e5fc 30%, #b2dfdb 60%, #c8e6c9 100%);
+            background: #E8F5E9; /* Soft green learning path */
             position: relative;
             overflow: hidden;
         }
@@ -125,15 +129,24 @@
             justify-content: center;
             cursor: pointer;
             position: relative;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.1s ease;
             user-select: none;
+            background: white;
+            border: 2px solid var(--glass-border);
+            border-bottom-width: 6px;
+        }
+
+        .map-node:active {
+            border-bottom-width: 2px;
+            margin-top: 4px;
         }
 
         .map-node .node-char {
             font-family: 'Baloo Thambi 2', cursive;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 800;
             line-height: 1;
+            color: var(--text-main);
         }
 
         .map-node .node-paws {
@@ -144,75 +157,75 @@
 
         /* LOCKED */
         .map-node.locked {
-            background: #cfd8dc;
-            border: 3px solid #90a4ae;
+            background: #E5E5E5;
+            border-color: #CCCCCC;
             cursor: not-allowed;
-            filter: grayscale(0.5);
         }
-        .map-node.locked .node-char { color: #78909c; }
+        .map-node.locked .node-char { color: #A0A0A0; }
 
         .map-node.locked::after {
             content: '🔒';
             position: absolute;
-            top: -8px; right: -8px;
-            font-size: 0.9rem;
+            top: -5px; right: -5px;
+            font-size: 1rem;
         }
 
-        /* UNLOCKED VOWEL - green aura */
+        /* UNLOCKED VOWEL */
         .map-node.unlocked-vowel {
             background: white;
-            border: 4px solid #4caf50;
-            box-shadow: 0 0 0 6px rgba(76, 175, 80, 0.15), 0 4px 20px rgba(76,175,80,0.3);
-            animation: glow-green 2.5s ease-in-out infinite;
+            border-color: var(--primary);
         }
-        .map-node.unlocked-vowel .node-char { color: #2e7d32; }
+        .map-node.unlocked-vowel .node-char { color: var(--primary); }
 
-        /* UNLOCKED CONSONANT - orange aura */
+        /* UNLOCKED CONSONANT */
         .map-node.unlocked-consonant {
             background: white;
-            border: 4px solid #ff9800;
-            box-shadow: 0 0 0 6px rgba(255, 152, 0, 0.15), 0 4px 20px rgba(255,152,0,0.3);
-            animation: glow-orange 2.5s ease-in-out infinite;
+            border-color: var(--secondary);
         }
-        .map-node.unlocked-consonant .node-char { color: #e65100; }
+        .map-node.unlocked-consonant .node-char { color: var(--secondary); }
 
         /* ACTIVE (current) node */
         .map-node.active-node {
-            transform: scale(1.15);
+            transform: scale(1.1);
             z-index: 5;
         }
-
-        /* MASTERED - gold */
-        .map-node.mastered {
-            background: linear-gradient(135deg, #fff176, #ffd54f, #ffca28);
-            border: 4px solid #f9a825;
-            box-shadow: 0 0 0 6px rgba(249, 168, 37, 0.2), 0 4px 25px rgba(249,168,37,0.5);
-            animation: glow-gold 2s ease-in-out infinite;
+        .map-node.active-node::before {
+            content: '';
+            position: absolute;
+            top: -15px; bottom: -15px; left: -15px; right: -15px;
+            border: 4px dashed rgba(0,0,0,0.1);
+            border-radius: 50%;
+            animation: spin-dashed 6s linear infinite;
         }
-        .map-node.mastered .node-char { color: #5d4037; }
+
+        @keyframes spin-dashed {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* MASTERED */
+        .map-node.mastered {
+            background: var(--accent);
+            border-color: #CC9A00;
+        }
+        .map-node.mastered .node-char { color: white; }
 
         .map-node.mastered::after {
             content: '⭐';
             position: absolute;
             top: -10px; right: -10px;
-            font-size: 1rem;
-            animation: spin-star 3s linear infinite;
+            font-size: 1.2rem;
         }
 
         /* REVIEW node */
         .map-node.review-node {
-            background: linear-gradient(135deg, #ce93d8, #ba68c8);
-            border: 4px solid #7b1fa2;
-            box-shadow: 0 0 0 6px rgba(123,31,162,0.15), 0 4px 20px rgba(123,31,162,0.3);
+            background: var(--info);
+            border-color: #9B51E0;
             width: 90px;
             height: 90px;
-            animation: glow-purple 2s ease-in-out infinite;
         }
         .map-node.review-node.locked {
-            background: #cfd8dc;
-            border-color: #90a4ae;
-            animation: none;
-            box-shadow: none;
+            background: #E5E5E5;
+            border-color: #CCCCCC;
         }
         .map-node.review-node .node-char { color: white; font-size: 1.4rem; }
 

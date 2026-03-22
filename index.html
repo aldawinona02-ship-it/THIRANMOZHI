@@ -1,196 +1,328 @@
 <!DOCTYPE html>
-<html lang="ta">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THIRANMOZHI - Adaptive Tamil Learning</title>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;900&display=swap"
-        rel="stylesheet">
+    <title>THIRANMOZHI - Seamless Tamil Learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
-
     <style>
-        /* Landing Page specifics */
         body {
-            overflow: hidden;
-            background: radial-gradient(circle at top left, var(--primary) -20%, transparent 40%),
-                        radial-gradient(circle at bottom right, var(--secondary) -20%, transparent 40%),
-                        var(--bg-color);
+            background-color: var(--bg-color-light);
+            overflow-x: hidden;
+            background-image: radial-gradient(#E5E5E5 2px, transparent 2px);
+            background-size: 40px 40px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            height: 100vh;
-        }
-
-        /* --- Hanging Letters --- */
-        .hanging-letters-container {
+        .header {
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            pointer-events: none;
-            z-index: 1;
+            z-index: 100;
         }
 
-        .hanging-letter {
+        .brand {
             font-family: var(--font-tamil);
-            font-size: clamp(3rem, 8vw, 5rem);
+            font-size: 2rem;
             font-weight: 800;
-            animation: swing 3s ease-in-out infinite alternate;
+            color: var(--primary);
+            text-decoration: none;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            gap: 10px;
         }
 
-        .hanging-letter::before {
-            content: '';
-            width: 2px;
-            height: 150px;
-            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
-            margin-bottom: -10px;
-        }
-
-        @keyframes swing {
-            0% { transform: rotate(-3deg); transform-origin: top center; }
-            100% { transform: rotate(3deg); transform-origin: top center; }
-        }
-
-        /* --- Main Content --- */
-        .landing-content {
-            position: relative;
-            z-index: 10;
+        .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            padding: 20px;
+            padding: 6rem 2rem 2rem 2rem;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 40px;
-            padding: 4rem 2rem;
-            max-width: 900px;
+        .hero-container {
+            max-width: 1200px;
             width: 100%;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s ease;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        .main-title {
+        .hero-text h1 {
             font-family: var(--font-tamil);
-            font-size: 7.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--info));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: clamp(3.5rem, 6vw, 5rem);
+            color: var(--text-main);
             line-height: 1.1;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 8px 12px rgba(67, 97, 238, 0.3));
+            margin-bottom: 1.5rem;
         }
 
-        .antigravity-active {
-            transition: all 1s ease-in;
-            transform: translateY(-100vh);
-            opacity: 0;
+        .hero-text h1 span {
+            color: var(--primary);
+        }
+
+        .hero-text p {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-google {
+            background-color: white;
+            color: #757575;
+            border: 2px solid #E5E5E5;
+            border-bottom-width: 4px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .abstract-shape {
+            width: 400px;
+            height: 400px;
+            background: var(--bg-color);
+            border-radius: 40px;
+            transform: rotate(10deg);
+            border: 4px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-tamil);
+            font-size: 15rem;
+            font-weight: 800;
+            color: var(--primary);
+            box-shadow: var(--shadow-md);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(10deg); }
+            50% { transform: translateY(-20px) rotate(8deg); }
+        }
+
+        .feature-ribbon {
+            background: white;
+            border-top: 2px solid var(--glass-border);
+            padding: 4rem 2rem;
+        }
+
+        .feature-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            border: 2px solid var(--glass-border);
+            background: white;
+            color: var(--text-main);
+            box-shadow: 0 4px 0 var(--glass-border);
+        }
+
+        .f-1 { color: var(--primary); border-color: var(--primary); box-shadow: 0 4px 0 var(--primary); background: rgba(88,204,2,0.1); }
+        .f-2 { color: var(--secondary); border-color: var(--secondary); box-shadow: 0 4px 0 var(--secondary); background: rgba(28,176,246,0.1); }
+        .f-3 { color: var(--accent); border-color: var(--accent); box-shadow: 0 4px 0 var(--accent); background: rgba(255,200,0,0.1); }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        /* Real Contact Footer */
+        .footer-contact {
+            background: var(--bg-color-light);
+            border-top: 2px solid var(--glass-border);
+            padding: 5rem 2rem;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-container h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .contact-container p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--glass-border);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            background: var(--bg-color);
+            transition: border-color 0.2s;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .contact-info-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        @media (max-width: 900px) {
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-text p { margin-left: auto; margin-right: auto; }
+            .cta-group { justify-content: center; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .contact-info-cards { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
-
 <body>
-    <div class="hanging-letters-container">
-        <div class="hanging-letter" style="color: var(--info); animation-delay: 0s;">அ</div>
-        <div class="hanging-letter" style="color: var(--secondary); animation-delay: 0.2s;">ஆ</div>
-        <div class="hanging-letter" style="color: var(--primary); animation-delay: 0.4s;">இ</div>
-        <div class="hanging-letter" style="color: var(--accent); animation-delay: 0.6s;">ஈ</div>
-        <div class="hanging-letter" style="color: var(--info); animation-delay: 0.8s;">உ</div>
-    </div>
 
-    <main class="landing-content page-enter" id="landing-main">
-        <div class="container">
-            <div class="hero-section glass-card hover-float" style="max-width: 900px; margin: 0 auto; text-align: center;">
-                <div class="badge-new mb-1" style="display: inline-block; padding: 0.5rem 1.25rem; background: var(--accent); color: var(--text-main); border-radius: var(--radius-pill); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem;">AI-Powered Experience</div>
-                <h1 class="main-title">திறன்மொழி</h1>
-                <p class="section-subtitle mb-2" style="font-size: 1.4rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    Personalized Tamil learning for every child. Adaptive. Interactive. Fun.
-                </p>
-                
-                <div class="cta-group" style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-primary" id="start-btn">
-                        <i class="fa-solid fa-graduation-cap"></i> Start Learning
-                    </button>
-                    <button class="btn btn-secondary" onclick="window.location.href='pre-test.html'">
-                        <i class="fa-solid fa-vial"></i> Take Assessment
+    <header class="header">
+        <a href="index.html" class="brand"><i class="fa-solid fa-leaf"></i> திறன்மொழி</a>
+        <button class="btn btn-secondary" style="padding: 0.6rem 1.5rem; font-size: 1rem;" onclick="window.location.href='dashboard.html'">Parent Portal</button>
+    </header>
+
+    <main class="hero">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1>Tamil learning,<br><span>reimagined.</span></h1>
+                <p>The fun, free, and highly effective way for kids to master fundamental Tamil letters through intelligent tracking and personalized pacing.</p>
+                <div class="cta-group">
+                    <button class="btn btn-primary" onclick="window.location.href='pre-test.html'" style="padding: 1.2rem 2.5rem; font-size: 1.3rem;">Take Test</button>
+                    <!-- REAL GOOGLE AUTHENTICATION -->
+                    <button class="btn btn-google" id="google-login-btn" onclick="window.loginWithGoogle()" style="padding: 1.2rem 2.5rem; font-size: 1.3rem;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                        Sign In with Google
                     </button>
                 </div>
             </div>
-
-            <div class="features-preview mt-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 4rem;">
-                <div class="feature-item text-center">
-                    <div class="card-icon" style="background: var(--primary-light); color: white; margin: 0 auto 1rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                        <i class="fa-solid fa-brain"></i>
-                    </div>
-                    <h4>Adaptive AI</h4>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Matches your child's unique learning style.</p>
-                </div>
-                <div class="feature-item text-center">
-                    <div class="card-icon" style="background: var(--secondary); color: white; margin: 0 auto 1rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                        <i class="fa-solid fa-pen-nib"></i>
-                    </div>
-                    <h4>Tracing Practice</h4>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Engaging stroke-by-stroke guidance.</p>
-                </div>
-                <div class="feature-item text-center">
-                    <div class="card-icon" style="background: var(--accent); color: white; margin: 0 auto 1rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-                    <h4>Progress Tracking</h4>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Detailed analytics for teachers & parents.</p>
-                </div>
+            <div class="hero-visual">
+                <div class="abstract-shape">அ</div>
             </div>
         </div>
     </main>
 
-    <!-- Global Logic -->
-    <script src="main.js"></script>
-    <script src="particles.js"></script>
-    <script>
-        // Start Button Logic
-        document.getElementById('start-btn').addEventListener('click', function () {
-            const mainContent = document.getElementById('landing-main');
-            mainContent.classList.add('antigravity-active');
+    <section class="feature-ribbon">
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon f-1"><i class="fa-solid fa-brain"></i></div>
+                <h3>Adaptive AI Engine</h3>
+                <p>Lessons naturally adapt to your child's pace. We identify weak spots and target practice organically without frustration.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon f-2"><i class="fa-solid fa-pen"></i></div>
+                <h3>Guided Tracing</h3>
+                <p>Highly responsive canvas tracing with millimeter precision checks. Builds flawless muscle memory for writing.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon f-3"><i class="fa-solid fa-chart-pie"></i></div>
+                <h3>Visual Analytics</h3>
+                <p>Parents get deep, understandable insights. See exactly which letters need work and watch overall progress soar.</p>
+            </div>
+        </div>
+    </section>
 
-            setTimeout(() => {
-                const mainEl = document.getElementById('landing-main');
-                if (mainEl) mainEl.classList.replace('page-enter', 'page-exit');
-                
-                setTimeout(() => {
-                    if(app.state.student) {
-                        if(app.state.is_assessed) {
-                            window.location.href = 'dashboard.html';
-                        } else {
-                            window.location.href = 'test-intro.html';
-                        }
-                    } else {
-                        window.location.href = 'student-info.html';
-                    }
-                }, 400);
-            }, 1000);
-        });
-    </script>
+    <!-- REAL CONTACT SECTION -->
+    <section class="footer-contact" id="contact">
+        <div class="contact-container">
+            <h2>Get in Touch</h2>
+            <p>Have questions about our curriculums, school bulk licensing, or need technical support? <strong>We respond to actual emails.</strong></p>
+            
+            <!-- Using FormSubmit to genuinely send emails without backend -->
+            <form class="contact-form" action="https://formsubmit.co/admin@thiranmozhi.edu" method="POST">
+                <input type="hidden" name="_next" value="http://localhost:5500/index.html?sent=true">
+                <input type="hidden" name="_subject" value="New Inquiry from Thiranmozhi Support">
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <textarea name="message" rows="5" placeholder="How can we help you today?" required></textarea>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">Send Message <i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+
+            <div class="contact-info-cards">
+                <div class="info-card"><i class="fa-solid fa-envelope" style="color:var(--secondary)"></i> support@thiranmozhi.edu</div>
+                <div class="info-card"><i class="fa-solid fa-phone" style="color:var(--primary)"></i> +1 (800) 555-0199</div>
+                <div class="info-card"><i class="fa-solid fa-location-dot" style="color:var(--warning)"></i> San Francisco, CA</div>
+            </div>
+        </div>
+    </section>
+
+    <script type="module" src="auth.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

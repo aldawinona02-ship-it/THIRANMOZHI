@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type - Thiranmozhi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .module-container {
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .target-box {
+            font-family: var(--font-tamil);
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--glass-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .type-input-area {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+            height: 80px;
+        }
+
+        .typed-char {
+            width: 60px;
+            height: 80px;
+            border-bottom: 4px solid var(--text-muted);
+            font-family: var(--font-tamil);
+            font-size: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            background: #E5E5E5;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+        }
+
+        .key {
+            background: white;
+            border: 2px solid #CCC;
+            border-bottom-width: 5px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-tamil);
+            font-size: 2rem;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            user-select: none;
+        }
+
+        .key:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+            margin-top: 3px;
+            background: var(--bg-color);
+        }
+
+        .key.action { background: var(--warning); color: white; border-color: #D32F2F; font-family: var(--font-ui); font-size:1.2rem; }
+    </style>
+</head>
+<body style="background-color: var(--bg-color);">
+    <header style="padding: 1rem; background: white; border-bottom: 2px solid var(--glass-border); display: flex; justify-content: space-between;">
+        <button class="btn" onclick="window.location.href='dashboard.html'"><i class="fa-solid fa-arrow-left"></i> Hub</button>
+        <span style="font-size: 1.5rem; font-weight: 800; color: var(--secondary);"><i class="fa-solid fa-keyboard"></i> Type Module</span>
+    </header>
+
+    <div class="module-container">
+        <h2 style="color: var(--text-muted); margin-bottom: 1rem;">Type the word using the keyboard:</h2>
+        <div class="target-box" id="target">அப்பா</div>
+        
+        <div class="type-input-area" id="input-area">
+            <!-- Filled dynamically -->
+        </div>
+
+        <div class="keyboard" id="keyboard">
+            <!-- Keys populated by JS -->
+        </div>
+    </div>
+
+    <script src="typing.js"></script>
+</body>
+</html>

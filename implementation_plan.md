@@ -1,39 +1,44 @@
-# Implementation Plan - Modern EdTech Transformation
+# Thiranmozhi - Tamil.my Feature Parity Plan
 
-This plan outlines the steps to transform THIRANMOZHI into a professional-grade edtech platform with a clean design system and a seamless user flow.
+You requested that we clone the exact functions of the reference app (`tamil.my`) to create a "final proper product". 
 
-## 🎨 1. Design System & Global Styles
-We will replace the current ad-hoc styling with a unified "Premium Pastel" system.
-- **Palette**: Soft but high-contrast pastels (Indigo-600 for primary, Rose-500 for secondary, Emerald-500 for success).
-- **Typography**: Nunito for UI, Baloo Thambi 2 for Tamil content.
-- **Components**: Standardized cards, buttons (pill-shaped, shadow-depth), and progress bars.
+According to the metadata and source of `tamil.my`, their core functionality includes five distinct pillars: **Speak, Write, Type, Read, & Grammar**. 
 
-### [MODIFY] [styles.css](file:///c:/Users/Jaysukh%20Sesham/OneDrive/Desktop/THIRANMOZHI-1/css/styles.css)
-- Reset variables for a unified theme.
-- Define global classes for `.glass-card`, `.btn-premium`, and `.section-title`.
+Currently, Thiranmozhi excels at **Write** (the tracing canvas) and basic Reading (letter identification on the map). To achieve true feature parity and build a comprehensive product, we will implement the missing pillars.
 
-## 🚀 2. Navigation & User Flow
-We will implement a linear, guided experience.
-1. **Landing (`index.html`)**: Clear "Start Learning" button.
-2. **Onboarding (`student-info.html`)**: Simplified student data entry.
-3. **Assessment (`pre-test.html` -> `test.html`)**: Guided 9-test sequence to determine learning style.
-4. **Result (`result.html`)**: Celebration of completion and style reveals.
-5. **Dashboard (`dashboard.html`)**: The "Home Base" showing progress and weak letters.
-6. **Practice (`learning.html` -> `tracing.html`)**: Adaptive lessons based on AI recommendations.
+## User Review Required
+> [!IMPORTANT]
+> This is a significant expansion of the application's scope. Please review the proposed modules below and confirm if you want me to proceed with building all of them.
 
-## 🧠 3. Adaptive Engine Refinement
-The `adaptive-engine.js` will be upgraded to be more proactive.
-- **Mistake Matrix**: Track not just if a letter was missed, but what it was confused with (e.g., ழ vs ள).
-- **Personalized Path**: Generate a dynamic list of letters to practice based on performance.
-- **Real-time Updates**: Ensure the dashboard reflects every practice session immediately.
+## Proposed Changes
 
-## 🛠️ 4. UI Overhaul per Page
-- **Landing Page**: Add value props and a massive, friendly CTA.
-- **Test Page**: Move from "test" to "activity" - make instructions clear and visual.
-- **Dashboard**: Use "Duolingo-style" progress rings and achievement badges.
-- **Learning Page**: Focus on one letter at a time with clean, high-contrast visuals.
+We will introduce 4 new standalone modules that can be accessed from the `dashboard.html` or the Map.
 
-## ✅ Verification Plan
-- **Flow Validation**: Manually walk through the entire flow as a new user.
-- **State Audit**: Check `localStorage` after each step to ensure data matches the UI.
-- **Visual Consistency**: Compare all pages for font sizing, color usage, and spacing.
+### 1. Speech Recognition (Speak Module)
+We will leverage HTML5 `webkitSpeechRecognition` configured for Tamil (`ta-IN`) to listen to the student's pronunciation and validate it.
+#### [NEW] `speech.html` & `speech.js`
+- UI with a microphone button and audio visualizations.
+- Prompts the user with a Tamil letter or word.
+- Evaluates the spoken input against the target string and awards XP.
+
+### 2. Tamil Typing Mechanics (Type Module)
+We will build a phonetic typing engine so users don't need a physical Tamil keyboard to practice.
+#### [NEW] `typing.html` & `typing.js`
+- Displays words on screen.
+- User types phonetically (e.g., typing 'a' 'm' 'm' 'a' produces 'அம்மா').
+- Tracks typing speed and accuracy.
+
+### 3. Reading Comprehension (Read Module)
+#### [NEW] `reading.html` & `reading.js`
+- Short, simple sentences in Tamil.
+- Uses `ResponsiveVoice.js` (or native SpeechSynthesis) to read the sentence aloud.
+- Multiple choice comprehension questions.
+
+### 4. Grammar Sandbox (Grammar Module)
+#### [NEW] `grammar.html` & `grammar.js`
+- Interactive lessons explaining the difference between Uyir (Vowels), Mei (Consonants), and Uyirmei (Compound).
+- Drag-and-drop mechanics to build compound letters (e.g., க் + அ = க).
+
+## Verification Plan
+1. **Automated Verification:** We will ensure `localStorage` cleanly routes users back and forth between the new modules and the central dashboard.
+2. **Manual Verification:** We will ask you to test the Speech API using your microphone, and the Typing engine using your keyboard.

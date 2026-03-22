@@ -37,11 +37,31 @@ class DashboardEngine {
         const streak = localStorage.getItem('tm_streak') || 1;
         const xp = localStorage.getItem('tm_xp') || 0;
 
+        const reviewsDone = JSON.parse(localStorage.getItem('tm_reviews_done') || '{}');
+        const courseCompleted = !!reviewsDone[30];
+
         // Head section
         document.getElementById('dash-name').innerHTML = `Hello, ${this.student.name}! <div class="streak-badge"><i class="fa-solid fa-fire"></i> ${streak}</div>`;
         document.getElementById('dash-age').innerText = `${this.style.toUpperCase()} Learner | Age ${this.student.age}`;
 
+        let completedBanner = '';
+        if (courseCompleted) {
+            completedBanner = `
+                <div class="glass-panel mb-3" style="background: linear-gradient(135deg, var(--warning), var(--secondary)); color: white; padding: 2.5rem; border-radius: 20px; text-align: center; position: relative; overflow: hidden; box-shadow: 0 15px 30px rgba(247,37,133,0.3);">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/stardust.png'); opacity: 0.3;"></div>
+                    <i class="fa-solid fa-crown" style="font-size: 4rem; color: #FFD700; filter: drop-shadow(0 0 10px rgba(255,215,0,0.8)); margin-bottom: 1rem;"></i>
+                    <h2 style="font-family: var(--font-tamil); font-size: 2.5rem; margin-bottom: 0.5rem; text-shadow: 0 4px 10px rgba(0,0,0,0.2);">Master of Thiranmozhi!</h2>
+                    <p style="font-size: 1.2rem; font-weight: 700; margin-bottom: 2rem;">You have conquered the map. Keep practicing or play your reward game!</p>
+                    <div style="display: flex; gap: 15px; justify-content: center; position: relative; z-index: 10;">
+                        <a href="certificate.html" class="btn" style="background: white; color: var(--secondary);"><i class="fa-solid fa-award"></i> View Certificate</a>
+                        <a href="minigame.html" class="btn" style="background: rgba(0,0,0,0.2); color: white; border: 1px solid rgba(255,255,255,0.4);"><i class="fa-solid fa-gamepad"></i> Play Balloon Pop</a>
+                    </div>
+                </div>
+            `;
+        }
+
         this.container.innerHTML = `
+            ${completedBanner}
             <!-- Stats Overview -->
             <div class="grid-4 mb-3">
                 ${this.renderStatCard('Uyir Vowels', skills.uyir, 'var(--primary)', 'fa-moon')}
@@ -99,6 +119,16 @@ class DashboardEngine {
                         <h3>Weekly Goal</h3>
                         <p style="opacity: 0.9; margin: 1rem 0;">You have earned <b>${xp} XP</b> this week! Just 100 XP more to reach your goal.</p>
                         <button class="btn btn-secondary" style="width:100%; color:var(--primary); font-weight:800;" onclick="window.location.href='practice.html'">Enter Practice Room <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+
+                    <div class="glass-panel mt-3" style="padding: 2rem; background: var(--bg-color-light);">
+                        <h3 class="mb-2" style="font-family: var(--font-tamil); font-size: 1.2rem;"><i class="fa-solid fa-rocket" style="color:var(--primary)"></i> Advanced Pillars</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <button class="btn btn-secondary" style="padding: 1rem; font-size: 0.9rem;" onclick="window.location.href='speech.html'"><i class="fa-solid fa-microphone"></i> Speak</button>
+                            <button class="btn btn-secondary" style="padding: 1rem; font-size: 0.9rem;" onclick="window.location.href='typing.html'"><i class="fa-solid fa-keyboard"></i> Type</button>
+                            <button class="btn btn-secondary" style="padding: 1rem; font-size: 0.9rem;" onclick="window.location.href='reading.html'"><i class="fa-solid fa-book-open"></i> Read</button>
+                            <button class="btn btn-secondary" style="padding: 1rem; font-size: 0.9rem;" onclick="window.location.href='grammar.html'"><i class="fa-solid fa-puzzle-piece"></i> Grammar</button>
+                        </div>
                     </div>
                 </div>
             </div>

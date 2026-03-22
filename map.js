@@ -336,6 +336,13 @@ class MapEngine {
         this.reviewsDone[pos] = true;
         this.savePaws();
         this.renderMap();
+
+        if (pos === 30) {
+            this.tigerSay("AMAZING! You completed the entire map! 🎓🏆");
+            setTimeout(() => {
+                window.location.href = 'certificate.html';
+            }, 3000);
+        }
     }
 
     positionTiger() {

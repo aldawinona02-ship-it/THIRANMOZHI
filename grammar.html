@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar - Thiranmozhi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .module-container {
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .equation-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--glass-border);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 3rem;
+        }
+
+        .char-slot {
+            font-family: var(--font-tamil);
+            font-size: 4rem;
+            color: var(--text-main);
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-color-light);
+            border: 2px dashed #CCC;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+        
+        .char-slot.filled {
+            border-style: solid;
+            background: var(--primary);
+            color: white;
+            border-color: #46A302;
+            box-shadow: 0 4px 0 #46A302;
+        }
+
+        .operator {
+            font-size: 3rem;
+            color: var(--text-muted);
+            font-weight: 800;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .choice-btn {
+            font-family: var(--font-tamil);
+            font-size: 3rem;
+            width: 80px;
+            height: 80px;
+            background: white;
+            border: 2px solid var(--glass-border);
+            border-bottom-width: 4px;
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+        .choice-btn:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+    </style>
+</head>
+<body style="background-color: var(--bg-color);">
+    <header style="padding: 1rem; background: white; border-bottom: 2px solid var(--glass-border); display: flex; justify-content: space-between;">
+        <button class="btn" onclick="window.location.href='dashboard.html'"><i class="fa-solid fa-arrow-left"></i> Hub</button>
+        <span style="font-size: 1.5rem; font-weight: 800; color: #FF9600;"><i class="fa-solid fa-puzzle-piece"></i> Grammar Module</span>
+    </header>
+
+    <div class="module-container">
+        <h2 style="color: var(--text-muted);">Construct the Uyirmei Eluthu:</h2>
+        
+        <div class="equation-box">
+            <div class="char-slot filled" id="mei">க்</div>
+            <div class="operator">+</div>
+            <div class="char-slot filled" id="uyir">அ</div>
+            <div class="operator">=</div>
+            <div class="char-slot" id="target">?</div>
+        </div>
+
+        <div class="choices" id="choices">
+            <!-- Built by JS -->
+        </div>
+    </div>
+
+    <script src="grammar.js"></script>
+</body>
+</html>

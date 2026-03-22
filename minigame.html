@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloon Pop - Reward Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #81D4FA; /* Clear Sky Blue */
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-main);
+            user-select: none;
+            touch-action: none;
+        }
+
+        /* Clouds overlay */
+        .clouds {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4) 0%, transparent 20%),
+                              radial-gradient(circle at 80% 40%, rgba(255,255,255,0.3) 0%, transparent 15%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hud {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        .score-box {
+            background: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-pill);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            border: 2px solid var(--glass-border);
+            border-bottom-width: 4px;
+        }
+
+        .game-area {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* Balloons */
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 80px;
+            height: 100px;
+            background: var(--primary);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            border: 2px solid rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Baloo Thambi 2', cursive;
+            font-size: 2.5rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: inset -10px -10px 0 rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+        }
+
+        /* Balloon tie */
+        .balloon::before {
+            content: '';
+            position: absolute;
+            bottom: -8px; left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-bottom-color: inherit;
+            border-bottom-color: rgba(0,0,0,0.1);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -50px; left: 50%;
+            width: 2px; height: 50px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .balloon.popped {
+            transform: scale(1.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Pop FX text */
+        .pop-text {
+            position: absolute;
+            font-family: var(--font-ui);
+            font-weight: 900;
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 4px 0 rgba(0,0,0,0.2);
+            pointer-events: none;
+            animation: floatUp 0.8s ease forwards;
+            z-index: 50;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="clouds"></div>
+
+    <div class="hud">
+        <div class="score-box" id="score-val">0</div>
+        <a href="dashboard.html" class="btn" style="padding: 0.8rem 1.5rem;"><i class="fa-solid fa-xmark"></i> Finish</a>
+    </div>
+
+    <div class="game-area" id="game-area"></div>
+
+    <script>
+        // Clean, fun CSS-based Balloon Pop game
+        const gameArea = document.getElementById('game-area');
+        const scoreVal = document.getElementById('score-val');
+        
+        let score = 0;
+        const letters = ['அ','ஆ','இ','ஈ','உ','ஊ','எ','ஏ','ஐ','ஒ','ஓ','ௌ'];
+        // Using our ed-tech palette
+        const colors = ['#58CC02', '#1CB0F6', '#FFC800', '#CE82FF', '#FF9600', '#FF4B4B'];
+
+        function spawnBalloon() {
+            const b = document.createElement('div');
+            b.classList.add('balloon');
+            
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            b.style.background = color;
+            b.innerText = letters[Math.floor(Math.random() * letters.length)];
+            
+            // Random horizontal start
+            const startX = Math.random() * (window.innerWidth - 100);
+            b.style.left = startX + 'px';
+            
+            // Wobble animation in JS for perf
+            let y = window.innerHeight;
+            let xOff = 0;
+            let speed = Math.random() * 2 + 1.5;
+            let wobbleSpeed = Math.random() * 0.05 + 0.02;
+            let time = Math.random() * 100;
+
+            gameArea.appendChild(b);
+
+            // Pop interaction
+            const pop = (e) => {
+                if(b.classList.contains('popped')) return;
+                
+                // For touch devices, stop propagation so it doesn't double fire
+                if(e) { e.preventDefault(); e.stopPropagation(); }
+
+                b.classList.add('popped');
+                score += 10;
+                scoreVal.innerText = score;
+                
+                // Show floating text
+                const pt = document.createElement('div');
+                pt.className = 'pop-text';
+                pt.innerText = '+10';
+                pt.style.left = (startX + xOff + 20) + 'px';
+                pt.style.top = y + 'px';
+                gameArea.appendChild(pt);
+                
+                setTimeout(() => b.remove(), 200);
+                setTimeout(() => pt.remove(), 800);
+            };
+
+            b.addEventListener('mousedown', pop);
+            b.addEventListener('touchstart', pop);
+
+            // Move loop
+            function move() {
+                if(b.classList.contains('popped')) return;
+                
+                y -= speed;
+                time += wobbleSpeed;
+                xOff = Math.sin(time) * 30; // Wobble left/right
+                
+                b.style.transform = `translate(${xOff}px, ${y - window.innerHeight}px)`;
+                
+                if(y < -150) {
+                    b.remove(); // escaped
+                } else {
+                    requestAnimationFrame(move);
+                }
+            }
+            requestAnimationFrame(move);
+            
+            // Schedule next balloon
+            setTimeout(spawnBalloon, Math.random() * 800 + 400);
+        }
+
+        // Start
+        setTimeout(spawnBalloon, 500);
+        setTimeout(spawnBalloon, 1500);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read - Thiranmozhi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .module-container {
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .story-box {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--glass-border);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            font-family: var(--font-tamil);
+            font-size: 2.5rem;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+        .play-audio-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 0 #1B8ABF;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .play-audio-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 0 0 #1B8ABF;
+        }
+        .question {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .choices {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .choice-btn {
+            background: white;
+            border: 2px solid var(--glass-border);
+            border-bottom-width: 4px;
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: all 0.1s;
+        }
+        .choice-btn:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+        .choice-btn.correct { background: var(--primary); color: white; border-color: #46A302; }
+        .choice-btn.wrong { background: var(--error); color: white; border-color: #D32F2F; opacity: 0.5; }
+    </style>
+</head>
+<body style="background-color: var(--bg-color);">
+    <header style="padding: 1rem; background: white; border-bottom: 2px solid var(--glass-border); display: flex; justify-content: space-between;">
+        <button class="btn" onclick="window.location.href='dashboard.html'"><i class="fa-solid fa-arrow-left"></i> Hub</button>
+        <span style="font-size: 1.5rem; font-weight: 800; color: #CE82FF;"><i class="fa-solid fa-book-open"></i> Read Module</span>
+    </header>
+
+    <div class="module-container">
+        <button class="play-audio-btn" id="listen-btn" title="Listen to story"><i class="fa-solid fa-volume-high"></i></button>
+        <div class="story-box" id="story-text">
+            சிறுவன் பந்து விளையாடுகிறான்.
+        </div>
+        
+        <div class="question" id="question-text">Who is playing with the ball?</div>
+        <div class="choices" id="choices">
+            <!-- Rendered by JS -->
+        </div>
+    </div>
+
+    <!-- ResponsiveVoice for Tamil TTS without external API keys -->
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=1TdNs6ox"></script>
+    <script src="reading.js"></script>
+</body>
+</html>
