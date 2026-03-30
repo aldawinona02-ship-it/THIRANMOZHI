@@ -1,52 +1,47 @@
+/**
+ * THIRANMOZHI - Final Audio System
+ * Location: assets/audio/
+ */
 class AudioSystem {
     constructor() {
+        this.basePath = 'assets/audio/';
         this.synth = window.speechSynthesis;
+        this.currentAudio = null;
     }
 
-    play(text, lang = 'ta-IN') {
-        if (!this.synth) {
-            console.warn("Speech Synthesis API not supported.");
-            return;
-        }
+    play(text) {
+        this.stopAll();
 
-        // Cancel any currently playing speech to prevent queuing lag
-        this.synth.cancel();
+        // Target: assets/audio/அ.mp3
+        const audioPath = `${this.basePath}${text}.mp3`;
+        const audio = new Audio(audioPath);
 
+        audio.play()
+            .then(() => {
+                this.currentAudio = audio;
+                console.log(`Playing high-quality file: ${text}.mp3`);
+            })
+            .catch(() => {
+                console.warn(`File ${text}.mp3 not found. Falling back to TTS.`);
+                this.playFallback(text);
+            });
+    }
+
+    playFallback(text) {
+        if (!this.synth) return;
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = lang;
-        utterance.rate = 0.8; // Speak slightly slower for kids
-        utterance.pitch = 1.2; // Slightly higher pitch for friendliness
-
+        utterance.lang = 'ta-IN';
+        utterance.rate = 0.8;
         this.synth.speak(utterance);
     }
 
-    playFeedback(type) {
-        // Types: 'success', 'try-again', 'excellent'
-        // Using AudioContext for bleeps and bloops
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        
-        osc.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        if(type === 'success' || type === 'excellent') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.3);
-            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.3);
-        } else if (type === 'try-again') {
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.3);
-            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.3);
+    stopAll() {
+        if (this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio.currentTime = 0;
+            this.currentAudio = null;
         }
+        if (this.synth) this.synth.cancel();
     }
 }
 
