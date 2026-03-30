@@ -1,3 +1,8 @@
+/**
+ * THIRANMOZHI — Adaptive Engine (Refined)
+ * Fixes: Logic for Stage Filtering, User Style retrieval, and UI consistency.
+ */
+
 const TAMIL_DATA = {
     uyir: [
         { l: 'அ', v: 'Easy', w: 'Easy', p: 'Easy', sound: 'a' }, { l: 'ஆ', v: 'Easy', w: 'Easy', p: 'Easy', sound: 'aa' },
@@ -22,23 +27,25 @@ const TAMIL_DATA = {
 
 class AdaptiveEngine {
     constructor() {
+        // Retrieve learning style from Assessment
+        this.style = (localStorage.getItem('userStyle') || 'visual').toLowerCase();
+        
         this.dataset = this.generateDataset();
         this.mistakeMatrix = JSON.parse(localStorage.getItem('thiranmozhi_mistakes')) || {};
+        
+        // Logical Stages Mapping
         this.stages = {
-            basic: { uyir: ['அ', 'இ', 'உ', 'எ', 'ஒ'], mei: ['க', 'த', 'ப', 'ந', 'ம'] },
-            intermediate: { uyir: ['ஆ', 'ஈ', 'ஊ', 'ஏ', 'ஓ'], mei: ['ச', 'ய', 'ல', 'வ', 'ர'] },
-            advanced: { uyir: ['ஐ', 'ஔ'], mei: ['ங', 'ஞ', 'ண', 'ழ', 'ள', 'ற'] }
+            basic: { uyir: ['அ', 'ஆ', 'இ', 'ஈ', 'உ'], mei: ['க்', 'ங்', 'ச்', 'ஞ்'] },
+            intermediate: { uyir: ['ஊ', 'எ', 'ஏ', 'ஐ'], mei: ['ட்', 'ண்', 'த்', 'ந்', 'ப்'] },
+            advanced: { uyir: ['ஒ', 'ஓ', 'ஔ'], mei: ['ம்', 'ய்', 'ர்', 'ல்', 'வ்', 'ழ்', 'ள்', 'ற்', 'ன்'] }
         };
     }
 
     generateDataset() {
         let all = [];
-        // Add Uyir
         TAMIL_DATA.uyir.forEach(l => all.push({ ...l, type: 'uyir', id: 'u-' + l.l }));
-        // Add Mei (with pulli)
         TAMIL_DATA.mei.forEach(l => all.push({ ...l, type: 'mei', id: 'm-' + l.l }));
-        
-        // Proper Uyirmei generation logic
+
         const uyir_suffix_map = {
             'அ': '', 'ஆ': 'ா', 'இ': 'ி', 'ஈ': 'ீ', 'உ': 'ு', 'ஊ': 'ூ',
             'எ': 'ெ', 'ஏ': 'ே', 'ஐ': 'ை', 'ஒ': 'ொ', 'ஓ': 'ோ', 'ஔ': 'ௌ'
@@ -47,17 +54,13 @@ class AdaptiveEngine {
         TAMIL_DATA.mei.forEach(m => {
             const base = m.base;
             TAMIL_DATA.uyir.forEach(u => {
-                let char;
-                // Special cases for U and UU vowel markers are complex in Tamil, 
-                // but standard unicode handles most via combining marks.
-                char = base + uyir_suffix_map[u.l];
-                
+                let char = base + uyir_suffix_map[u.l];
                 all.push({ 
                     l: char,
                     type: 'uyirmei', 
                     base_mei: m.l, 
                     uyir: u.l, 
-                    v: m.v, w: m.w, p: m.p // inheriting difficulty
+                    v: m.v, w: m.w, p: m.p 
                 });
             });
         });
@@ -66,57 +69,66 @@ class AdaptiveEngine {
 
     getLettersForStage(stageName) {
         const stage = this.stages[stageName];
-        if(!stage) return [];
+        if (!stage) return [];
         
         const filtered = this.dataset.filter(l => 
             (l.type === 'uyir' && stage.uyir.includes(l.l)) ||
             (l.type === 'mei' && stage.mei.includes(l.l))
         );
 
-        // Sort based on learning style
+        // Adaptive Sorting based on Learning Style
         return filtered.sort((a, b) => {
-            if(this.style === 'visual') return this.diffScore(a.v) - this.diffScore(b.v);
-            if(this.style === 'kinesthetic') return this.diffScore(a.w) - this.diffScore(b.w);
-            if(this.style === 'auditory') return this.diffScore(a.p) - this.diffScore(b.p);
+            if (this.style === 'visual') return this.diffScore(a.v) - this.diffScore(b.v);
+            if (this.style === 'kinesthetic') return this.diffScore(a.w) - this.diffScore(b.w);
+            if (this.style === 'auditory') return this.diffScore(a.p) - this.diffScore(b.p);
             return 0;
         });
     }
 
     diffScore(val) {
-        if(val === 'Easy') return 1;
-        if(val === 'Medium') return 2;
-        if(val === 'Hard') return 3;
-        return 0;
+        const map = { 'Easy': 1, 'Medium': 2, 'Hard': 3 };
+        return map[val] || 0;
     }
 
     renderContent() {
         const container = document.getElementById('letter-gallery');
-        if(!container) return;
+        if (!container) return;
 
         const stage = localStorage.getItem('tm_current_stage') || 'basic';
         const letters = this.getLettersForStage(stage);
 
         container.innerHTML = `
-            <div class="stage-selector mb-3 text-center" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 3rem;">
-                <button class="btn ${stage==='basic'?'btn-primary':'btn-secondary'}" onclick="localStorage.setItem('tm_current_stage','basic'); location.reload()" style="padding: 0.8rem 2rem; border-radius: 100px;">Basic</button>
-                <button class="btn ${stage==='intermediate'?'btn-primary':'btn-secondary'}" onclick="localStorage.setItem('tm_current_stage','intermediate'); location.reload()" style="padding: 0.8rem 2rem; border-radius: 100px;">Intermediate</button>
-                <button class="btn ${stage==='advanced'?'btn-primary':'btn-secondary'}" onclick="localStorage.setItem('tm_current_stage','advanced'); location.reload()" style="padding: 0.8rem 2rem; border-radius: 100px;">Advanced</button>
+            <div class="stage-selector" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 3rem;">
+                ${['basic', 'intermediate', 'advanced'].map(s => `
+                    <button class="btn ${stage === s ? 'btn-primary' : 'btn-secondary'}" 
+                        onclick="localStorage.setItem('tm_current_stage','${s}'); location.reload()" 
+                        style="padding: 0.8rem 2rem; border-radius: 100px; text-transform: capitalize;">
+                        ${s}
+                    </button>
+                `).join('')}
             </div>
-            <div class="grid-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+            <div class="letter-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem;">
                 ${letters.map(item => `
-                    <div class="card text-center hover-float" onclick="window.location.href='tracing.html?letter=${encodeURIComponent(item.l)}'" style="cursor: pointer; border: 4px solid var(--primary); padding: 2rem; background: var(--glass-bg); border-radius: var(--radius-lg);">
-                        <h2 style="font-size: 6rem; color: var(--text-main); margin: 0.5rem 0; font-family: var(--font-tamil); line-height: 1;">${item.l}</h2>
-                        <div style="font-size: 0.9rem; background: rgba(0,0,0,0.03); padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 1.5rem; color: var(--text-muted); font-weight: 700;">${item.type.toUpperCase()}</div>
-                        <button class="btn btn-primary" style="width: 100%; font-weight: 800;">Practice Now</button>
+                    <div class="card hover-float" onclick="window.location.href='activity.html?letter=${encodeURIComponent(item.l)}&type=${item.type}'" 
+                        style="cursor: pointer; border: 3px solid var(--glass-border); padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 24px; text-align:center; backdrop-filter: blur(10px);">
+                        <h2 style="font-size: 5rem; color: var(--primary); margin: 0; font-family: 'Baloo Thambi 2';">${item.l}</h2>
+                        <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 10px; font-weight: 800; letter-spacing: 1px;">${item.type.toUpperCase()}</div>
+                        <div style="margin-top: 20px; font-weight: 900; color: white;">PRACTICE <i class="fa-solid fa-chevron-right" style="font-size:0.8rem"></i></div>
                     </div>
                 `).join('')}
             </div>
         `;
     }
+
     getLetterData(char) {
         return this.dataset.find(l => l.l === char);
     }
 }
 
+// Global initialization
 window.adaptiveEngineSys = new AdaptiveEngine();
-document.addEventListener('DOMContentLoaded', () => window.adaptiveEngineSys.renderContent());
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('letter-gallery')) {
+        window.adaptiveEngineSys.renderContent();
+    }
+});
