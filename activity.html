@@ -1,309 +1,176 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THIRANMOZHI - Learn Letter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* ==============================
-           ACTIVITY PAGE STYLES
-        ============================== */
-        .activity-header {
-            background: white;
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 2px solid var(--glass-border);
-            position: sticky; top: 0; z-index: 50;
-        }
+/**
+ * THIRANMOZHI - ACTIVITY ENGINE (activity.js)
+ * Logic: Checks User Learning Style and Injects Visual, Auditory, or Kinesthetic Tasks.
+ */
 
-        .activity-header .back-btn {
-            background: none; border: none;
-            font-size: 1.1rem; font-weight: 800;
-            cursor: pointer; color: var(--text-muted);
-            display: flex; align-items: center; gap: 0.5rem;
-            font-family: 'Nunito', sans-serif;
-        }
-        .activity-header .back-btn:hover { color: var(--text-main); }
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Get Style from LocalStorage (Assumed from Assessment)
+    const userStyle = localStorage.getItem('userStyle') || 'Visual'; // Default
+    const badge = document.getElementById('activity-style-badge');
+    const container = document.getElementById('activity-container');
 
-        .activity-content {
-            min-height: calc(100vh - 70px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 2rem 1.5rem 100px;
-            background: var(--bg-color); /* Soft grey bg */
-        }
+    // 2. Set UI Badge
+    badge.innerHTML = `<i class="fa-solid fa-brain"></i> Style: ${userStyle}`;
 
-        /* Glowing letter display */
-        .letter-hero {
-            font-family: 'Baloo Thambi 2', cursive;
-            font-size: 8rem;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
+    // 3. Activity Logic - The Letter "அ"
+    if (userStyle === 'Visual') {
+        renderVisualTask(container);
+    } else if (userStyle === 'Auditory') {
+        renderAuditoryTask(container);
+    } else {
+        renderKinestheticTask(container);
+    }
+});
 
-        .letter-hero.vowel-glow { color: var(--primary); }
-        .letter-hero.consonant-glow { color: var(--secondary); }
-
-        /* Style badge */
-        .style-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 1.2rem;
-            border-radius: var(--radius-pill);
-            font-size: 0.8rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            border: 2px solid var(--glass-border);
-            background: white;
-            color: var(--text-main);
-        }
-
-        /* Choice buttons */
-        .choice-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            width: 100%;
-            max-width: 420px;
-            margin-top: 1.5rem;
-        }
-
-        .choice-btn {
-            font-family: 'Baloo Thambi 2', cursive;
-            font-size: 2.5rem;
-            font-weight: 800;
-            padding: 1.2rem 0.5rem;
-            border-radius: var(--radius-md);
-            border: 2px solid var(--glass-border);
-            border-bottom-width: 6px;
-            background: white;
-            cursor: pointer;
-            transition: transform 0.1s ease;
-            box-shadow: none;
-            color: var(--text-main);
-        }
-
-        .choice-btn:active {
-            border-bottom-width: 2px;
-            transform: translateY(4px);
-        }
-
-        .choice-btn.correct {
-            background: var(--primary-light);
-            border-color: var(--primary);
-            color: white;
-        }
-
-        .choice-btn.wrong {
-            background: #FFDDDD;
-            border-color: var(--error);
-            color: var(--error);
-            animation: shake 0.4s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-
-        /* TIGER mascot in activity */
-        .activity-tiger {
-            font-size: 4rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-
-        @keyframes tiger-idle {
-            0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50% { transform: translateY(-10px) rotate(3deg); }
-        }
-
-        .tiger-speech {
-            background: white;
-            border: 3px solid #ff9800;
-            border-radius: 18px;
-            padding: 0.7rem 1.4rem;
-            font-weight: 800;
-            font-size: 1rem;
-            color: #333;
-            max-width: 280px;
-            margin: 0 auto 0.5rem;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            animation: bubble-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
-        }
-
-        @keyframes bubble-pop {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* TRACING section */
-        .tracing-section {
-            width: 100%;
-            max-width: 420px;
-        }
-
-        .accuracy-bar-container {
-            width: 100%;
-            background: rgba(0,0,0,0.1);
-            border-radius: 50px;
-            height: 20px;
-            margin: 1rem 0;
-            overflow: hidden;
-            border: 2px solid white;
-        }
-
-        .accuracy-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #ef5350, #ff9800, #4caf50);
-            border-radius: 50px;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .accuracy-label {
-            text-align: center;
-            font-weight: 800;
-            font-size: 1rem;
-            color: var(--text-main);
-            margin-bottom: 0.5rem;
-        }
-
-        .trace-canvas-wrapper {
-            position: relative;
-            background: white;
-            border-radius: 24px;
-            border: 5px solid #ff9800;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(255,152,0,0.2);
-            aspect-ratio: 1;
-        }
-
-        #guide-canvas-a {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-        }
-
-        #trace-canvas-a {
-            width: 100%; height: 100%;
-            display: block;
-            touch-action: none;
-            cursor: crosshair;
-        }
-
-        /* Paw result banner */
-        .paw-banner {
-            width: 100%;
-            max-width: 420px;
-            background: linear-gradient(135deg, #fff176, #ffd54f);
-            border: 4px solid #f9a825;
-            border-radius: 24px;
-            padding: 1.5rem;
-            text-align: center;
-            animation: bubble-pop 0.6s cubic-bezier(0.34,1.56,0.64,1);
-            display: none;
-        }
-
-        .paw-banner.show {
-            display: block;
-        }
-
-        .paw-banner h2 {
-            font-size: 2rem;
-            color: #5d4037;
-            margin-bottom: 0.5rem;
-        }
-
-        .paw-icons {
-            font-size: 2.5rem;
-            letter-spacing: 8px;
-            margin: 0.5rem 0;
-        }
-
-        .btn-back-map {
-            width: 100%;
-            max-width: 420px;
-            background: linear-gradient(135deg, #4caf50, #2e7d32);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 1.2rem 2rem;
-            font-size: 1.2rem;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(46,125,50,0.35);
-            transition: all 0.3s ease;
-            font-family: 'Nunito', sans-serif;
-            display: none;
-            margin-top: 1rem;
-        }
-
-        .btn-back-map.show {
-            display: block;
-        }
-
-        .btn-back-map:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(46,125,50,0.5);
-        }
-
-        /* Sound play button */
-        .sound-btn {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #29b6f6, #0288d1);
-            border: none;
-            font-size: 3rem;
-            color: white;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 8px 25px rgba(2,136,209,0.4);
-            transition: all 0.3s ease;
-            animation: sound-pulse 2s ease-in-out infinite;
-        }
-        .sound-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 30px rgba(2,136,209,0.5);
-        }
-        @keyframes sound-pulse {
-            0%, 100% { box-shadow: 0 8px 25px rgba(2,136,209,0.4); }
-            50% { box-shadow: 0 8px 40px rgba(2,136,209,0.7); }
-        }
-    </style>
-</head>
-<body>
-    <header class="activity-header">
-        <button class="back-btn" onclick="window.location.href='map.html'">
-            <i class="fa-solid fa-arrow-left"></i> Map
-        </button>
-        <div id="activity-style-badge" class="style-badge"></div>
-        <div id="paw-status" style="font-size:1.5rem; font-weight:800;"></div>
-    </header>
-
-    <div class="activity-content">
-        <div id="activity-container">
-            <!-- Injected by activity.js -->
+/** --- 👁️ VISUAL: Spot the Letter --- **/
+function renderVisualTask(container) {
+    container.innerHTML = `
+        <div class="tiger-speech">Can you find the letter "அ"?</div>
+        <div class="activity-tiger">🐯</div>
+        <div class="letter-hero vowel-glow">அ</div>
+        <div class="choice-grid">
+            <button class="choice-btn" onclick="checkChoice(this, false)">ஆ</button>
+            <button class="choice-btn" onclick="checkChoice(this, true)">அ</button>
+            <button class="choice-btn" onclick="checkChoice(this, false)">இ</button>
         </div>
-    </div>
+        <button id="next-btn" class="btn-back-map" onclick="window.location.href='map.html'">Back to Map</button>
+    `;
+}
 
-    <script src="main.js"></script>
-    <script src="adaptive-engine.js"></script>
-    <script src="activity.js"></script>
-</body>
-</html>
+/** --- 👂 AUDITORY: Sound Match --- **/
+function renderAuditoryTask(container) {
+    container.innerHTML = `
+        <div class="tiger-speech">Listen carefully and pick the right letter!</div>
+        <div class="activity-tiger">🐯</div>
+        <button class="sound-btn" onclick="playLetterSound('ah')">
+            <i class="fa-solid fa-volume-high"></i>
+        </button>
+        <div class="choice-grid">
+            <button class="choice-btn" onclick="checkChoice(this, true)">அ</button>
+            <button class="choice-btn" onclick="checkChoice(this, false)">உ</button>
+            <button class="choice-btn" onclick="checkChoice(this, false)">எ</button>
+        </div>
+        <button id="next-btn" class="btn-back-map" onclick="window.location.href='map.html'">Back to Map</button>
+    `;
+}
+
+/** --- 🖐️ KINESTHETIC: Tracing Letter --- **/
+function renderKinestheticTask(container) {
+    container.innerHTML = `
+        <div class="tiger-speech">Trace the letter "அ" beautifully!</div>
+        <div class="activity-tiger">🐯</div>
+        <div class="tracing-section">
+            <div class="accuracy-label">Accuracy: <span id="acc-val">0</span>%</div>
+            <div class="accuracy-bar-container">
+                <div id="acc-bar" class="accuracy-bar"></div>
+            </div>
+            <div class="trace-canvas-wrapper">
+                <canvas id="guide-canvas-a"></canvas>
+                <canvas id="trace-canvas-a"></canvas>
+            </div>
+            <button class="btn btn-secondary" onclick="clearCanvas()" style="margin-top:1rem; width:100%;">Clear</button>
+        </div>
+        <div id="result-banner" class="paw-banner">
+            <h2>Excellent! 🐾</h2>
+            <div class="paw-icons">🐾 🐾 🐾</div>
+            <button class="btn-back-map show" onclick="window.location.href='map.html'">Next Lesson</button>
+        </div>
+    `;
+    initTracingLogic();
+}
+
+/** --- SHARED HELPERS --- **/
+
+function checkChoice(btn, isCorrect) {
+    if (isCorrect) {
+        btn.classList.add('correct');
+        document.querySelector('.tiger-speech').innerText = "Amazing! You found it! 🐾";
+        document.getElementById('next-btn').classList.add('show');
+        playLetterSound('correct');
+    } else {
+        btn.classList.add('wrong');
+        document.querySelector('.tiger-speech').innerText = "Try again, you can do it!";
+        setTimeout(() => btn.classList.remove('wrong'), 500);
+    }
+}
+
+function playLetterSound(type) {
+    // Placeholder for actual audio files
+    const audio = new Audio(`assets/audio/${type}.mp3`);
+    audio.play().catch(() => console.log("Audio file missing - Place in assets/audio/"));
+}
+
+/** --- TRACING ENGINE --- **/
+let canvas, ctx, isDrawing = false;
+
+function initTracingLogic() {
+    canvas = document.getElementById('trace-canvas-a');
+    if (!canvas) return;
+    ctx = canvas.getContext('2d');
+    
+    // Resize canvas to fit wrapper
+    const size = canvas.parentElement.offsetWidth;
+    canvas.width = size;
+    canvas.height = size;
+    
+    // Draw guide letter on back canvas
+    const gCanvas = document.getElementById('guide-canvas-a');
+    const gCtx = gCanvas.getContext('2d');
+    gCanvas.width = size; gCanvas.height = size;
+    gCtx.font = `${size * 0.7}px 'Baloo Thambi 2'`;
+    gCtx.fillStyle = '#f0f0f0';
+    gCtx.textAlign = 'center';
+    gCtx.textBaseline = 'middle';
+    gCtx.fillText('அ', size/2, size/2);
+
+    // Drawing settings
+    ctx.lineWidth = 15;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#ff9800';
+
+    // Events
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e.touches[0]); });
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
+    canvas.addEventListener('touchend', stopDraw);
+}
+
+function startDraw(e) { isDrawing = true; draw(e); }
+function stopDraw() { 
+    isDrawing = false; 
+    ctx.beginPath(); 
+    calculateAccuracy(); 
+}
+
+function draw(e) {
+    if (!isDrawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || e.pageX) - rect.left;
+    const y = (e.clientY || e.pageY) - rect.top;
+    
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+}
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById('acc-bar').style.width = '0%';
+    document.getElementById('acc-val').innerText = '0';
+}
+
+function calculateAccuracy() {
+    // Simple pixel-based accuracy simulation
+    const currentAcc = parseInt(document.getElementById('acc-val').innerText);
+    const newAcc = Math.min(currentAcc + 15, 95); // Simulation logic
+    
+    document.getElementById('acc-val').innerText = newAcc;
+    document.getElementById('acc-bar').style.width = newAcc + '%';
+
+    if (newAcc > 80) {
+        document.getElementById('result-banner').classList.add('show');
+    }
+}
