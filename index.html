@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#8B5CF6" />
+    <meta name="description" content="Thiranmozhi - Inclusive learning app that understands every child (Autism, ADHD, Dyslexia, IDD)" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>Thiranmozhi | திறமொழி</title>
+    <script>
+      window.addEventListener("error", function(e) {
+        if (e.error && (e.error.name === "DataCloneError" || (e.message && e.message.includes("posthog")))) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+        }
+      }, true);
+      window.posthog = {
+        init: function() {},
+        capture: function() {},
+        identify: function() {},
+        people: { set: function() {} }
+      };
+    </script>
+    <!-- Relative path so it works when opened directly in any browser with file:// -->
+    <script defer src="./dist/static/js/bundle.js"></script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
