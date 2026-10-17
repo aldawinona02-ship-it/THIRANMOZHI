@@ -2,8 +2,8 @@
 > **"Learning that understands every child."**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Deploy to GitHub Pages](https://github.com/aldawinona02/Thiranmozhi/actions/workflows/deploy.yml/badge.svg)](https://github.com/aldawinona02/Thiranmozhi/actions/workflows/deploy.yml)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](#-live-website-link)
+[![Deploy to GitHub Pages](https://github.com/aldawinona02-ship-it/THIRANMOZHI/actions/workflows/deploy.yml/badge.svg)](https://github.com/aldawinona02-ship-it/THIRANMOZHI/actions/workflows/deploy.yml)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://aldawinona02-ship-it.github.io/THIRANMOZHI/)
 
 **Thiranmozhi** is a multi-sensory, inclusive web application tailored specifically for neurodivergent children diagnosed with **Autism**, **ADHD**, **Dyslexia**, and **Intellectual & Developmental Disabilities (IDD)**. 
 
@@ -13,10 +13,7 @@ Through gamified assessments, customizable sensory settings, and interactive let
 
 ## 🌐 Live Website Link
 
-Once pushed to GitHub, your live website is automatically accessible at:
-
-🔗 **`https://<your-github-username>.github.io/<repo-name>/`**  
-*(e.g., `https://aldawinona02.github.io/Thiranmozhi/`)*
+🔗 **https://aldawinona02-ship-it.github.io/THIRANMOZHI/**
 
 > [!NOTE]  
 > The repository includes a pre-configured GitHub Actions workflow ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) that publishes the site to GitHub Pages immediately upon push.
